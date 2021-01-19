@@ -12,5 +12,8 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected slots:
+    void test_change();
 };
 #endif // MAINWINDOW_H
