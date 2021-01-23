@@ -15,7 +15,7 @@
 class DBManager
 {
 private:
-     const QString DB_PATH = QDir(qApp->applicationDirPath()).absoluteFilePath("biblio.db");
+     static const QString DB_PATH;
      // The database connection
      QSqlDatabase m_db;
 

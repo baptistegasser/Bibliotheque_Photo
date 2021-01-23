@@ -6,6 +6,8 @@
 #include "QSqlRecord"
 #include "QSqlResult"
 
+const QString DBManager::DB_PATH = QDir(qApp->applicationDirPath()).absoluteFilePath("biblio.db");
+
 DBManager::DBManager()
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
