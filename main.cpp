@@ -1,12 +1,18 @@
 #include "mainwindow.h"
 
-#include <QApplication>
+#include "db/dbmanager.h"
 
-#include "dbmanager.h"
+#include <QApplication>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
-    DBManager manager = DBManager();
+    DBManager* manager;
+    try {
+        manager = new DBManager();
+    }  catch (const DBManager::DBException &) {
+        qCritical() << "Failed to init the database !" << manager->lastErrorMsg();
+    }
 
     QApplication a(argc, argv);
     MainWindow w;
