@@ -11,14 +11,17 @@ CONFIG += c++11
 SOURCES += \
     imagefinder.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    modification_window.cpp
 
 HEADERS += \
     imagefinder.h \
-    mainwindow.h
+    mainwindow.h \
+    modification_window.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    modification_window.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
