@@ -2,8 +2,12 @@
 
 #include <QApplication>
 
+#include "dbmanager.h"
+
 int main(int argc, char *argv[])
 {
+    DBManager manager = DBManager();
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
