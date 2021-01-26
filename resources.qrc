@@ -2,4 +2,7 @@
     <qresource prefix="/db">
         <file alias="init.db">resources/init.db</file>
     </qresource>
+    <qresource prefix="/css">
+        <file alias="style.css">resources/style.css</file>
+    </qresource>
 </RCC>
