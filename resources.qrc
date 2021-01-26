@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/db">
+        <file alias="init.db">resources/init.db</file>
+    </qresource>
+</RCC>
