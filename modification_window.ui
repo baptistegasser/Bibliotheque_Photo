@@ -60,7 +60,7 @@
        <string notr="true">background-color:rgb(239, 239, 239)</string>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#838383;&quot;&gt;Photo du XX Mois 20XX à XX:XX&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; color:#a7a7a7;&quot;&gt;XXX Mo - Format XXX - Image originale&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#838383;&quot;&gt;Photo du XX Mois 20XX à XX:XX&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#a7a7a7;&quot;&gt;XXX Mo - Format XXX - Image originale&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
@@ -131,7 +131,7 @@ background-color : rgb(224, 224, 224);
      <x>530</x>
      <y>570</y>
      <width>161</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -148,7 +148,7 @@ background-color : rgb(224, 224, 224);
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>90</y>
+     <y>91</y>
      <width>301</width>
      <height>531</height>
     </rect>
@@ -177,6 +177,192 @@ color:rgb(167, 167, 167);</string>
     <property name="text">
      <string>&lt; RETOUR</string>
     </property>
+   </widget>
+   <widget class="QLabel" name="_my_dominant_color_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Couleur dominante&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="_my_note_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Note&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="_my_commentaire_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Commentaire&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="_my_descriptif_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Descriptif&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#8b8b8b;&quot;&gt;Ajouter un mot clé descriptif ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="_my_ressenti_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>290</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Ressenti&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#8b8b8b;&quot;&gt;Ajouter un mot clé descriptif ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="_my_catgorie_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>400</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Catégorie&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#8b8b8b;&quot;&gt;Ajouter un mot clé de catégorie ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="_my_color_dominant_edit">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>50</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(180, 179, 179);
+border: 1px solid rgb(180, 179, 179);
+border-radius:5px;
+
+
+</string>
+    </property>
+    <property name="text">
+     <string>#F8F7F7</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="_my_commentaire_edit">
+    <property name="geometry">
+     <rect>
+      <x>23</x>
+      <y>130</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(180, 179, 179);
+border: 1px solid rgb(180, 179, 179);
+border-radius:5px;</string>
+    </property>
+    <property name="plainText">
+     <string>Ceci est un exemple de commentaire</string>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="_my_descriptif_tag_area">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>220</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>259</width>
+       <height>59</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QScrollArea" name="_my_ressenti_tag_area">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>330</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>259</width>
+       <height>59</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QScrollArea" name="_my_categorie_tag_area">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>440</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>259</width>
+       <height>59</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
