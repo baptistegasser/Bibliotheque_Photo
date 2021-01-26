@@ -5,26 +5,36 @@
 #include "QSqlQuery"
 #include "QSqlRecord"
 #include "QSqlResult"
+#include "QFile"
 
 QString DBManager::DB_PATH;
 
 DBManager::DBManager()
 {
-    if (DB_PATH == NULL) {
+    // Set path to database
+    if (DB_PATH.isNull()) {
         DB_PATH = QDir(qApp->applicationDirPath()).absoluteFilePath("biblio.db");
     }
+    // If database file don't exist, copy it from resources
+    if (!QFileInfo::exists(DB_PATH)) {
+        qInfo("Initialising database from resources");
 
+        if (!QFile::copy(":/db/init.db", DB_PATH)) {
+            m_lastErrorMsg = "Failed to init database by copying templatefile";
+            throw DBException();
+        }
+    }
+
+    qInfo() << "Opening database connection at " << DB_PATH;
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName(DB_PATH);
-
-    qDebug() << "Opening database connection at " << DB_PATH;
 
     if (!m_db.open()) {
         m_lastErrorMsg = "Failed to open database, cause: \n" + m_db.lastError().text();
         throw DBException();
+    } else {
+        qInfo("Connection successfull");
     }
-
-    qInfo("Connection successfull");
 }
 
 DBManager::~DBManager()
