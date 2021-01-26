@@ -31,15 +31,8 @@ int main(int argc, char *argv[])
     w.show();*/
 
     Modification_window w;
-    QImage img;
-    if(img.load(":/image/resources/star_fill.png"))
-    {
-        w.setImage(img);
-    }
-    else
-    {
-         cout << "ca marche pas" << endl;
-    }
+
+    w.setImage(":/image/resources/star_fill.png");
     w.show();
 
 
