@@ -7,5 +7,8 @@
     </qresource>
     <qresource prefix="/image">
         <file>resources/filter.png</file>
+        <file>resources/star_fill.png</file>
+        <file>resources/star_half.png</file>
+        <file>resources/star_empty.png</file>
     </qresource>
 </RCC>
