@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+#include "photocard.h"
 #include "modification_window.h"
 #include <iostream>
 
@@ -33,7 +34,11 @@ int main(int argc, char *argv[])
     /*Modification_window w;
 
     w.setImage(":/image/resources/star_fill.png");
-    w.show();*/
+    w.show();
+
+    
+    photoCard pC;
+    pC.show();
 
 
     delete manager;
