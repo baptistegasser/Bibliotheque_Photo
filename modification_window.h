@@ -12,6 +12,7 @@ private:
 public:
     explicit Modification_window(QWidget *parent = nullptr);
     void setImage(QImage image);
+    void setImage(char* path);
 };
 
 #endif // MODIFICATION_WINDOW_H
