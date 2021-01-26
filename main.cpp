@@ -1,9 +1,14 @@
 #include "mainwindow.h"
 
+#include "modification_window.h"
+#include <iostream>
+
 #include "db/dbmanager.h"
 
 #include <QApplication>
 #include <QDebug>
+
+using namespace std;
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +21,21 @@ int main(int argc, char *argv[])
         qCritical() << "Failed to init the database !" << manager->lastErrorMsg();
     }
 
-    MainWindow w;
+    /*MainWindow w;
+    w.show();*/
+
+    Modification_window w;
+    QImage img;
+    if(img.load(":/image/resources/star_fill.png"))
+    {
+        w.setImage(img);
+    }
+    else
+    {
+         cout << "ca marche pas" << endl;
+    }
     w.show();
+
 
     delete manager;
     return a.exec();
