@@ -7,7 +7,7 @@ class TagButton : public QPushButton
 {
 
 public:
-    TagButton();
+    TagButton(QWidget * parent);
 };
 
 #endif // TAGBUTTON_H

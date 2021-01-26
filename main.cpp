@@ -27,13 +27,12 @@ int main(int argc, char *argv[])
         qCritical() << "Failed to init the database !" << manager->lastErrorMsg();
     }
 
-    MainWindow w;
-    w.show();
-
-    /*Modification_window w;
-
-    w.setImage(":/image/resources/star_fill.png");
+    /*MainWindow w;
     w.show();*/
+
+    Modification_window w;
+    w.setImage(":/image/resources/star_fill.png");
+    w.show();
 
 
     delete manager;
