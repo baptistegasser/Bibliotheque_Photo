@@ -5,4 +5,7 @@
     <qresource prefix="/css">
         <file alias="style.css">resources/style.css</file>
     </qresource>
+    <qresource prefix="/image">
+        <file>resources/filter.png</file>
+    </qresource>
 </RCC>
