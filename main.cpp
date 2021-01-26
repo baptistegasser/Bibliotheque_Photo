@@ -7,6 +7,8 @@
 
 int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
+
     DBManager* manager;
     try {
         manager = new DBManager();
@@ -14,8 +16,9 @@ int main(int argc, char *argv[])
         qCritical() << "Failed to init the database !" << manager->lastErrorMsg();
     }
 
-    QApplication a(argc, argv);
     MainWindow w;
     w.show();
+
+    delete manager;
     return a.exec();
 }

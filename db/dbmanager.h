@@ -15,7 +15,7 @@
 class DBManager
 {
 private:
-     static const QString DB_PATH;
+     static QString DB_PATH;
      // The database connection
      QSqlDatabase m_db;
 
