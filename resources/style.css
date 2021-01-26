@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+*{
+    font-family: 'Open Sans', sans-serif;
+}
 /*******************/
 /*    photoCard    */
 /*******************/
@@ -12,7 +15,6 @@ QWidget#photoCard QFrame#photo{
 QWidget#photoCard QLabel{
     color: #B3B2B2;
     font-size: 11px;
-    font-family: 'Open Sans', sans-serif;
     font-weight: 300;
 }
 QWidget#photoCard QLabel#date_label{
