@@ -78,10 +78,10 @@ border:none;
       <widget class="QPushButton" name="_my_recadrer">
        <property name="geometry">
         <rect>
-         <x>311</x>
+         <x>301</x>
          <y>10</y>
-         <width>101</width>
-         <height>21</height>
+         <width>111</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -92,6 +92,8 @@ border-color: grey;
 width : 90px;
 height :20px;
 background-color : rgb(224, 224, 224);
+color:rgb(143, 143, 143);
+font-size:15px;
 </string>
        </property>
        <property name="text">
@@ -103,8 +105,8 @@ background-color : rgb(224, 224, 224);
         <rect>
          <x>430</x>
          <y>10</y>
-         <width>101</width>
-         <height>21</height>
+         <width>111</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -115,7 +117,8 @@ border-color: grey;
 width : 90px;
 height :20;
 background-color : rgb(224, 224, 224);
-</string>
+color:rgb(143, 143, 143);
+font-size:15px;</string>
        </property>
        <property name="text">
         <string>Redimensionner</string>
@@ -363,6 +366,64 @@ border-radius:5px;</string>
       </rect>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="_my_add_tag_desc_button">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>190</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(180, 179, 179);
+border: 1px solid rgb(180, 179, 179);
+border-radius:5px;
+</string>
+    </property>
+    <property name="text">
+     <string>ajouter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="_my_add_tag_ress_button">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>300</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(180, 179, 179);
+border: 1px solid rgb(180, 179, 179);
+border-radius:5px;
+
+</string>
+    </property>
+    <property name="text">
+     <string>ajouter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="_my_add_tag_cat_button">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>410</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(180, 179, 179);
+border: 1px solid rgb(180, 179, 179);
+border-radius:5px;
+</string>
+    </property>
+    <property name="text">
+     <string>ajouter</string>
+    </property>
    </widget>
   </widget>
  </widget>
