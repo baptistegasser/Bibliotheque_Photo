@@ -12,6 +12,10 @@ QWidget#photoCard QFrame#photo{
     border: 1px solid black;
     border-radius: 15px;
 }
+QWidget#photoCard QFrame#photo QFrame#main_color_frame{
+    border: 1px solid black;
+    border-radius: 10px;
+}
 QWidget#photoCard QLabel{
     color: #B3B2B2;
     font-size: 11px;
@@ -29,10 +33,10 @@ QWidget#photoCard QScrollArea{
     background-color: transparent;
     border: 0;
 }
-QWidget#photoCard QScrollArea > QWidget > QWidget{
+QWidget#photoCard QScrollArea > QWidget#a > QWidget{
     background: transparent;
 }
-QWidget#photoCard QScrollArea > QWidget > QScrollBar{
+QWidget#photoCard QScrollArea > QWidget#a > QScrollBar{
     background: palette(base);
 }
 QWidget#photoCard QGroupBox#stars_group{
