@@ -1,3 +1,7 @@
-QFrame#star1_frame{
+#star1_frame{
     background-image: url(:/image.png);
+}
+
+#stars_group{
+    border:0;
 }

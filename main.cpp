@@ -9,6 +9,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    // Feuille de style externe ajoutée à l'App
+    QFile file(":/css/style.css");
+    file.open(QFile::ReadOnly);
+    QString styleSheet = QLatin1String(file.readAll());
+    a.setStyleSheet(styleSheet);
+
     DBManager* manager;
     try {
         manager = new DBManager();
