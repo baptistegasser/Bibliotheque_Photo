@@ -1,9 +1,12 @@
 #include "mainwindow.h"
+#include "photocard.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
+    photoCard* photoCard = new class::photoCard();
+    photoCard->show();
     //connect(_btn_one, &QPushButton::clicked, this, &MainWindow::test_change);
 }
 

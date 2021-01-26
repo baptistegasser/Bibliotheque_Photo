@@ -17,7 +17,8 @@ SOURCES += \
     model/image.cpp \
     model/imagedir.cpp \
     model/tag.cpp \
-    modification_window.cpp
+    modification_window.cpp \
+    photocard.cpp
 
 HEADERS += \
     db/dbmanager.h \
@@ -27,12 +28,13 @@ HEADERS += \
     model/image.h \
     model/imagedir.h \
     model/tag.h \
-    modification_window.h
+    modification_window.h \
+    photocard.h
 
 FORMS += \
     mainwindow.ui \
     modification_window.ui \
-    photoCard.ui
+    photocard.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
