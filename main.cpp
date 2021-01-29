@@ -14,18 +14,18 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    try {
+        DBManager::init();
+    } catch (DBManager::DBException &e) {
+        qCritical() << "Failed to init DB manager, aborting !\n" << e.what();
+        exit(EXIT_FAILURE);
+    }
+
     // Feuille de style externe ajoutée à l'App
     QFile file(":/css/style.css");
     file.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(file.readAll());
     a.setStyleSheet(styleSheet);
-
-    DBManager* manager;
-    try {
-        manager = new DBManager();
-    }  catch (const DBManager::DBException &) {
-        qCritical() << "Failed to init the database !" << manager->lastErrorMsg();
-    }
 
     /*MainWindow w;
     w.show();*/
@@ -42,7 +42,5 @@ int main(int argc, char *argv[])
     }
     w.show();
 
-
-    delete manager;
     return a.exec();
 }

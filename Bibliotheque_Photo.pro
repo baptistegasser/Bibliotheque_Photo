@@ -11,18 +11,22 @@ CONFIG += c++11
 SOURCES += \
     db/dbmanager.cpp \
     db/filter.cpp \
+    db/imagedao.cpp \
+    db/imagedirdao.cpp \
+    db/tagdao.cpp \
     imagefinder.cpp \
     main.cpp \
     mainwindow.cpp \
-    model/image.cpp \
-    model/imagedir.cpp \
-    model/tag.cpp \
     modification_window.cpp \
     photocard.cpp
 
 HEADERS += \
+    db/dao.h \
     db/dbmanager.h \
     db/filter.h \
+    db/imagedao.h \
+    db/imagedirdao.h \
+    db/tagdao.h \
     imagefinder.h \
     mainwindow.h \
     model/image.h \

@@ -1,180 +1,85 @@
 #include "dbmanager.h"
 
-#include "QDebug"
-#include "QSqlError"
-#include "QSqlQuery"
-#include "QSqlRecord"
-#include "QSqlResult"
-#include "QFile"
+#include <QApplication>
+#include <QDir>
+#include <QSqlError>
 
-QString DBManager::DB_PATH;
+// Define static instance
+DBManager *DBManager::instance = nullptr;
+// Set DB_PATH later
+QString DBManager::DB_PATH = QString::Null();
 
 DBManager::DBManager()
 {
-    // Set path to database
+    // Assert path to DB is set
     if (DB_PATH.isNull()) {
         DB_PATH = QDir(qApp->applicationDirPath()).absoluteFilePath("biblio.db");
     }
-    // If database file don't exist, copy it from resources
-    if (!QFileInfo::exists(DB_PATH)) {
-        qInfo("Initialising database from resources");
 
+    // Assert DB file exist
+    if (!QFileInfo::exists(DB_PATH)) {
+        // Attempt to copy base DB from resources
         if (!QFile::copy(":/db/init.db", DB_PATH)) {
-            m_lastErrorMsg = "Failed to init database by copying templatefile";
-            throw DBException();
+            throw DBException("Failed to init database by copying template file");
         }
     }
 
-    qInfo() << "Opening database connection at " << DB_PATH;
+    // Open connection to DB
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName(DB_PATH);
-
     if (!m_db.open()) {
-        m_lastErrorMsg = "Failed to open database, cause: \n" + m_db.lastError().text();
-        throw DBException();
-    } else {
-        qInfo("Connection successfull");
+        throw DBException("Failed to open database, cause: \n" + m_db.lastError().text());
     }
+
+    // Instanciate Data Access Objects
+    tagDao = new TagDAO(m_db);
+    imageDao = new ImageDAO(m_db);
+    imageDirDao = new ImageDirDAO(m_db);
 }
 
 DBManager::~DBManager()
 {
-    qDebug("Closing database connection");
     if (m_db.isOpen()) {
         m_db.close();
     }
 }
 
-// Get the last error message
-QString DBManager::lastErrorMsg() const
+// Init the singleton instance, must be explicitly called
+void DBManager::init()
 {
-    return m_lastErrorMsg;
-}
-
-Tag* DBManager::getTag(const int tagID)
-{
-    QSqlQuery* query = selectFromTableByID("Tag", tagID);
-    QSqlRecord record = query->record();
-
-    if (!query->isValid() || record.isEmpty()) {
-        return NULL;
+    if (instance) {
+        throw DBException("DB manager already initialized");
     }
 
-    QString value = record.value("Value").toString();
-    QString color = record.value("Color").toString();
-
-    return new Tag(tagID, value, color);
+    instance = new DBManager();
 }
 
-Image* DBManager::getImage(const int imageID)
+void DBManager::close()
 {
-    QSqlQuery* query = selectFromTableByID("Image", imageID);
-    QSqlRecord record = query->record();
+    delete instance;
+    instance = nullptr;
+}
 
-    if (!query->isValid() || record.isEmpty()) {
-        qWarning() << "Failed to find an image with ID=" << imageID;
-        return NULL;
+DBManager *DBManager::getInstance()
+{
+    if (!instance) {
+        throw DBException("DB manager was not initialized, please call init() first");
     }
 
-    ImageDir parentDir = *getImageDir(record.value("DirID").toInt());
-    QString name = record.value("Name").toString();
-    QString path = record.value("Path").toString();
-
-    Image* image = new Image(imageID, name, parentDir, path);
-
-    image->setComment(record.value("Comment").toString());
-    image->setSize(record.value("Size").toInt());
-    image->setRating(record.value("Rating").toInt());
-    image->setWidth(record.value("Width").toFloat());
-    image->setHeight(record.value("Height").toFloat());
-
-    image->setFeelingTags(getFeelingTags(imageID));
-    image->setCategoryTags(getCategoryTag(imageID));
-    image->setDescriptiveTags(getDescriptiveTags(imageID));
-
-    return image;
+    return instance;
 }
 
-ImageDir* DBManager::getImageDir(const int imageDirID)
+TagDAO DBManager::getTagDao() const
 {
-    QSqlQuery* query = selectFromTableByID("ImageDir", imageDirID);
-    QSqlRecord record = query->record();
-
-    if (!query->isValid() || record.isEmpty()) {
-        return NULL;
-    }
-
-    QString path = record.value("Path").toString();
-
-    return new ImageDir(imageDirID, path);
+    return *tagDao;
 }
 
-QSqlQuery* DBManager::selectFromTableByID(QString table, int ID)
+ImageDAO DBManager::getImageDao() const
 {
-    QString SQL = "SELECT FROM %TABLE% WHERE ID = :id LIMIT 1;";
-
-    QSqlQuery* query = new QSqlQuery(m_db);
-    bool success = query->prepare(SQL.replace("%TABLE%", table));
-
-    if (!success) {
-        m_lastErrorMsg = "Failed to prepare select query for table: " + table;
-        throw DBManager::DBException();
-    }
-
-    query->bindValue(":id", ID);
-    if (!query->exec()) {
-        m_lastErrorMsg = QString("Failed to run select on table '%1' width ID='%2', cause: \n%3").arg(table, QString::number(ID), query->lastError().text());
-        throw DBException();
-    }
-
-    query->next(); // Set the pointer to the first (and only) record
-    return query;
+    return *imageDao;
 }
 
-QList<Tag> DBManager::getFeelingTags (int imageID)
+ImageDirDAO DBManager::getImageDirDao() const
 {
-    return getTags("ImageFeeling", imageID);
+    return *imageDirDao;
 }
-
-QList<Tag> DBManager::getCategoryTag (int imageID)
-{
-    return getTags("ImageCategory", imageID);
-}
-
-QList<Tag> DBManager::getDescriptiveTags(int imageID)
-{
-    return getTags("ImageDescription", imageID);
-}
-
-QList<Tag> DBManager::getTags(QString tagTable, int imageID)
-{
-    QString SQL = "SELECT TagID FROM %TABLE% WHERE ImageID = :id";
-
-    QSqlQuery* query = new QSqlQuery(m_db);
-    bool success = query->prepare(SQL.replace("%TABLE%", tagTable));
-
-    if (!success) {
-        m_lastErrorMsg = "Failed to prepare tag selecttion query for table: " + tagTable;
-        throw DBManager::DBException();
-    }
-
-    query->bindValue(":id", imageID);
-    if (!query->exec()) {
-        m_lastErrorMsg = QString("Failed to run select on table '%1' width ImageID='%2', cause: \n%3").arg(tagTable, QString::number(imageID), query->lastError().text());
-        throw DBException();
-    }
-
-    QList<Tag> tags;
-
-    QSqlRecord record;
-    while (query->next()) {
-        const int tagID = record.value("TagID").toInt();
-        Tag* tag = getTag(tagID);
-        if (tag != NULL) {
-            tags.append(*tag);
-        }
-    }
-
-    return tags;
-}
-

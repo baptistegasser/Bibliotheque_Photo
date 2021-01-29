@@ -6,16 +6,13 @@
 class Tag
 {
 public:
-    const int ID;
+    Tag() = default;
+
+    int ID;
     QString value;
     QString color;
 
-    Tag(const Tag& tag);
-    Tag(int ID, QString value);
-    Tag(int ID, QString value, QString color);
-
-    void operator= (const Tag& tag);
-    bool operator== (const Tag& tag) const;
+    bool operator== (const Tag& tag) const { return this->value == tag.value; }
 };
 
 #endif // TAG_H

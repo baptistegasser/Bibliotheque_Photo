@@ -6,10 +6,10 @@
 class ImageDir
 {
 public:
-    const int ID;
-    const QString path;
+    ImageDir() = default;
 
-    ImageDir(int ID, QString path);
+    int ID;
+    QString path;
 };
 
 #endif // IMAGEDIR_H
