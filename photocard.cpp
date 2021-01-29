@@ -1,5 +1,5 @@
 #include "photocard.h"
-#include "ui_photoCard.h"
+#include "ui_photocard.h"
 
 #include <QGraphicsDropShadowEffect>
 
