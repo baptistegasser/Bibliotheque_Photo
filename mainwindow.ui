@@ -74,7 +74,11 @@
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>Filter</string>
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/image/resources/filter.png</normaloff>:/image/resources/filter.png</iconset>
               </property>
              </widget>
             </item>
@@ -111,7 +115,7 @@
         <item>
          <widget class="QStackedWidget" name="_my_stack">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page"/>
           <widget class="QWidget" name="page_2"/>
@@ -124,7 +128,9 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btn_quit</sender>

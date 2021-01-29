@@ -1,7 +1,53 @@
-QGroupBox#stars_group QFrame{
-    border-image: url(:/image/resources/star_empty.png) 0 0 0 0 stretch stretch;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+*{
+    font-family: 'Open Sans', sans-serif;
 }
-
-#stars_group{
-    border:0;
+/*******************/
+/*    photoCard    */
+/*******************/
+QWidget#photoCard{
+    background-color: #FFFFFF;
+}
+QWidget#photoCard QFrame#photo{
+    border: 1px solid black;
+    border-radius: 15px;
+}
+QWidget#photoCard QFrame#photo QFrame#main_color_frame{
+    border: 1px solid black;
+    border-radius: 10px;
+}
+QWidget#photoCard QLabel{
+    color: #B3B2B2;
+    font-size: 11px;
+    font-weight: 300;
+}
+QWidget#photoCard QLabel#date_label{
+    font-size: 20px;
+    font-weight: 600;
+    color: #575656;
+}
+QWidget#photoCard QLabel#info_label{
+    font-size: 10px;
+}
+QWidget#photoCard QScrollArea{
+    background-color: transparent;
+    border: 0;
+}
+QWidget#photoCard QScrollArea > QWidget#a > QWidget{
+    background: transparent;
+}
+QWidget#photoCard QScrollArea > QWidget#a > QScrollBar{
+    background: palette(base);
+}
+QWidget#photoCard QGroupBox#stars_group{
+    color: #575656;
+    padding: 0;
+    border: 0;
+}
+QWidget#photoCard QGroupBox#stars_group QFrame#star1_frame,
+QWidget#photoCard QGroupBox#stars_group QFrame#star2_frame,
+QWidget#photoCard QGroupBox#stars_group QFrame#star3_frame,
+QWidget#photoCard QGroupBox#stars_group QFrame#star4_frame,
+QWidget#photoCard QGroupBox#stars_group QFrame#star5_frame{
+    border-image: url(:/image/resources/star_empty.png) 0 0 0 0 stretch stretch;
 }

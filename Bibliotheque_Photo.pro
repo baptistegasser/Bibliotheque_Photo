@@ -18,7 +18,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     modification_window.cpp \
-    photocard.cpp
+    photocard.cpp \
+    tagbutton.cpp
 
 HEADERS += \
     db/dao.h \
@@ -33,7 +34,8 @@ HEADERS += \
     model/imagedir.h \
     model/tag.h \
     modification_window.h \
-    photocard.h
+    photocard.h \
+    tagbutton.h
 
 FORMS += \
     mainwindow.ui \

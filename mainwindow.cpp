@@ -5,9 +5,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
-    photoCard* photoCard = new class::photoCard();
-    photoCard->show();
     //connect(_btn_one, &QPushButton::clicked, this, &MainWindow::test_change);
+
+    photoCard *pC = new photoCard(this);
+    _my_stack->addWidget(pC);
+    pC->show();
 }
 
 MainWindow::~MainWindow()

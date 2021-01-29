@@ -365,6 +365,17 @@ border-radius:5px;</string>
        <height>59</height>
       </rect>
      </property>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>261</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="_my_layout_cat_tag"/>
+     </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="_my_add_tag_desc_button">
