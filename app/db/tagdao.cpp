@@ -1,6 +1,6 @@
 #include "tagdao.h"
 
-#include "db/dbmanager.h"
+#include "dbmanager.h"
 #include "QDebug"
 
 bool TagDAO::create(Tag *tag)

@@ -1,6 +1,6 @@
 #include "imagedirdao.h"
 
-#include "db/dbmanager.h"
+#include "dbmanager.h"
 #include "QDebug"
 
 bool ImageDirDAO::create(ImageDir *imageDir)

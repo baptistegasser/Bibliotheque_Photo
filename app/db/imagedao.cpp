@@ -1,6 +1,6 @@
 #include "imagedao.h"
 
-#include "db/dbmanager.h"
+#include "dbmanager.h"
 #include "QDebug"
 
 bool ImageDAO::create(Image *image)
