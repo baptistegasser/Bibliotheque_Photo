@@ -1,8 +1,10 @@
 #ifndef DAO_H
 #define DAO_H
 
+#include "QDebug"
 #include "QList"
 #include "QSqlDatabase"
+#include "QSqlError"
 #include "QSqlQuery"
 #include "QVariant"
 
@@ -21,7 +23,18 @@ private:
     QSqlDatabase m_db;
 
 protected:
-    QSqlQuery *getNewQuery() { return new QSqlQuery(m_db); }
+    QSqlQuery getNewQuery() { return QSqlQuery(m_db); }
+    // Simple wrapper that execute a prepared query and throw a warning
+    // if it fail. The string is a description of the query
+    bool execQuery(QSqlQuery *query, QString description) const
+    {
+        if (query->exec()) {
+            return true;
+        } else {
+            qWarning() << "Failed to " + description << query->lastError().text();
+            return false;
+        }
+    }
 };
 
 #endif // DAO_H

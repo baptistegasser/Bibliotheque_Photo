@@ -2,23 +2,23 @@
 
 #include "dbmanager.h"
 #include "QDebug"
+#include "QSqlError"
 
 bool TagDAO::create(Tag *tag)
 {
     QString SQL = "INSERT INTO Tag(Value, Color) VALUES(?, ?);";
 
-    QSqlQuery *query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, tag->value);
-    query->bindValue(1, tag->color);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, tag->value);
+    query.bindValue(1, tag->color);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to create Tag");
+    if (!execQuery(&query, "Create Tag")) {
         return false;
     }
 
-    QVariant ID = query->lastInsertId();
-    if (query->numRowsAffected() == 1 && ID.isValid() && ID.canConvert(QVariant::Int)) {
+    QVariant ID = query.lastInsertId();
+    if (query.numRowsAffected() == 1 && ID.isValid() && ID.canConvert(QVariant::Int)) {
         tag->ID = ID.toInt();
         return true;
     } else {
@@ -30,50 +30,49 @@ bool TagDAO::update(Tag *tag)
 {
     QString SQL = "UPDATE Tag SET Value = ?, Color = ? WHERE ID = ?;";
 
-    QSqlQuery *query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, tag->value);
-    query->bindValue(1, tag->color);
-    query->bindValue(2, tag->ID);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, tag->value);
+    query.bindValue(1, tag->color);
+    query.bindValue(2, tag->ID);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to update Tag with ID = '%d'", tag->ID);
+    if (!execQuery(&query, QString("Update Tag with ID = '%d'").arg(tag->ID))) {
         return false;
     }
 
-    return query->numRowsAffected() == 1;
+    return query.numRowsAffected() == 1;
 }
 
 bool TagDAO::remove(Tag *tag)
 {
     QString SQL = "DELETE FROM Tag WHERE ID = ?;";
 
-    QSqlQuery *query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, tag->ID);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, tag->ID);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to remove Tag with ID = '%d'", tag->ID);
+    if (!execQuery(&query, QString("Remove Tag with ID = '%d").arg(tag->ID))) {
         return false;
     }
 
-    return query->numRowsAffected() == 1;
+    return query.numRowsAffected() == 1;
 }
 
 QList<Tag *> TagDAO::getAll()
 {
     QString SQL = "SELECT * FROM Tag;";
-    QSqlQuery *query = getNewQuery();
+
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
 
     QList<Tag *> result;
 
-    if (!query->exec(SQL) || !query->isValid()) {
-        qWarning("Failed to get all Tags");
+    if (!execQuery(&query, "Get all Tags")) {
         return result;
     }
 
-    while (query->next()) {
-        result.append(fromRecord(query->record()));
+    while (query.next()) {
+        result.append(fromRecord(query.record()));
     }
 
     return result;
@@ -83,17 +82,16 @@ Tag *TagDAO::getById(int id)
 {
     QString SQL = "SELECT * FROM Tag WHERE ID = ?;";
 
-    QSqlQuery *query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, id);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, id);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to get Tag with ID = '%d'", id);
+    if (!execQuery(&query, QString("Get Tag with ID = '%d'").arg(id))) {
         return NULL;
     }
 
-    if (query->next()) {
-        return fromRecord(query->record());
+    if (query.next()) {
+        return fromRecord(query.record());
     } else {
         qWarning("No Tag found for ID = '%d'", id);
         return NULL;
@@ -147,19 +145,19 @@ QList<Tag *> TagDAO::getTagsFromImage(QString table, int imageID)
     QString SQL = "SELECT ID, Value, Color FROM Tag, %TABLE% WHERE Tag.ID = %TABLE%.TagID AND %TABLE%.ImageID = ?;";
     SQL.replace("%TABLE%", table);
 
-    QSqlQuery *query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, imageID);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, imageID);
 
     QList<Tag *> result;
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to get tags for image %d from table %s", imageID, table.toUtf8().data());
+    QString action = QString("Get tags for image %d from table %s").arg(imageID).arg(table);
+    if (!execQuery(&query, action)) {
         return result;
     }
 
-    while(query->next()) {
-        result.append(fromRecord(query->record()));
+    while(query.next()) {
+        result.append(fromRecord(query.record()));
     }
 
     return result;

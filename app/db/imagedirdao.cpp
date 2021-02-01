@@ -2,22 +2,22 @@
 
 #include "dbmanager.h"
 #include "QDebug"
+#include "QSqlError"
 
 bool ImageDirDAO::create(ImageDir *imageDir)
 {
     QString SQL = "";
 
-    QSqlQuery *query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, imageDir->path);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, imageDir->path);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to create ImageDir");
+    if (!execQuery(&query, "Create ImageDir")) {
         return false;
     }
 
-    QVariant ID = query->lastInsertId();
-    if (query->numRowsAffected() == 1 && ID.isValid() && ID.canConvert(QVariant::Int)) {
+    QVariant ID = query.lastInsertId();
+    if (query.numRowsAffected() == 1 && ID.isValid() && ID.canConvert(QVariant::Int)) {
         imageDir->ID = ID.toInt();
         return true;
     } else {
@@ -29,49 +29,48 @@ bool ImageDirDAO::update(ImageDir *imageDir)
 {
     QString SQL = "UPDATE ImageDir SET \"Path\" = ? WHERE ID = ?;";
 
-    QSqlQuery* query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, imageDir->path);
-    query->bindValue(1, imageDir->ID);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, imageDir->path);
+    query.bindValue(1, imageDir->ID);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to update ImageDir with ID = '%d'", imageDir->ID);
+    if (!execQuery(&query, QString("Update ImageDir with ID = '%d'").arg(imageDir->ID))) {
         return false;
     }
 
-    return query->numRowsAffected() == 1;
+    return query.numRowsAffected() == 1;
 }
 
 bool ImageDirDAO::remove(ImageDir *imageDir)
 {
     QString SQL = "DELETE FROM ImageDir WHERE ID = ?;";
 
-    QSqlQuery* query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, imageDir->ID);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, imageDir->ID);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to remove ImageDir with ID = '%d'", imageDir->ID);
+    if (!execQuery(&query, QString("Remove ImageDir with ID = '%d'").arg(imageDir->ID))) {
         return false;
     }
 
-    return query->numRowsAffected() == 1;
+    return query.numRowsAffected() == 1;
 }
 
 QList<ImageDir *> ImageDirDAO::getAll()
 {
     QString SQL = "SELECT * FROM ImageDir";
-    QSqlQuery *query = getNewQuery();
+
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
 
     QList<ImageDir *> result;
 
-    if (!query->exec(SQL) || !query->isValid()) {
-        qWarning("Failed to get all ImageDirs");
+    if (!execQuery(&query, QString("Get all ImageDirs"))) {
         return result;
     }
 
-    while (query->next()) {
-        result.append(fromRecord(query->record()));
+    while (query.next()) {
+        result.append(fromRecord(query.record()));
     }
 
     return result;
@@ -81,17 +80,16 @@ ImageDir *ImageDirDAO::getById(int id)
 {
     QString SQL = "SELECT * FROM ImageDir WHERE ID = ?;";
 
-    QSqlQuery *query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, id);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, id);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to get ImageDir with ID = '%d'", id);
+    if (!execQuery(&query, QString("Get ImageDir with ID = '%d'").arg(id))) {
         return NULL;
     }
 
-    if (query->next()) {
-        return fromRecord(query->record());
+    if (query.next()) {
+        return fromRecord(query.record());
     } else {
         qWarning("No ImageDir found for ID = '%d'", id);
         return NULL;

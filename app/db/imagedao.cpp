@@ -2,6 +2,7 @@
 
 #include "dbmanager.h"
 #include "QDebug"
+#include "QSqlError"
 
 bool ImageDAO::create(Image *image)
 {
@@ -16,24 +17,23 @@ bool ImageDAO::create(Image *image)
 
     QString SQL = "INSERT INTO Image(DirID, Name, \"Path\", \"Size\", Width, Height, Comment, Rating) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-    QSqlQuery* query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, image->parentDir.ID);
-    query->bindValue(1, image->name);
-    query->bindValue(2, image->path);
-    query->bindValue(3, image->size);
-    query->bindValue(4, image->width);
-    query->bindValue(5, image->height);
-    query->bindValue(6, image->comment);
-    query->bindValue(7, image->rating);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, image->parentDir.ID);
+    query.bindValue(1, image->name);
+    query.bindValue(2, image->path);
+    query.bindValue(3, image->size);
+    query.bindValue(4, image->width);
+    query.bindValue(5, image->height);
+    query.bindValue(6, image->comment);
+    query.bindValue(7, image->rating);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to create Image");
+    if (!execQuery(&query, "Create Image")) {
         return false;
     }
 
-    QVariant ID = query->lastInsertId();
-    if (query->numRowsAffected() == 1 && ID.isValid() && ID.canConvert(QVariant::Int)) {
+    QVariant ID = query.lastInsertId();
+    if (query.numRowsAffected() == 1 && ID.isValid() && ID.canConvert(QVariant::Int)) {
         image->ID = ID.toInt();
         return true;
     } else {
@@ -45,56 +45,55 @@ bool ImageDAO::update(Image *image)
 {
     QString SQL = "UPDATE Image SET DirID = ?, Name = ?, \"Path\" = ?, \"Size\" = ?, Width = ?, Height = ?, Comment = ?, Rating = ? WHERE ID = ?;";
 
-    QSqlQuery* query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, image->parentDir.ID);
-    query->bindValue(1, image->name);
-    query->bindValue(2, image->path);
-    query->bindValue(3, image->size);
-    query->bindValue(4, image->width);
-    query->bindValue(5, image->height);
-    query->bindValue(6, image->comment);
-    query->bindValue(7, image->rating);
-    query->bindValue(8, image->ID);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, image->parentDir.ID);
+    query.bindValue(1, image->name);
+    query.bindValue(2, image->path);
+    query.bindValue(3, image->size);
+    query.bindValue(4, image->width);
+    query.bindValue(5, image->height);
+    query.bindValue(6, image->comment);
+    query.bindValue(7, image->rating);
+    query.bindValue(8, image->ID);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to update Image with ID = '%d'", image->ID);
+    if (!execQuery(&query, QString("Update Image with ID = '%d'").arg(image->ID))) {
         return false;
     }
 
-    return query->numRowsAffected() == 1;
+    return query.numRowsAffected() == 1;
 }
 
 bool ImageDAO::remove(Image *image)
 {
     QString SQL = "DELETE FROM Image WHERE ID = ?;";
 
-    QSqlQuery* query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, image->ID);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, image->ID);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to remove Image with ID = '%d'", image->ID);
+    if (!execQuery(&query, QString("Remove Image with ID = '%d'").arg(image->ID))) {
         return false;
     }
 
-    return query->numRowsAffected() == 1;
+    return query.numRowsAffected() == 1;
 }
 
 QList<Image *> ImageDAO::getAll()
 {
     QString SQL = "SELECT * FROM Image;";
-    QSqlQuery* query = getNewQuery();
+
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
 
     QList<Image *> result;
 
-    if (!query->exec(SQL) || !query->isValid()) {
-        qWarning("Failed to get all Images");
+    if (!execQuery(&query, "Get all Images")) {
         return result;
     }
 
-    while (query->next()) {
-        result.append(fromRecord(query->record()));
+    while (query.next()) {
+        result.append(fromRecord(query.record()));
     }
 
     return result;
@@ -104,17 +103,16 @@ Image *ImageDAO::getById(int id)
 {
     QString SQL = "SELECT * FROM Image WHERE ID = ?;";
 
-    QSqlQuery* query = getNewQuery();
-    query->prepare(SQL);
-    query->bindValue(0, id);
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+    query.bindValue(0, id);
 
-    if (!query->exec() || !query->isValid()) {
-        qWarning("Failed to get Image with ID = '%d'", id);
+    if (!execQuery(&query, QString("Get Image with ID = '%d'").arg(id))) {
         return NULL;
     }
 
-    if (query->next()) {
-        return fromRecord(query->record());
+    if (query.next()) {
+        return fromRecord(query.record());
     } else {
         qWarning("No Image found for ID = '%d'", id);
         return NULL;
