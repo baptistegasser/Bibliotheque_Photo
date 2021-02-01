@@ -14,7 +14,7 @@ private:
     static QString DB_PATH;
     static DBManager *instance;
 
-    QSqlDatabase m_db;
+    QSqlDatabase *m_db;
     TagDAO *tagDao;
     ImageDAO *imageDao;
     ImageDirDAO *imageDirDao;

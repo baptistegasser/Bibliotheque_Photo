@@ -25,10 +25,10 @@ DBManager::DBManager()
     }
 
     // Open connection to DB
-    m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName(DB_PATH);
-    if (!m_db.open()) {
-        throw DBException("Failed to open database, cause: \n" + m_db.lastError().text());
+    m_db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
+    m_db->setDatabaseName(DB_PATH);
+    if (!m_db->open()) {
+        throw DBException("Failed to open database, cause: \n" + m_db->lastError().text());
     }
 
     // Instanciate Data Access Objects
@@ -39,9 +39,10 @@ DBManager::DBManager()
 
 DBManager::~DBManager()
 {
-    if (m_db.isOpen()) {
-        m_db.close();
-    }
+    QString name = m_db->connectionName();
+    delete m_db;
+    delete tagDao;
+    QSqlDatabase::removeDatabase(name);
 }
 
 // Init the singleton instance, must be explicitly called

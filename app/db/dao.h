@@ -12,7 +12,9 @@ template <typename T>
 class DAO
 {
 public:
-    DAO(QSqlDatabase db): m_db(db) {};
+    virtual ~DAO() {};
+    DAO(QSqlDatabase *db): m_db(db) {};
+
     virtual bool create(T *dto) = 0;
     virtual bool update(T *dto) = 0;
     virtual bool remove(T *dto) = 0;
@@ -20,10 +22,10 @@ public:
     virtual T *getById(int id) = 0;
 
 private:
-    QSqlDatabase m_db;
+    QSqlDatabase *m_db;
 
 protected:
-    QSqlQuery getNewQuery() { return QSqlQuery(m_db); }
+    QSqlQuery getNewQuery() { return QSqlQuery(*m_db); }
     // Simple wrapper that execute a prepared query and throw a warning
     // if it fail. The string is a description of the query
     bool execQuery(QSqlQuery *query, QString description) const
