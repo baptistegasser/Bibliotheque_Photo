@@ -7,8 +7,14 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
+HEADERS += \
+    tst_dbmanager.h \
+    tst_tagdao.h
+
 SOURCES += \
-    tst_dbmanager.cpp
+    main.cpp \
+    tst_dbmanager.cpp \
+    tst_tagdao.cpp
 
 #----------------------------------------------
 # Include the header and sources of the app
