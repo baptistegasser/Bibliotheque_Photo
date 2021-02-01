@@ -25,6 +25,7 @@ private:
 public:
     static void init();
     static void close();
+    static void overrideDBPath(QString newPath);
     static DBManager *getInstance();
 
     TagDAO getTagDao() const;

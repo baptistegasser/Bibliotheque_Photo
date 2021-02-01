@@ -60,6 +60,15 @@ void DBManager::close()
     instance = nullptr;
 }
 
+void DBManager::overrideDBPath(QString newPath)
+{
+    if (instance) {
+        qWarning("The DBManager instance is initialized, change will apply after closing it.");
+    }
+
+    DB_PATH = newPath;
+}
+
 DBManager *DBManager::getInstance()
 {
     if (!instance) {
