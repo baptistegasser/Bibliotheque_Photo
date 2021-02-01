@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>618</width>
-    <height>490</height>
+    <width>511</width>
+    <height>261</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,32 +17,44 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>10</y>
-     <width>611</width>
-     <height>273</height>
+     <y>0</y>
+     <width>511</width>
+     <height>262</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>20</number>
+    </property>
     <property name="leftMargin">
-     <number>5</number>
+     <number>20</number>
     </property>
     <property name="topMargin">
-     <number>5</number>
+     <number>20</number>
     </property>
     <property name="rightMargin">
-     <number>5</number>
+     <number>20</number>
     </property>
     <property name="bottomMargin">
-     <number>5</number>
+     <number>20</number>
     </property>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="left_layout">
+      <property name="spacing">
+       <number>4</number>
+      </property>
       <item>
-       <widget class="QFrame" name="frame">
+       <widget class="QFrame" name="photo">
         <property name="minimumSize">
          <size>
-          <width>200</width>
-          <height>0</height>
+          <width>145</width>
+          <height>180</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>145</width>
+          <height>180</height>
          </size>
         </property>
         <property name="frameShape">
@@ -51,20 +63,48 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
+        <widget class="QFrame" name="main_color_frame">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>10</y>
+           <width>35</width>
+           <height>35</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="date_label">
         <property name="minimumSize">
          <size>
-          <width>200</width>
+          <width>145</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>30</height>
+          <width>145</width>
+          <height>25</height>
          </size>
         </property>
         <property name="text">
@@ -73,19 +113,22 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="info_label">
         <property name="minimumSize">
          <size>
-          <width>200</width>
+          <width>145</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>145</width>
           <height>15</height>
          </size>
         </property>
@@ -100,13 +143,16 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="right_layout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="desc_label">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>20</height>
+          <height>15</height>
          </size>
         </property>
         <property name="text">
@@ -115,11 +161,17 @@
        </widget>
       </item>
       <item>
-       <widget class="QScrollArea" name="scrollArea">
+       <widget class="QScrollArea" name="desc_scroll">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>35</height>
+          <height>30</height>
          </size>
         </property>
         <property name="widgetResizable">
@@ -130,19 +182,19 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>389</width>
-           <height>33</height>
+           <width>300</width>
+           <height>28</height>
           </rect>
          </property>
         </widget>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="ress_label">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>20</height>
+          <height>15</height>
          </size>
         </property>
         <property name="text">
@@ -151,11 +203,17 @@
        </widget>
       </item>
       <item>
-       <widget class="QScrollArea" name="scrollArea_2">
+       <widget class="QScrollArea" name="ress_scroll">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>35</height>
+          <height>30</height>
          </size>
         </property>
         <property name="widgetResizable">
@@ -166,19 +224,19 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>389</width>
-           <height>33</height>
+           <width>300</width>
+           <height>28</height>
           </rect>
          </property>
         </widget>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="keyw_label">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>20</height>
+          <height>15</height>
          </size>
         </property>
         <property name="text">
@@ -187,11 +245,17 @@
        </widget>
       </item>
       <item>
-       <widget class="QScrollArea" name="scrollArea_3">
+       <widget class="QScrollArea" name="keyw_scroll">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>35</height>
+          <height>30</height>
          </size>
         </property>
         <property name="widgetResizable">
@@ -202,8 +266,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>389</width>
-           <height>33</height>
+           <width>300</width>
+           <height>28</height>
           </rect>
          </property>
         </widget>
@@ -212,15 +276,15 @@
       <item>
        <widget class="QGroupBox" name="stars_group">
         <property name="title">
-         <string>Note</string>
+         <string/>
         </property>
         <widget class="QFrame" name="star5_frame">
          <property name="geometry">
           <rect>
            <x>120</x>
-           <y>30</y>
-           <width>20</width>
-           <height>20</height>
+           <y>10</y>
+           <width>18</width>
+           <height>18</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -231,14 +295,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="frameShape">
@@ -251,10 +315,10 @@
         <widget class="QFrame" name="star2_frame">
          <property name="geometry">
           <rect>
-           <x>30</x>
-           <y>30</y>
-           <width>20</width>
-           <height>20</height>
+           <x>60</x>
+           <y>10</y>
+           <width>18</width>
+           <height>18</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -265,14 +329,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="frameShape">
@@ -285,10 +349,10 @@
         <widget class="QFrame" name="star4_frame">
          <property name="geometry">
           <rect>
-           <x>90</x>
-           <y>30</y>
-           <width>20</width>
-           <height>20</height>
+           <x>100</x>
+           <y>10</y>
+           <width>18</width>
+           <height>18</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -299,14 +363,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="frameShape">
@@ -319,10 +383,10 @@
         <widget class="QFrame" name="star1_frame">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>20</width>
-           <height>20</height>
+           <x>40</x>
+           <y>10</y>
+           <width>18</width>
+           <height>18</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -333,14 +397,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="frameShape">
@@ -353,10 +417,10 @@
         <widget class="QFrame" name="star3_frame">
          <property name="geometry">
           <rect>
-           <x>60</x>
-           <y>30</y>
-           <width>20</width>
-           <height>20</height>
+           <x>80</x>
+           <y>10</y>
+           <width>18</width>
+           <height>18</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -367,14 +431,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>20</width>
-           <height>20</height>
+           <width>18</width>
+           <height>18</height>
           </size>
          </property>
          <property name="frameShape">
@@ -382,6 +446,19 @@
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="title">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>10</y>
+           <width>41</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Note</string>
          </property>
         </widget>
        </widget>

@@ -1,7 +1,0 @@
-QGroupBox#stars_group QFrame{
-    border-image: url(:/image/resources/star_empty.png) 0 0 0 0 stretch stretch;
-}
-
-#stars_group{
-    border:0;
-}
