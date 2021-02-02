@@ -42,6 +42,8 @@ DBManager::~DBManager()
     QString name = m_db->connectionName();
     delete m_db;
     delete tagDao;
+    delete imageDao;
+    delete imageDirDao;
     QSqlDatabase::removeDatabase(name);
 }
 

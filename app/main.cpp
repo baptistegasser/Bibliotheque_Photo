@@ -28,15 +28,15 @@ int main(int argc, char *argv[])
     QString styleSheet = QLatin1String(file.readAll());
     a.setStyleSheet(styleSheet);
 
-    /*MainWindow w;
-    w.show();*/
+    MainWindow w;
+    w.show();
 
-    Modification_window w;
+    /*Modification_window w;
     w.setImage(":/image/resources/star_fill.png");
     w.show();
 
     photoCard pC;
-    pC.show();
+    pC.show();*/
 
     return a.exec();
 }
