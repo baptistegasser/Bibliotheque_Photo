@@ -20,7 +20,7 @@ bool TagDAO::create(Tag &tag)
     query.bindValue(0, tag.value);
     query.bindValue(1, tag.color);
 
-    if (!query.exec() || query.numRowsAffected() != 1) {
+    if (!query.exec()) {
         qWarning() << "Creating tag failed" << tag;
         qCritical() << query.lastError().text();
         return false;
@@ -36,7 +36,7 @@ bool TagDAO::update(Tag &tag)
     query.bindValue(0, tag.color);
     query.bindValue(1, tag.value);
 
-    if (!query.exec() || query.numRowsAffected() != 1) {
+    if (!query.exec()) {
         qWarning() << "Updating tag failed" << tag;
         qCritical() << query.lastError().text();
         return false;

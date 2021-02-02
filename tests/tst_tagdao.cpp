@@ -3,6 +3,17 @@
 #include "db/dbmanager.h"
 #include <QDebug>
 
+
+void TagDAOTest::init()
+{
+    DBTest::init();
+}
+
+void TagDAOTest::cleanup()
+{
+    DBTest::cleanup();
+}
+
 void TagDAOTest::test_save()
 { // Check the creation and update via save()
     Tag tag_1("Moutain");

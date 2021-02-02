@@ -12,10 +12,8 @@ protected:
     using DBTest::DBTest;
 
 private slots:
-    void init()
-    { DBTest::init(); };
-    void cleanup()
-    { DBTest::cleanup(); };
+    void init();
+    void cleanup();
 
     void test_save();
     void test_remove();
