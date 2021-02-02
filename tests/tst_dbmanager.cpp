@@ -3,6 +3,12 @@
 #include <QDebug>
 #include <QtTest>
 
+
+void DBManagerTest::cleanup()
+{
+    DBTest::cleanup();
+}
+
 void DBManagerTest::test_init()
 {
     QFileInfo file(path);
@@ -38,13 +44,4 @@ void DBManagerTest::test_getInstance()
 
     DBManager::init();
     QVERIFY(DBManager::getInstance() != nullptr);
-}
-
-void DBManagerTest::cleanup()
-{
-    DBManager::close();
-    QFile file(path);
-    if (file.exists()) {
-        QVERIFY2(file.remove(), ("Failed to delete db file at " + path).toUtf8().data());
-    }
 }

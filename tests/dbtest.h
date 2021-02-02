@@ -8,6 +8,15 @@
 
 class DBTest
 {
+public:
+    bool deleteDBOnCleanup = true;
+    void setDeleteDBOnCleanup(bool d) {
+        deleteDBOnCleanup = d;
+    }
+
+private:
+    QApplication *app;
+
 protected:
     DBTest()
     {
@@ -18,18 +27,19 @@ protected:
         DBManager::overrideDBPath(path);
     };
 
-    ~DBTest()
-    {
-        delete app;
-        DBManager::close();
-        QFile f(path);
-        if (f.exists()) f.remove();
-    };
-
-private:
-    QApplication *app;
-protected:
     QString path;
+    void init()
+    {
+        DBManager::init();
+    }
+    void cleanup()
+    {
+        DBManager::close();
+        QFile file(path);
+        if (file.exists() && deleteDBOnCleanup) {
+            QVERIFY2(file.remove(), ("Failed to delete db file at " + path).toUtf8().data());
+        }
+    }
 };
 
 #endif // DBTEST_H

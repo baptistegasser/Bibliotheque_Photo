@@ -1,5 +1,6 @@
 #include <QtTest>
 
+#include "dbtest.h"
 #include "tst_tagdao.h"
 #include "tst_dbmanager.h"
 
