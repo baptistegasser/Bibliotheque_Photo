@@ -10,11 +10,13 @@ TEMPLATE = app
 HEADERS += \
     dbtest.h \
     tst_dbmanager.h \
+    tst_imagedao.h \
     tst_tagdao.h
 
 SOURCES += \
     main.cpp \
     tst_dbmanager.cpp \
+    tst_imagedao.cpp \
     tst_tagdao.cpp
 
 #----------------------------------------------

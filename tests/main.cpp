@@ -3,6 +3,7 @@
 #include "dbtest.h"
 #include "tst_tagdao.h"
 #include "tst_dbmanager.h"
+#include "tst_imagedao.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,8 +16,9 @@ int main(int argc, char *argv[])
         delete test;
     };
 
-    RUN_TEST(new TagDAOTest());
-    RUN_TEST(new DBManagerTest());
+    //RUN_TEST(new TagDAOTest());
+    //RUN_TEST(new DBManagerTest());
+    RUN_TEST(new ImageDAOTest());
 
     return status;
 }
