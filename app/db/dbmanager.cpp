@@ -40,6 +40,7 @@ DBManager::DBManager()
     tagDao = new TagDAO(m_db);
     imageDao = new ImageDAO(m_db);
     imageDirDao = new ImageDirDAO(m_db);
+    directoryDao = new DirectoryDAO(m_db);
 }
 
 DBManager::~DBManager()
@@ -99,6 +100,12 @@ ImageDirDAO DBManager::getImageDirDao()
 {
     assertInit();
     return *instance->imageDirDao;
+}
+
+DirectoryDAO DBManager::getDirectoryDao()
+{
+    assertInit();
+    return *instance->directoryDao;
 }
 
 void DBManager::assertInit()

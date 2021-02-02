@@ -4,6 +4,7 @@
 #include "imagedao.h"
 #include "imagedirdao.h"
 #include "tagdao.h"
+#include "directorydao.h"
 
 #include <QSqlDatabase>
 #include <QString>
@@ -18,6 +19,7 @@ private:
     TagDAO *tagDao;
     ImageDAO *imageDao;
     ImageDirDAO *imageDirDao;
+    DirectoryDAO *directoryDao;
 
     DBManager();
     ~DBManager();
@@ -31,6 +33,7 @@ public:
     static TagDAO getTagDao();
     static ImageDAO getImageDao();
     static ImageDirDAO getImageDirDao();
+    static DirectoryDAO getDirectoryDao();
 
     class DBException : public std::exception {
     private:

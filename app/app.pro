@@ -10,6 +10,7 @@ include(../Bibliotheque_Photo.pri)
 
 SOURCES += \
     db/dbmanager.cpp \
+    db/directorydao.cpp \
     db/filter.cpp \
     db/imagedao.cpp \
     db/imagedirdao.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
     imagefinder.cpp \
     main.cpp \
     mainwindow.cpp \
+    model/directory.cpp \
     modification_window.cpp \
     photocard.cpp \
     tagbutton.cpp
@@ -24,12 +26,14 @@ SOURCES += \
 HEADERS += \
     db/dao.h \
     db/dbmanager.h \
+    db/directorydao.h \
     db/filter.h \
     db/imagedao.h \
     db/imagedirdao.h \
     db/tagdao.h \
     imagefinder.h \
     mainwindow.h \
+    model/directory.h \
     model/image.h \
     model/imagedir.h \
     model/tag.h \
