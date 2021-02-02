@@ -39,7 +39,6 @@ DBManager::DBManager()
     // Instanciate Data Access Objects
     tagDao = new TagDAO(m_db);
     imageDao = new ImageDAO(m_db);
-    imageDirDao = new ImageDirDAO(m_db);
     directoryDao = new DirectoryDAO(m_db);
 }
 
@@ -49,7 +48,7 @@ DBManager::~DBManager()
     delete m_db;
     delete tagDao;
     delete imageDao;
-    delete imageDirDao;
+    delete directoryDao;
     QSqlDatabase::removeDatabase(name);
 }
 
@@ -94,12 +93,6 @@ ImageDAO DBManager::getImageDao()
 {
     assertInit();
     return *instance->imageDao;
-}
-
-ImageDirDAO DBManager::getImageDirDao()
-{
-    assertInit();
-    return *instance->imageDirDao;
 }
 
 DirectoryDAO DBManager::getDirectoryDao()

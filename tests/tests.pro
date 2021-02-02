@@ -32,7 +32,6 @@ SOURCES += \
     $$APP/db/dbmanager.cpp \
     $$APP/db/filter.cpp \
     $$APP/db/imagedao.cpp \
-    $$APP/db/imagedirdao.cpp \
     $$APP/db/tagdao.cpp \
     $$APP/db/directorydao.cpp \
     $$APP/model/directory.cpp

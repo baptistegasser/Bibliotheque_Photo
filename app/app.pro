@@ -13,7 +13,6 @@ SOURCES += \
     db/directorydao.cpp \
     db/filter.cpp \
     db/imagedao.cpp \
-    db/imagedirdao.cpp \
     db/tagdao.cpp \
     imagefinder.cpp \
     main.cpp \
@@ -29,13 +28,11 @@ HEADERS += \
     db/directorydao.h \
     db/filter.h \
     db/imagedao.h \
-    db/imagedirdao.h \
     db/tagdao.h \
     imagefinder.h \
     mainwindow.h \
     model/directory.h \
     model/image.h \
-    model/imagedir.h \
     model/tag.h \
     modification_window.h \
     photocard.h \
