@@ -32,28 +32,65 @@
     </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="QPushButton" name="btn_quit">
-          <property name="enabled">
-           <bool>true</bool>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="minimumSize">
+           <size>
+            <width>125</width>
+            <height>0</height>
+           </size>
           </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+          <property name="styleSheet">
+           <string notr="true">background-color:rgb(224,221,218);
+border: 1px solid rgb(128,128,128);
+border-top: none;
+border-bottom: none;
+border-left: none;</string>
           </property>
-          <property name="mouseTracking">
-           <bool>false</bool>
+          <property name="title">
+           <string/>
           </property>
-          <property name="text">
-           <string>Quit</string>
-          </property>
+          <widget class="QPushButton" name="btn_quit">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="geometry">
+            <rect>
+             <x>5</x>
+             <y>5</y>
+             <width>20</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="mouseTracking">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border: none;
+</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/image/resources/close.png</normaloff>:/image/resources/close.png</iconset>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -67,9 +104,18 @@
           </property>
           <item row="0" column="0">
            <widget class="QGroupBox" name="groupBox">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>50</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color:rgb(224,221,218);
-border: 1px solid gray;</string>
+border: 1px solid rgb(128,128,128);
+border-top: none;
+border-right: none;
+border-left: none;</string>
             </property>
             <property name="title">
              <string/>
@@ -84,7 +130,8 @@ border: 1px solid gray;</string>
               </rect>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: white;</string>
+              <string notr="true">background-color: rgb(240,240,240);
+color: black;</string>
              </property>
              <property name="text">
               <string>  Filter</string>
@@ -97,7 +144,7 @@ border: 1px solid gray;</string>
             <widget class="QLineEdit" name="lineEdit">
              <property name="geometry">
               <rect>
-               <x>560</x>
+               <x>550</x>
                <y>10</y>
                <width>101</width>
                <height>31</height>
