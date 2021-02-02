@@ -10,7 +10,7 @@ private:
     QDir rootDir;
 
 public:
-    ImageFinder(QDir const rootDir);
+    ImageFinder(/*QDir const rootDir*/);
     QFileInfoList getImagesList() const;
 };
 
