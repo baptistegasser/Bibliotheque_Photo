@@ -2,6 +2,7 @@
 #define DBMANAGERTEST_H
 
 #include "db/dbmanager.h"
+#include <QApplication>
 #include <QObject>
 
 class DBManagerTest : public QObject
@@ -9,15 +10,20 @@ class DBManagerTest : public QObject
     Q_OBJECT
 
 public:
-    DBManagerTest() {};
-    ~DBManagerTest() {};
+    DBManagerTest() {
+        int _ = 0;
+        app = new QApplication(_, {});
+    };
+    ~DBManagerTest() {
+        delete app;
+    };
 
 private:
     static QString testDBPath;
+    QApplication *app;
 
 private slots:
     void initTestCase();
-    void init();
     void cleanup();
 
     void test_init();
