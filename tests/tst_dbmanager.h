@@ -1,29 +1,14 @@
 #ifndef DBMANAGERTEST_H
 #define DBMANAGERTEST_H
 
-#include "db/dbmanager.h"
-#include <QApplication>
+#include "dbtest.h"
 #include <QObject>
 
-class DBManagerTest : public QObject
+class DBManagerTest : public QObject, private DBTest
 {
     Q_OBJECT
 
-public:
-    DBManagerTest() {
-        int _ = 0;
-        app = new QApplication(_, {});
-    };
-    ~DBManagerTest() {
-        delete app;
-    };
-
-private:
-    static QString testDBPath;
-    QApplication *app;
-
 private slots:
-    void initTestCase();
     void cleanup();
 
     void test_init();
