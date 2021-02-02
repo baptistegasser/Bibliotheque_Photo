@@ -27,10 +27,10 @@ public:
     static void close();
     static void overrideDBPath(QString newPath);
     static DBManager *getInstance();
-
-    TagDAO getTagDao() const;
-    ImageDAO getImageDao() const;
-    ImageDirDAO getImageDirDao() const;
+    static void assertInit();
+    static TagDAO getTagDao();
+    static ImageDAO getImageDao();
+    static ImageDirDAO getImageDirDao();
 
     class DBException : public std::exception {
     private:

@@ -74,24 +74,31 @@ void DBManager::overrideDBPath(QString newPath)
 
 DBManager *DBManager::getInstance()
 {
-    if (!instance) {
-        throw DBException("DB manager was not initialized, please call init() first");
-    }
-
+    assertInit();
     return instance;
 }
 
-TagDAO DBManager::getTagDao() const
+TagDAO DBManager::getTagDao()
 {
-    return *tagDao;
+    assertInit();
+    return *instance->tagDao;
 }
 
-ImageDAO DBManager::getImageDao() const
+ImageDAO DBManager::getImageDao()
 {
-    return *imageDao;
+    assertInit();
+    return *instance->imageDao;
 }
 
-ImageDirDAO DBManager::getImageDirDao() const
+ImageDirDAO DBManager::getImageDirDao()
 {
-    return *imageDirDao;
+    assertInit();
+    return *instance->imageDirDao;
+}
+
+void DBManager::assertInit()
+{
+    if (!instance) {
+        throw DBException("DB manager was not initialized, please call init() first");
+    }
 }
