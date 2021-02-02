@@ -3,7 +3,7 @@
 #include "dbmanager.h"
 #include "QDebug"
 #include "QSqlError"
-
+/*
 bool ImageDirDAO::create(ImageDir *imageDir)
 {
     QString SQL = "";
@@ -105,3 +105,4 @@ ImageDir *ImageDirDAO::fromRecord(QSqlRecord record)
 
     return imageDir;
 }
+*/

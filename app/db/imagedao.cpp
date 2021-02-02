@@ -3,7 +3,7 @@
 #include "dbmanager.h"
 #include "QDebug"
 #include "QSqlError"
-
+/*
 bool ImageDAO::create(Image *image)
 {
     // Check datas before insert
@@ -141,3 +141,4 @@ Image *ImageDAO::fromRecord(QSqlRecord record)
 
     return image;
 }
+*/

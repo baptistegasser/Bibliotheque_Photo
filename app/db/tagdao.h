@@ -12,12 +12,20 @@ class TagDAO : DAO<Tag>
 public:
     using DAO::DAO;
 
-    bool create(Tag *tag);
-    bool update(Tag *tag);
-    bool remove(Tag *tag);
-    QList<Tag *> getAll();
-    Tag *getById(int id);
+    bool exist(Tag &tag);
+    bool save(Tag &tag);
+    bool saveAll(Tag tags[]);
+    bool saveAll(QList<Tag> tags);
+    bool remove(Tag &tag);
+    QList<Tag> getAll();
+    QList<Tag> search(QString key);
 
+private:
+    bool create(Tag &tag);
+    bool update(Tag &tag);
+    Tag fromRecord(QSqlRecord record);
+
+public:
     QList<Tag *> getFeelingTags(int imageID);
     QList<Tag *> getFeelingTags(const Image *image);
     QList<Tag *> getDescriptiveTags(int imageID);
@@ -25,9 +33,6 @@ public:
     QList<Tag *> getCategoryTags(int imageID);
     QList<Tag *> getCategoryTags(const Image *image);
 
-private:
-    Tag *fromRecord(QSqlRecord record);
-    QList<Tag *> getTagsFromImage(QString table, int imageID);
 };
 
 #endif // TAGDAO_H
