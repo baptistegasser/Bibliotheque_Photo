@@ -7,20 +7,16 @@
 class Tag
 {
 public:
-    Tag() = default;
-    Tag(QString value): Tag(value, "#000000") {};
-    Tag(QString value, QString color): value(value), color(color) {};
-
     QString value;
     QString color;
 
-    bool operator== (const Tag& tag) const { return value == tag.value && color == tag.color; }
-    bool operator!= (const Tag& tag) const { return !(*this == tag); }
+    Tag() = default;
+    Tag(QString value);
+    Tag(QString value, QString color);
 
-    operator QString() const {
-        QString s = QString("{ Value: %1, Color: %2 }").arg(value, color);
-        return s;
-    }
+    bool operator== (const Tag& tag) const;
+    bool operator!= (const Tag& tag) const;
+    operator QString() const;
 };
 
 #endif // TAG_H

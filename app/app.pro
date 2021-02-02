@@ -18,6 +18,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     model/directory.cpp \
+    model/image.cpp \
+    model/tag.cpp \
     modification_window.cpp \
     photocard.cpp \
     tagbutton.cpp
