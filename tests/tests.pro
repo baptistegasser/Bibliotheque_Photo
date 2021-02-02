@@ -34,6 +34,8 @@ SOURCES += \
     $$APP/db/imagedao.cpp \
     $$APP/db/tagdao.cpp \
     $$APP/db/directorydao.cpp \
+    $$APP/model/tag.cpp \
+    $$APP/model/image.cpp \
     $$APP/model/directory.cpp
 
 RESOURCES += \

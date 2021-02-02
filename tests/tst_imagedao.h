@@ -2,6 +2,8 @@
 #define IMAGEDAOTEST_H
 
 #include "dbtest.h"
+#include "model/image.h"
+#include <QList>
 #include <QObject>
 
 class ImageDAOTest : public QObject, private DBTest
@@ -11,11 +13,17 @@ class ImageDAOTest : public QObject, private DBTest
 public:
     using DBTest::DBTest;
 
+private:
+    QList<Image> images;
+
 private slots:
-    void init() { DBTest::init(); };
-    void cleanup() { DBTest::cleanup(); };
+    void init();
+    void cleanup();
 
-
+    void test_exist();
+    void test_creation();
+    void test_update();
+    void test_remove();
 };
 
 #endif // IMAGEDAOTEST_H

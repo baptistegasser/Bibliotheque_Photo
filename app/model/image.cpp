@@ -2,12 +2,22 @@
 
 #include <QImage>
 
+Image::Image()
+{
+    path = "";
+    name = "";
+    size = 0;
+    width = 0;
+    height = 0;
+    rating = 0;
+    comment = "";
+}
 
 Image::Image(QString path) : Image(QFileInfo(path))
 {
 }
 
-Image::Image(QFileInfo infos)
+Image::Image(QFileInfo infos) : Image()
 {
     if (!infos.exists()) {
         qCritical("The given file don't exist");
@@ -46,4 +56,9 @@ bool Image::operator== (const Image& img) const
 bool Image::operator!= (const Image& img) const
 {
     return !(*this == img);
+}
+
+Image::operator QString() const
+{
+    return QString("{ Path: %1 }").arg(path);
 }
