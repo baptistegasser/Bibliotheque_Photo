@@ -22,6 +22,11 @@ DBManager::DBManager()
         if (!QFile::copy(":/db/init.db", DB_PATH)) {
             throw DBException("Failed to init database by copying template file");
         }
+        // Check les droits sur la bd
+        QFileDevice::Permissions perm = QFileDevice::ReadUser | QFileDevice::WriteUser;
+        if (!QFile::setPermissions(DB_PATH, perm)) {
+            throw DBException("Failed to set database's file permissions");
+        }
     }
 
     // Open connection to DB
