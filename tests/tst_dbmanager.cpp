@@ -3,36 +3,15 @@
 #include <QDebug>
 #include <QtTest>
 
-QString DBManagerTest::testDBPath = ""; // tmp declaration
-
-void DBManagerTest::initTestCase()
-{
-    // Assert file was correctly cleaned after previous tests
-    // and override the default file path
-    testDBPath = QDir(qApp->applicationDirPath()).absoluteFilePath("test.db");
-    QVERIFY2(!QFileInfo(testDBPath).exists(), "Test database already exist");
-    DBManager::overrideDBPath(testDBPath);
-}
-
-// Clean the created database
-void DBManagerTest::cleanup()
-{
-    DBManager::close();
-    QFile file(testDBPath);
-    if (file.exists()) {
-        QVERIFY2(file.remove(), ("Failed to delete db file at " + testDBPath).toUtf8().data());
-    }
-}
-
 void DBManagerTest::test_init()
 {
-    QFileInfo file(testDBPath);
+    QFileInfo file(path);
 
     QVERIFY(!file.exists());
     DBManager::init();
     QVERIFY(file.exists());
     DBManager::close();
-    QVERIFY2(QFile::remove(testDBPath), ("Failed to delete db file at " + testDBPath).toUtf8().data());
+    QVERIFY2(QFile::remove(path), ("Failed to delete db file at " + path).toUtf8().data());
 }
 
 void DBManagerTest::test_close()
@@ -45,12 +24,12 @@ void DBManagerTest::test_close()
 
 void DBManagerTest::test_overrideDBPath()
 {
-    QVERIFY(!QFileInfo(testDBPath).exists());
-    DBManager::overrideDBPath(testDBPath);
+    QVERIFY(!QFileInfo(path).exists());
+    DBManager::overrideDBPath(path);
     DBManager::init();
-    QVERIFY(QFileInfo(testDBPath).exists());
+    QVERIFY(QFileInfo(path).exists());
     DBManager::close();
-    QFile(testDBPath).remove();
+    QFile(path).remove();
 }
 
 void DBManagerTest::test_getInstance()
@@ -59,4 +38,13 @@ void DBManagerTest::test_getInstance()
 
     DBManager::init();
     QVERIFY(DBManager::getInstance() != nullptr);
+}
+
+void DBManagerTest::cleanup()
+{
+    DBManager::close();
+    QFile file(path);
+    if (file.exists()) {
+        QVERIFY2(file.remove(), ("Failed to delete db file at " + path).toUtf8().data());
+    }
 }

@@ -8,6 +8,7 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 HEADERS += \
+    dbtest.h \
     tst_dbmanager.h \
     tst_tagdao.h
 

@@ -1,20 +1,18 @@
 #ifndef TST_TAGDAO_H
 #define TST_TAGDAO_H
 
+#include "dbtest.h"
 #include <QObject>
 
-class TagDAOTest : public QObject
+class TagDAOTest : public QObject, private DBTest
 {
     Q_OBJECT;
 
-public:
-    TagDAOTest() = default;
-
 private slots:
-    void init();
+    void cleanup();
+
     void test_1();
     void test_2();
-    void cleanup();
 };
 
 #endif // TST_TAGDAO_H
