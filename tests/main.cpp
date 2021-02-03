@@ -19,10 +19,10 @@ int main(int argc, char *argv[])
     };
 
     RUN_TEST(new TagListTest());
-    //RUN_TEST(new DBManagerTest());
-    //RUN_TEST(new TagDAOTest());
-    //RUN_TEST(new DirectoryDAOTest());
-    //RUN_TEST(new ImageDAOTest());
+    RUN_TEST(new DBManagerTest());
+    RUN_TEST(new TagDAOTest());
+    RUN_TEST(new DirectoryDAOTest());
+    RUN_TEST(new ImageDAOTest());
 
     return status;
 }
