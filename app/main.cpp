@@ -4,6 +4,8 @@
 #include "modification_window.h"
 #include <iostream>
 
+#include "imagefinder.h"
+
 #include "db/dbmanager.h"
 
 #include <QApplication>
@@ -37,6 +39,9 @@ int main(int argc, char *argv[])
 
     photoCard pC;
     pC.show();*/
+
+    ImageFinder img;
+    img.getImagesList();
 
     return a.exec();
 }
