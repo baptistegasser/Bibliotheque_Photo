@@ -19,13 +19,13 @@ Image::Image(QString path) : Image(QFileInfo(path))
 
 Image::Image(QFileInfo infos) : Image()
 {
+    path = infos.absoluteFilePath();
+
     if (!infos.exists()) {
         qCritical("The given file don't exist");
-        path = infos.path();
         return;
     }
 
-    path = infos.absoluteFilePath();
     name = infos.baseName();
     size = infos.size();
 
