@@ -77,7 +77,7 @@ bool ImageDAO::create(Image &image)
 bool ImageDAO::update(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("UPDATE Image SET Name = ?, \"Size\" = ?, Width = ?, Height = ?, Comment = ?, Rating = ? WHERE \"Path\" = ?;");
+    query.prepare("UPDATE Image SET Name = ?, \"Size\" = ?, Width = ?, Height = ?, Rating = ?, Comment = ? WHERE \"Path\" = ?;");
     query.bindValue(0, image.name);
     query.bindValue(1, image.size);
     query.bindValue(2, image.width);
