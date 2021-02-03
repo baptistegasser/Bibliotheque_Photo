@@ -11,7 +11,7 @@ Tag::Tag(QString value, QString color) :
 
 bool Tag::operator== (const Tag& tag) const
 {
-    return value == tag.value && color == tag.color;
+    return value == tag.value;
 }
 
 bool Tag::operator!= (const Tag& tag) const
