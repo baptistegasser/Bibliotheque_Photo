@@ -14,6 +14,7 @@ public:
     Tag(QString value);
     Tag(QString value, QString color);
 
+    bool equal(const Tag& tag) const;
     bool operator== (const Tag& tag) const;
     bool operator!= (const Tag& tag) const;
     operator QString() const;

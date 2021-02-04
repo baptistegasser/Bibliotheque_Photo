@@ -39,18 +39,23 @@ Image::Image(QFileInfo infos) : Image()
     height = q_img.height();
 }
 
-bool Image::operator== (const Image& img) const
+bool Image::equal(const Image& img) const
 {
-    return name == img.name &&
-            path == img.path &&
-            comment == img.comment &&
+    return path == img.path &&
+            name == img.name &&
             size == img.size &&
-            rating == img.rating &&
             width == img.width &&
             height == img.height &&
+            rating == img.rating &&
+            comment == img.comment &&
             feelingTags == img.feelingTags &&
-            categoryTags == img.categoryTags &&
-            descriptiveTags == img.descriptiveTags;
+            descriptiveTags == img.descriptiveTags &&
+            categoryTags == img.categoryTags;
+}
+
+bool Image::operator== (const Image& img) const
+{
+    return path == img.path;
 }
 
 bool Image::operator!= (const Image& img) const

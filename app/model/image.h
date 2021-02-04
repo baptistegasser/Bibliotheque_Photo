@@ -27,6 +27,7 @@ public:
     Image(QString path);
     Image(QFileInfo infos);
 
+    bool equal(const Image& img) const;
     bool operator== (const Image& img) const;
     bool operator!= (const Image& img) const;
     operator QString() const;

@@ -15,6 +15,7 @@ public:
 
     Directory(QString path, IndexingStrategy strategy);
 
+    bool equal(const Directory& dir) const;
     bool operator== (const Directory& dir) const;
 };
 

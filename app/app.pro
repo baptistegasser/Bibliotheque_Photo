@@ -20,7 +20,6 @@ SOURCES += \
     model/directory.cpp \
     model/image.cpp \
     model/tag.cpp \
-    model/taglist.cpp \
     modification_window.cpp \
     photocard.cpp \
     tagbutton.cpp
@@ -37,7 +36,6 @@ HEADERS += \
     model/directory.h \
     model/image.h \
     model/tag.h \
-    model/taglist.h \
     modification_window.h \
     photocard.h \
     tagbutton.h

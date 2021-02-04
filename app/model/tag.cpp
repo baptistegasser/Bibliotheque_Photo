@@ -9,6 +9,11 @@ Tag::Tag(QString value, QString color) :
     color(color)
 {}
 
+bool Tag::equal(const Tag& tag) const
+{
+    return value == tag.value && color == tag.color;
+}
+
 bool Tag::operator== (const Tag& tag) const
 {
     return value == tag.value;

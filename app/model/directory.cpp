@@ -5,7 +5,12 @@ Directory::Directory(QString path, IndexingStrategy strategy):
     strategy(strategy)
 {}
 
-bool Directory::operator== (const Directory& dir) const
+bool Directory::equal(const Directory& dir) const
 {
     return absolutePath() == dir.absolutePath() && strategy == dir.strategy;
+}
+
+bool Directory::operator== (const Directory& dir) const
+{
+    return absolutePath() == dir.absolutePath();
 }
