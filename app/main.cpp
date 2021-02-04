@@ -33,15 +33,15 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    /*Modification_window w;
-    w.setImage(":/image/resources/star_fill.png");
-    w.show();
+    Modification_window win;
+    win.setImage(":/image/resources/star_fill.png");
+    win.show();
 
-    photoCard pC;
+    /*photoCard pC;
     pC.show();*/
 
-    ImageFinder img;
-    img.getImagesList();
+    /*ImageFinder img;
+    img.getImagesList();*/
 
     return a.exec();
 }

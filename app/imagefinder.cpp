@@ -50,9 +50,6 @@ QFileInfoList ImageFinder::getImagesList() const
     for (const QFileInfo &fic : files)
     {
         Image img(fic);
-        img.categoryTags.append(Tag("meme", "#ff0000"));
-        img.feelingTags.append(Tag("fun", "#00ff00"));
-        img.descriptiveTags.append(Tag("yes", "#0000ff"));
         DB::getImageDao().save(img);
         cout << fic.baseName().toStdString() << endl;
     }
