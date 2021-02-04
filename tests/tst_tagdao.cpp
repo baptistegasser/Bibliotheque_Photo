@@ -1,6 +1,6 @@
 #include "tst_tagdao.h"
 
-#include "db/dbmanager.h"
+#include "db/db.h"
 #include <QDebug>
 
 
@@ -20,7 +20,7 @@ void TagDAOTest::test_save()
     Tag tag_2("Dog");
     Tag tag_3("Tree", "#00ff00");
 
-    TagDAO tagDao = DBManager::getTagDao();
+    TagDAO tagDao = DB::getTagDao();
 
     tagDao.save(tag_1);
     tagDao.saveAll({tag_2, tag_3});
@@ -50,7 +50,7 @@ void TagDAOTest::test_remove()
         Tag("Dog"),
         Tag("Tree", "#00ff00")
     };
-    TagDAO tagDao = DBManager::getTagDao();
+    TagDAO tagDao = DB::getTagDao();
 
     tagDao.saveAll(tags);
 
@@ -69,7 +69,7 @@ void TagDAOTest::test_search()
         Tag("Dog"),
         Tag("Tree", "#00ff00")
     };
-    TagDAO tagDao = DBManager::getTagDao();
+    TagDAO tagDao = DB::getTagDao();
     tagDao.saveAll(tags);
 
     QCOMPARE(tagDao.search("something").size(), 0);

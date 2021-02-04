@@ -2,7 +2,7 @@
 
 #include "QDebug"
 #include "QSqlError"
-#include "dbmanager.h"
+#include "db.h"
 
 bool ImageDAO::exist(Image &image)
 {
@@ -30,7 +30,7 @@ bool ImageDAO::save(Image &image)
         success &= create(image);
     }
 
-    success &= DBManager::getTagDao().saveImageTags(image);
+    success &= DB::getTagDao().saveImageTags(image);
 
     return success;
 }
@@ -114,7 +114,7 @@ bool ImageDAO::remove(Image &image)
     }
 
     bool success = query.numRowsAffected() == 1;
-    success &= DBManager::getTagDao().removeImageTags(image);
+    success &= DB::getTagDao().removeImageTags(image);
     return success;
 }
 
@@ -152,7 +152,7 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     img.rating = record.value("Rating").toInt();
     img.comment = record.value("Comment").toString();
 
-    TagDAO tagDao = DBManager::getTagDao();
+    TagDAO tagDao = DB::getTagDao();
     img.feelingTags = tagDao.getFeelingTags(img);
     img.descriptiveTags = tagDao.getDescriptiveTags(img);
     img.categoryTags = tagDao.getCategoryTags(img);

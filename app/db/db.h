@@ -1,5 +1,5 @@
-#ifndef DBMANAGER_H
-#define DBMANAGER_H
+#ifndef DB_H
+#define DB_H
 
 #include "imagedao.h"
 #include "tagdao.h"
@@ -8,25 +8,25 @@
 #include <QSqlDatabase>
 #include <QString>
 
-class DBManager
+class DB
 {
 private:
     static QString DB_PATH;
-    static DBManager *instance;
+    static DB *instance;
 
     QSqlDatabase *m_db;
     TagDAO *tagDao;
     ImageDAO *imageDao;
     DirectoryDAO *directoryDao;
 
-    DBManager();
-    ~DBManager();
+    DB();
+    ~DB();
 
 public:
     static void init();
     static void close();
     static void overrideDBPath(QString newPath);
-    static DBManager *getInstance();
+    static DB *getInstance();
     static void assertInit();
     static TagDAO getTagDao();
     static ImageDAO getImageDao();
@@ -43,4 +43,4 @@ public:
     };
 };
 
-#endif // DBMANAGER_H
+#endif // DB_H

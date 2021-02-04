@@ -38,7 +38,7 @@ void ImageDAOTest::cleanup()
 
 void ImageDAOTest::test_exist()
 {
-    ImageDAO imageDao = DBManager::getImageDao();
+    ImageDAO imageDao = DB::getImageDao();
     for (int i (0); i < images.size(); ++i) {
         QVERIFY(!imageDao.exist(images[i]));
         QVERIFY(imageDao.save(images[i]));
@@ -48,7 +48,7 @@ void ImageDAOTest::test_exist()
 
 void ImageDAOTest::test_creation()
 {
-    ImageDAO imageDao = DBManager::getImageDao();
+    ImageDAO imageDao = DB::getImageDao();
 
     QVERIFY(imageDao.save(images[0]));
     QCOMPARE(imageDao.getAll().size(), 1);
@@ -64,7 +64,7 @@ void ImageDAOTest::test_creation()
 
 void ImageDAOTest::test_update()
 {
-    ImageDAO imageDao = DBManager::getImageDao();
+    ImageDAO imageDao = DB::getImageDao();
     imageDao.save(images[0]);
     COMPARE_IMAGES(imageDao.getAll(), {images[0]});
 
@@ -85,7 +85,7 @@ void ImageDAOTest::test_update()
 
 void ImageDAOTest::test_remove()
 {
-    ImageDAO imageDao = DBManager::getImageDao();
+    ImageDAO imageDao = DB::getImageDao();
     // Insert datas
     QVERIFY(imageDao.saveAll(images));
     COMPARE_IMAGES(imageDao.getAll(), images);

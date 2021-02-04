@@ -1,6 +1,6 @@
 #include "tagdao.h"
 
-#include "dbmanager.h"
+#include "db.h"
 #include "QDebug"
 #include "QSqlError"
 

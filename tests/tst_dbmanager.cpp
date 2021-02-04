@@ -14,34 +14,34 @@ void DBManagerTest::test_init()
     QFileInfo file(path);
 
     QVERIFY(!file.exists());
-    DBManager::init();
+    DB::init();
     QVERIFY(file.exists());
-    DBManager::close();
+    DB::close();
     QVERIFY2(QFile::remove(path), ("Failed to delete db file at " + path).toUtf8().data());
 }
 
 void DBManagerTest::test_close()
 {
-    DBManager::init();
-    QVERIFY(DBManager::getInstance() != nullptr);
-    DBManager::close();
-    QVERIFY_EXCEPTION_THROWN(DBManager::getInstance(), DBManager::DBException);
+    DB::init();
+    QVERIFY(DB::getInstance() != nullptr);
+    DB::close();
+    QVERIFY_EXCEPTION_THROWN(DB::getInstance(), DB::DBException);
 }
 
 void DBManagerTest::test_overrideDBPath()
 {
     QVERIFY(!QFileInfo(path).exists());
-    DBManager::overrideDBPath(path);
-    DBManager::init();
+    DB::overrideDBPath(path);
+    DB::init();
     QVERIFY(QFileInfo(path).exists());
-    DBManager::close();
+    DB::close();
     QFile(path).remove();
 }
 
 void DBManagerTest::test_getInstance()
 {
-    QVERIFY_EXCEPTION_THROWN(DBManager::getInstance(), DBManager::DBException);
+    QVERIFY_EXCEPTION_THROWN(DB::getInstance(), DB::DBException);
 
-    DBManager::init();
-    QVERIFY(DBManager::getInstance() != nullptr);
+    DB::init();
+    QVERIFY(DB::getInstance() != nullptr);
 }

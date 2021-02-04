@@ -22,7 +22,7 @@ void DirectoryDAOTest::cleanup()
 
 void DirectoryDAOTest::test_creation()
 {
-    DirectoryDAO dirDao = DBManager::getDirectoryDao();
+    DirectoryDAO dirDao = DB::getDirectoryDao();
     QVERIFY(dirDao.getAll().isEmpty());
 
     // Insert a single dir
@@ -41,7 +41,7 @@ void DirectoryDAOTest::test_creation()
 
 void DirectoryDAOTest::test_exist()
 {
-    DirectoryDAO dirDao = DBManager::getDirectoryDao();
+    DirectoryDAO dirDao = DB::getDirectoryDao();
     QVERIFY(dirDao.getAll().isEmpty());
 
     QVERIFY(dirDao.save(directories[0]));
@@ -50,7 +50,7 @@ void DirectoryDAOTest::test_exist()
 
 void DirectoryDAOTest::test_update()
 {
-    DirectoryDAO dirDao = DBManager::getDirectoryDao();
+    DirectoryDAO dirDao = DB::getDirectoryDao();
     // Insert datas
     QVERIFY(dirDao.saveAll(directories));
     QCOMPARE(dirDao.getAll(), directories);
@@ -68,7 +68,7 @@ void DirectoryDAOTest::test_update()
 
 void DirectoryDAOTest::test_remove()
 {
-    DirectoryDAO dirDao = DBManager::getDirectoryDao();
+    DirectoryDAO dirDao = DB::getDirectoryDao();
     // Insert datas
     QVERIFY(dirDao.saveAll(directories));
     QCOMPARE(dirDao.getAll(), directories);

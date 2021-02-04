@@ -34,7 +34,7 @@ INCLUDEPATH += $$APP/
 HEADERS += # Well actually, QObject is no more but keep this in case
 
 SOURCES += \
-    $$APP/db/dbmanager.cpp \
+    $$APP/db/db.cpp \
     $$APP/db/filter.cpp \
     $$APP/db/imagedao.cpp \
     $$APP/db/tagdao.cpp \
