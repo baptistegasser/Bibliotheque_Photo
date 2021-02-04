@@ -8,11 +8,16 @@ class TagDAOTest : public QObject, private DBTest
 {
     Q_OBJECT;
 
+protected:
+    using DBTest::DBTest;
+
 private slots:
+    void init();
     void cleanup();
 
-    void test_1();
-    void test_2();
+    void test_save();
+    void test_remove();
+    void test_search();
 };
 
 #endif // TST_TAGDAO_H

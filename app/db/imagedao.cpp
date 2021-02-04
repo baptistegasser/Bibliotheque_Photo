@@ -1,94 +1,131 @@
 #include "imagedao.h"
 
-#include "dbmanager.h"
 #include "QDebug"
 #include "QSqlError"
+#include "db.h"
 
-bool ImageDAO::create(Image *image)
+bool ImageDAO::exist(Image &image)
 {
-    // Check datas before insert
-    if (image->rating < 0) {
-        qWarning("Image rating should be >= 0, rounding rating to 0");
-        image->rating = 0;
-    } else if (image->rating > 5) {
-        qWarning("Image rating should be <= 5, rounding rating to 5");
-        image->rating = 5;
-    }
-
-    QString SQL = "INSERT INTO Image(DirID, Name, \"Path\", \"Size\", Width, Height, Comment, Rating) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
-
     QSqlQuery query = getNewQuery();
-    query.prepare(SQL);
-    query.bindValue(0, image->parentDir.ID);
-    query.bindValue(1, image->name);
-    query.bindValue(2, image->path);
-    query.bindValue(3, image->size);
-    query.bindValue(4, image->width);
-    query.bindValue(5, image->height);
-    query.bindValue(6, image->comment);
-    query.bindValue(7, image->rating);
+    query.prepare("SELECT 1 FROM Image WHERE \"Path\" = ?;");
+    query.bindValue(0, image.path);
 
-    if (!execQuery(&query, "Create Image")) {
-        return false;
+    return query.exec() && query.next();
+}
+
+bool ImageDAO::save(Image &image)
+{
+    if (image.rating < 0) {
+        image.rating = 0;
+        qWarning("Image rating should be between 0 and 5, rounding to 0");
+    } else if (image.rating > 5) {
+        image.rating = 5;
+        qWarning("Image rating should be between 0 and 5, rounding to 5");
     }
 
-    QVariant ID = query.lastInsertId();
-    if (query.numRowsAffected() == 1 && ID.isValid() && ID.canConvert(QVariant::Int)) {
-        image->ID = ID.toInt();
-        return true;
+    bool success = true;
+    if (exist(image)) {
+        success &= update(image);
     } else {
+        success &= create(image);
+    }
+
+    success &= DB::getTagDao().saveImageTags(image);
+
+    return success;
+}
+
+bool ImageDAO::saveAll(Image images[])
+{
+    bool status = true;
+
+    int i = 0, l = *(&images + 1) - images;
+    for (; i < l; ++i) {
+        status &= save(images[i]);
+    }
+
+    return status;
+}
+
+bool ImageDAO::saveAll(QList<Image> images)
+{
+    bool status = true;
+
+    int i = 0, l = images.size();
+    for (; i < l; ++i) {
+        status &= save(images[i]);
+    }
+
+    return status;
+}
+
+bool ImageDAO::create(Image &image)
+{
+    QSqlQuery query = getNewQuery();
+    query.prepare("INSERT INTO Image(\"Path\", Name, \"Size\", Width, Height, Rating, Comment) VALUES(?, ?, ?, ?, ?, ?, ?);");
+    query.bindValue(0, image.path);
+    query.bindValue(1, image.name);
+    query.bindValue(2, image.size);
+    query.bindValue(3, image.width);
+    query.bindValue(4, image.height);
+    query.bindValue(5, image.rating);
+    query.bindValue(6, image.comment);
+
+    if (!query.exec()) {
+        qWarning() << "Creating image failed" << image;
+        qCritical() << query.lastError().text();
         return false;
+    } else {
+        return true;
     }
 }
 
-bool ImageDAO::update(Image *image)
+bool ImageDAO::update(Image &image)
 {
-    QString SQL = "UPDATE Image SET DirID = ?, Name = ?, \"Path\" = ?, \"Size\" = ?, Width = ?, Height = ?, Comment = ?, Rating = ? WHERE ID = ?;";
-
     QSqlQuery query = getNewQuery();
-    query.prepare(SQL);
-    query.bindValue(0, image->parentDir.ID);
-    query.bindValue(1, image->name);
-    query.bindValue(2, image->path);
-    query.bindValue(3, image->size);
-    query.bindValue(4, image->width);
-    query.bindValue(5, image->height);
-    query.bindValue(6, image->comment);
-    query.bindValue(7, image->rating);
-    query.bindValue(8, image->ID);
+    query.prepare("UPDATE Image SET Name = ?, \"Size\" = ?, Width = ?, Height = ?, Rating = ?, Comment = ? WHERE \"Path\" = ?;");
+    query.bindValue(0, image.name);
+    query.bindValue(1, image.size);
+    query.bindValue(2, image.width);
+    query.bindValue(3, image.height);
+    query.bindValue(4, image.rating);
+    query.bindValue(5, image.comment);
+    query.bindValue(6, image.path);
 
-    if (!execQuery(&query, QString("Update Image with ID = '%d'").arg(image->ID))) {
+    if (!query.exec()) {
+        qWarning() << "Updating image failed" << image;
+        qCritical() << query.lastError().text();
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool ImageDAO::remove(Image &image)
+{
+    QSqlQuery query = getNewQuery();
+    query.prepare("DELETE FROM Image WHERE \"Path\" = ?;");
+    query.bindValue(0, image.path);
+
+    if (!query.exec()) {
+        qWarning() << "Removing image failed" << image;
+        qCritical() << query.lastError().text();
         return false;
     }
 
-    return query.numRowsAffected() == 1;
+    bool success = query.numRowsAffected() == 1;
+    success &= DB::getTagDao().removeImageTags(image);
+    return success;
 }
 
-bool ImageDAO::remove(Image *image)
+QList<Image> ImageDAO::getAll()
 {
-    QString SQL = "DELETE FROM Image WHERE ID = ?;";
-
+    QList<Image> result;
     QSqlQuery query = getNewQuery();
-    query.prepare(SQL);
-    query.bindValue(0, image->ID);
 
-    if (!execQuery(&query, QString("Remove Image with ID = '%d'").arg(image->ID))) {
-        return false;
-    }
-
-    return query.numRowsAffected() == 1;
-}
-
-QList<Image *> ImageDAO::getAll()
-{
-    QString SQL = "SELECT * FROM Image;";
-
-    QSqlQuery query = getNewQuery();
-    query.prepare(SQL);
-
-    QList<Image *> result;
-
-    if (!execQuery(&query, "Get all Images")) {
+    if (!query.exec("SELECT * FROM Image;")) {
+        qWarning("Failed to get all images");
+        qCritical() << query.lastError().text();
         return result;
     }
 
@@ -99,45 +136,26 @@ QList<Image *> ImageDAO::getAll()
     return result;
 }
 
-Image *ImageDAO::getById(int id)
+QList<Image> ImageDAO::search(Filter filter)
 {
-    QString SQL = "SELECT * FROM Image WHERE ID = ?;";
-
-    QSqlQuery query = getNewQuery();
-    query.prepare(SQL);
-    query.bindValue(0, id);
-
-    if (!execQuery(&query, QString("Get Image with ID = '%d'").arg(id))) {
-        return NULL;
-    }
-
-    if (query.next()) {
-        return fromRecord(query.record());
-    } else {
-        qWarning("No Image found for ID = '%d'", id);
-        return NULL;
-    }
+    return QList<Image>();
 }
 
-Image *ImageDAO::fromRecord(QSqlRecord record)
+Image ImageDAO::fromRecord(QSqlRecord record)
 {
-    Image* image = new Image();
+    Image img;
+    img.path = record.value("Path").toString();
+    img.name = record.value("Name").toString();
+    img.size = record.value("Size").toInt();
+    img.width = record.value("Width").toInt();
+    img.height = record.value("Height").toInt();
+    img.rating = record.value("Rating").toInt();
+    img.comment = record.value("Comment").toString();
 
-    image->ID = record.value("ID").toInt();
-    image->name = record.value("Name").toString();
-    image->parentDir = *DBManager::getInstance()->getImageDirDao().getById(record.value("DirID").toInt());
-    image->path = record.value("Path").toString();
+    TagDAO tagDao = DB::getTagDao();
+    img.feelingTags = tagDao.getFeelingTags(img);
+    img.descriptiveTags = tagDao.getDescriptiveTags(img);
+    img.categoryTags = tagDao.getCategoryTags(img);
 
-    image->comment = record.value("Comment").toString();
-    image->size    = record.value("Size").toInt();
-    image->rating  = record.value("Rating").toInt();
-    image->width   = record.value("Width").toFloat();
-    image->height  = record.value("Height").toFloat();
-
-    TagDAO tagDAO = DBManager::getInstance()->getTagDao();
-    image->feelingTags = tagDAO.getFeelingTags(image);
-    image->descriptiveTags = tagDAO.getDescriptiveTags(image);
-    image->categoryTags = tagDAO.getCategoryTags(image);
-
-    return image;
+    return img;
 }

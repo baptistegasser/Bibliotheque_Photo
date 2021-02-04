@@ -1,15 +1,15 @@
-#include "dbmanager.h"
+#include "db.h"
 
 #include <QApplication>
 #include <QDir>
 #include <QSqlError>
 
 // Define static instance
-DBManager *DBManager::instance = nullptr;
+DB *DB::instance = nullptr;
 // Set DB_PATH later
-QString DBManager::DB_PATH = QString::Null();
+QString DB::DB_PATH = QString::Null();
 
-DBManager::DBManager()
+DB::DB()
 {
     // Assert path to DB is set
     if (DB_PATH.isNull()) {
@@ -21,6 +21,11 @@ DBManager::DBManager()
         // Attempt to copy base DB from resources
         if (!QFile::copy(":/db/init.db", DB_PATH)) {
             throw DBException("Failed to init database by copying template file");
+        }
+        // Check les droits sur la bd
+        QFileDevice::Permissions perm = QFileDevice::ReadUser | QFileDevice::WriteUser;
+        if (!QFile::setPermissions(DB_PATH, perm)) {
+            throw DBException("Failed to set database's file permissions");
         }
     }
 
@@ -34,36 +39,36 @@ DBManager::DBManager()
     // Instanciate Data Access Objects
     tagDao = new TagDAO(m_db);
     imageDao = new ImageDAO(m_db);
-    imageDirDao = new ImageDirDAO(m_db);
+    directoryDao = new DirectoryDAO(m_db);
 }
 
-DBManager::~DBManager()
+DB::~DB()
 {
     QString name = m_db->connectionName();
     delete m_db;
     delete tagDao;
     delete imageDao;
-    delete imageDirDao;
+    delete directoryDao;
     QSqlDatabase::removeDatabase(name);
 }
 
 // Init the singleton instance, must be explicitly called
-void DBManager::init()
+void DB::init()
 {
     if (instance) {
         throw DBException("DB manager already initialized");
     }
 
-    instance = new DBManager();
+    instance = new DB();
 }
 
-void DBManager::close()
+void DB::close()
 {
     delete instance;
     instance = nullptr;
 }
 
-void DBManager::overrideDBPath(QString newPath)
+void DB::overrideDBPath(QString newPath)
 {
     if (instance) {
         qWarning("The DBManager instance is initialized, change will apply after closing it.");
@@ -72,26 +77,33 @@ void DBManager::overrideDBPath(QString newPath)
     DB_PATH = newPath;
 }
 
-DBManager *DBManager::getInstance()
+DB *DB::getInstance()
+{
+    assertInit();
+    return instance;
+}
+
+TagDAO DB::getTagDao()
+{
+    assertInit();
+    return *instance->tagDao;
+}
+
+ImageDAO DB::getImageDao()
+{
+    assertInit();
+    return *instance->imageDao;
+}
+
+DirectoryDAO DB::getDirectoryDao()
+{
+    assertInit();
+    return *instance->directoryDao;
+}
+
+void DB::assertInit()
 {
     if (!instance) {
         throw DBException("DB manager was not initialized, please call init() first");
     }
-
-    return instance;
-}
-
-TagDAO DBManager::getTagDao() const
-{
-    return *tagDao;
-}
-
-ImageDAO DBManager::getImageDao() const
-{
-    return *imageDao;
-}
-
-ImageDirDAO DBManager::getImageDirDao() const
-{
-    return *imageDirDao;
 }

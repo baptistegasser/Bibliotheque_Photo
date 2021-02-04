@@ -6,7 +6,7 @@
 
 #include "imagefinder.h"
 
-#include "db/dbmanager.h"
+#include "db/db.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     try {
-        DBManager::init();
-    } catch (DBManager::DBException &e) {
+        DB::init();
+    } catch (DB::DBException &e) {
         qCritical() << "Failed to init DB manager, aborting !\n" << e.what();
         exit(EXIT_FAILURE);
     }

@@ -1,18 +1,26 @@
 #ifndef TAG_H
 #define TAG_H
 
-#include "QString"
+#include <QDebug>
+#include <QString>
 
 class Tag
 {
 public:
-    Tag() = default;
+    static Tag INVALID;
 
-    int ID;
     QString value;
     QString color;
 
-    bool operator== (const Tag& tag) const { return this->value == tag.value; }
+    Tag() = default;
+    Tag(QString value);
+    Tag(QString value, QString color);
+
+    bool equal(const Tag& tag) const;
+    bool operator== (const Tag& tag) const;
+    bool operator!= (const Tag& tag) const;
+    operator QString() const;
+    static QString listToQString(const QList<Tag> list);
 };
 
 #endif // TAG_H

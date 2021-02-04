@@ -12,22 +12,28 @@ class TagDAO : DAO<Tag>
 public:
     using DAO::DAO;
 
-    bool create(Tag *tag);
-    bool update(Tag *tag);
-    bool remove(Tag *tag);
-    QList<Tag *> getAll();
-    Tag *getById(int id);
+    bool exist(Tag &tag);
+    bool save(Tag &tag);
+    bool saveAll(Tag tags[]);
+    bool saveAll(QList<Tag> tags);
+    bool remove(Tag &tag);
+    Tag getByValue(QString value);
+    QList<Tag> getAll();
+    QList<Tag> search(QString key);
 
-    QList<Tag *> getFeelingTags(int imageID);
-    QList<Tag *> getFeelingTags(const Image *image);
-    QList<Tag *> getDescriptiveTags(int imageID);
-    QList<Tag *> getDescriptiveTags(const Image *image);
-    QList<Tag *> getCategoryTags(int imageID);
-    QList<Tag *> getCategoryTags(const Image *image);
+    bool saveImageTags(const Image &img);
+    bool removeImageTags(const Image &img);
+    QList<Tag> getFeelingTags(const Image &img);
+    QList<Tag> getDescriptiveTags(const Image &img);
+    QList<Tag> getCategoryTags(const Image &img);
 
 private:
-    Tag *fromRecord(QSqlRecord record);
-    QList<Tag *> getTagsFromImage(QString table, int imageID);
+    bool create(Tag &tag);
+    bool update(Tag &tag);
+    Tag fromRecord(QSqlRecord record);
+
+    bool saveImageTags(const Image &img, const QList<Tag> tags, QString table);
+    QList<Tag> getImageTags(const Image &img, QString table);
 };
 
 #endif // TAGDAO_H

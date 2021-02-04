@@ -3,22 +3,26 @@
 
 #include "dao.h"
 #include "model/image.h"
-
+#include "filter.h"
 #include "QSqlRecord"
 
-class ImageDAO : DAO<Image>
+class ImageDAO : public DAO<Image>
 {
 public:
     using DAO::DAO;
 
-    bool create(Image *image);
-    bool update(Image *image);
-    bool remove(Image *image);
-    QList<Image *> getAll();
-    Image *getById(int id);
+    bool exist(Image &image);
+    bool save(Image &image);
+    bool saveAll(Image images[]);
+    bool saveAll(QList<Image> images);
+    bool remove(Image &image);
+    QList<Image> getAll();
+    QList<Image> search(Filter filter);
 
 private:
-    Image *fromRecord(QSqlRecord record);
+    bool create(Image &image);
+    bool update(Image &image);
+    Image fromRecord(QSqlRecord record);
 };
 
 #endif // IMAGEDAO_H

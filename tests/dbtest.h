@@ -1,13 +1,22 @@
 #ifndef DBTEST_H
 #define DBTEST_H
 
-#include "db/dbmanager.h"
+#include "db/db.h"
 #include <QApplication>
 #include <QDir>
 #include <QTest>
 
 class DBTest
 {
+public:
+    bool deleteDBOnCleanup = true;
+    void setDeleteDBOnCleanup(bool d) {
+        deleteDBOnCleanup = d;
+    }
+
+private:
+    QApplication *app;
+
 protected:
     DBTest()
     {
@@ -15,21 +24,22 @@ protected:
         app = new QApplication(_, {});
         path = QDir(qApp->applicationDirPath()).absoluteFilePath("test.db");
         QVERIFY2(!QFileInfo(path).exists(), "Test database already exist");
-        DBManager::overrideDBPath(path);
+        DB::overrideDBPath(path);
     };
 
-    ~DBTest()
-    {
-        delete app;
-        DBManager::close();
-        QFile f(path);
-        if (f.exists()) f.remove();
-    };
-
-private:
-    QApplication *app;
-protected:
     QString path;
+    void init()
+    {
+        DB::init();
+    }
+    void cleanup()
+    {
+        DB::close();
+        QFile file(path);
+        if (file.exists() && deleteDBOnCleanup) {
+            QVERIFY2(file.remove(), ("Failed to delete db file at " + path).toUtf8().data());
+        }
+    }
 };
 
 #endif // DBTEST_H

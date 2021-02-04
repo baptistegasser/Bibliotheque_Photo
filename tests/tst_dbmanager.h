@@ -8,6 +8,9 @@ class DBManagerTest : public QObject, private DBTest
 {
     Q_OBJECT
 
+protected:
+    using DBTest::DBTest;
+
 private slots:
     void cleanup();
 
