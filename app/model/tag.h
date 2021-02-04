@@ -7,6 +7,8 @@
 class Tag
 {
 public:
+    static Tag INVALID;
+
     QString value;
     QString color;
 

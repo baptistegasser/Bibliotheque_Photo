@@ -19,9 +19,9 @@ public:
     int rating;         // A note between 0 and 5
     QString comment;    // A comment for the image
 
-    QList<Tag *> feelingTags;     // Tags relative to the feeling given by the image
-    QList<Tag *> categoryTags;    // Tags relative to general/abstract aspect of an image
-    QList<Tag *> descriptiveTags; // Tags that describe precisly the image content
+    QList<Tag> feelingTags;     // Tags relative to the feeling given by the image
+    QList<Tag> categoryTags;    // Tags relative to general/abstract aspect of an image
+    QList<Tag> descriptiveTags; // Tags that describe precisly the image content
 
     Image();
     Image(QString path);

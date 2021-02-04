@@ -17,22 +17,23 @@ public:
     bool saveAll(Tag tags[]);
     bool saveAll(QList<Tag> tags);
     bool remove(Tag &tag);
+    Tag getByValue(QString value);
     QList<Tag> getAll();
     QList<Tag> search(QString key);
+
+    bool saveImageTags(const Image &img);
+    bool removeImageTags(const Image &img);
+    QList<Tag> getFeelingTags(const Image &img);
+    QList<Tag> getDescriptiveTags(const Image &img);
+    QList<Tag> getCategoryTags(const Image &img);
 
 private:
     bool create(Tag &tag);
     bool update(Tag &tag);
     Tag fromRecord(QSqlRecord record);
 
-public:
-    QList<Tag *> getFeelingTags(int imageID);
-    QList<Tag *> getFeelingTags(const Image *image);
-    QList<Tag *> getDescriptiveTags(int imageID);
-    QList<Tag *> getDescriptiveTags(const Image *image);
-    QList<Tag *> getCategoryTags(int imageID);
-    QList<Tag *> getCategoryTags(const Image *image);
-
+    bool saveImageTags(const Image &img, const QList<Tag> tags, QString table);
+    QList<Tag> getImageTags(const Image &img, QString table);
 };
 
 #endif // TAGDAO_H

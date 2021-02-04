@@ -1,5 +1,7 @@
 #include "tag.h"
 
+Tag Tag::INVALID ("INVALID", "INVALID");
+
 Tag::Tag(QString value) :
     Tag(value, "#000000")
 {}

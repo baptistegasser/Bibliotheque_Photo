@@ -93,6 +93,25 @@ bool TagDAO::remove(Tag &tag)
     return query.numRowsAffected() == 1;
 }
 
+Tag TagDAO::getByValue(QString value)
+{
+    QSqlQuery query = getNewQuery();
+    query.prepare("SELECT * FROM Tag WHERE Value = ?;");
+    query.bindValue(0, value);
+
+    if (!query.exec()) {
+        qWarning() << "Getting tag failed" << value;
+        qCritical() << query.lastError().text();
+        return Tag::INVALID;
+    }
+
+    if (query.next()) {
+        return fromRecord(query.record());
+    } else {
+        return Tag::INVALID;
+    }
+}
+
 QList<Tag> TagDAO::getAll()
 {
     QList<Tag> result;
@@ -138,4 +157,132 @@ Tag TagDAO::fromRecord(QSqlRecord record)
     tag.value = record.value("Value").toString();
     tag.color = record.value("Color").toString();
     return tag;
+}
+
+/*
+ * Methods for tags linked to an image
+ */
+bool TagDAO::saveImageTags(const Image &img)
+{
+    bool success = true;
+    success &= saveImageTags(img, img.feelingTags, "ImageFeeling");
+    success &= saveImageTags(img, img.descriptiveTags, "ImageDescriptive");
+    success &= saveImageTags(img, img.categoryTags, "ImageCategory");
+    return success;
+}
+
+bool TagDAO::saveImageTags(const Image &img, const QList<Tag> tags, QString table)
+{
+    const QList<Tag> current = getImageTags(img, table);
+
+    QVariantList toInsert;
+    QVariantList toRemove;
+
+    for (const Tag &t : tags) {
+        if (!current.contains(t)) {
+            toInsert << t.value;
+        }
+    }
+    for (const Tag &t : current) {
+        if (!tags.contains(t)) {
+            toRemove << t.value;
+        }
+    }
+
+    bool success = true;
+
+    if (!toInsert.isEmpty()) {
+        QSqlQuery query = getNewQuery();
+        query.prepare(QString("INSERT INTO %1 (ImgPath, TagValue) VALUES(?, ?);").arg(table));
+        query.addBindValue(img.path);
+        query.addBindValue(toInsert);
+
+        if (!query.execBatch()) {
+            qWarning() << "Inserting image tags failed" << img << table;
+            qCritical() << query.lastError().text();
+            success = false;
+        }
+    }
+
+    if (!toRemove.isEmpty()) {
+        QSqlQuery query = getNewQuery();
+        query.prepare(QString("DELETE FROM %1 WHERE ImgPath = ? AND TagValue = ?").arg(table));
+        query.addBindValue(img.path);
+        query.addBindValue(toRemove);
+
+        if (!query.execBatch()) {
+            qWarning() << "Cleaning image tags failed" << img << table;
+            qCritical() << query.lastError().text();
+            success = false;
+        }
+    }
+
+    return success;
+}
+
+bool TagDAO::removeImageTags(const Image &img)
+{
+    bool success = true;
+    QList<QString> tables = {
+        "ImageFeeling",
+        "ImageDescriptive",
+        "ImageCategory"
+    };
+
+    for (const QString &t : tables) {
+        QSqlQuery query = getNewQuery();
+        query.prepare(QString("DELETE FROM %1 WHERE ImgPath = ?").arg(t));
+        query.addBindValue(img.path);
+
+        if (!query.exec()) {
+            qWarning() << "Removing tags from image failed" << img << t;
+            qCritical() << query.lastError().text();
+            success &= false;
+        }
+
+        success &= query.numRowsAffected() != 0;
+    }
+
+    return success;
+}
+
+QList<Tag> TagDAO::getFeelingTags(const Image &img)
+{
+    return getImageTags(img, "ImageFeeling");
+}
+
+QList<Tag> TagDAO::getDescriptiveTags(const Image &img)
+{
+    return getImageTags(img, "ImageDescriptive");
+}
+
+QList<Tag> TagDAO::getCategoryTags(const Image &img)
+{
+    return getImageTags(img, "ImageCategory");
+}
+
+QList<Tag> TagDAO::getImageTags(const Image &img, QString table)
+{
+    QList<Tag> result;
+
+    QSqlQuery query = getNewQuery();
+    query.prepare(QString("SELECT TagValue FROM %1 WHERE ImgPath = ?;").arg(table));
+    query.addBindValue(img.path);
+
+    if (!query.exec()) {
+        qWarning() << "Failed to get image tags from " + table;
+        qCritical() << query.lastError().text();
+        return result;
+    }
+
+    QList<QString> values;
+    while (query.next()) {
+        values << query.value("TagValue").toString();
+    }
+
+    for (const QString &v : values) {
+        result << getByValue(v);
+    }
+
+    return result;
 }

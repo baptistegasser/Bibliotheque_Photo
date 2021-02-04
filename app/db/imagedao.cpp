@@ -2,6 +2,7 @@
 
 #include "QDebug"
 #include "QSqlError"
+#include "dbmanager.h"
 
 bool ImageDAO::exist(Image &image)
 {
@@ -22,11 +23,16 @@ bool ImageDAO::save(Image &image)
         qWarning("Image rating should be between 0 and 5, rounding to 5");
     }
 
+    bool success = true;
     if (exist(image)) {
-        return update(image);
+        success &= update(image);
     } else {
-        return create(image);
+        success &= create(image);
     }
+
+    success &= DBManager::getTagDao().saveImageTags(image);
+
+    return success;
 }
 
 bool ImageDAO::saveAll(Image images[])
@@ -107,7 +113,9 @@ bool ImageDAO::remove(Image &image)
         return false;
     }
 
-    return query.numRowsAffected() == 1;
+    bool success = query.numRowsAffected() == 1;
+    success &= DBManager::getTagDao().removeImageTags(image);
+    return success;
 }
 
 QList<Image> ImageDAO::getAll()
@@ -143,6 +151,11 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     img.height = record.value("Height").toInt();
     img.rating = record.value("Rating").toInt();
     img.comment = record.value("Comment").toString();
+
+    TagDAO tagDao = DBManager::getTagDao();
+    img.feelingTags = tagDao.getFeelingTags(img);
+    img.descriptiveTags = tagDao.getDescriptiveTags(img);
+    img.categoryTags = tagDao.getCategoryTags(img);
 
     return img;
 }
