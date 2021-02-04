@@ -14,6 +14,6 @@ public:
     ~MainWindow();
 
 protected slots:
-    void test_change();
+    void onClose();
 };
 #endif // MAINWINDOW_H
