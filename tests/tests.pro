@@ -12,16 +12,14 @@ HEADERS += \
     tst_dbmanager.h \
     tst_directorydao.h \
     tst_imagedao.h \
-    tst_tagdao.h \
-    tst_taglist.h
+    tst_tagdao.h
 
 SOURCES += \
     main.cpp \
     tst_dbmanager.cpp \
     tst_directorydao.cpp \
     tst_imagedao.cpp \
-    tst_tagdao.cpp \
-    tst_taglist.cpp
+    tst_tagdao.cpp
 
 #----------------------------------------------
 # Include the header and sources of the app
@@ -42,7 +40,6 @@ SOURCES += \
     $$APP/db/tagdao.cpp \
     $$APP/db/directorydao.cpp \
     $$APP/model/tag.cpp \
-    $$APP/model/taglist.cpp \
     $$APP/model/image.cpp \
     $$APP/model/directory.cpp
 

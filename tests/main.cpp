@@ -1,7 +1,6 @@
 #include <QtTest>
 
 #include "dbtest.h"
-#include "tst_taglist.h"
 #include "tst_tagdao.h"
 #include "tst_dbmanager.h"
 #include "tst_imagedao.h"
@@ -18,7 +17,6 @@ int main(int argc, char *argv[])
         delete test;
     };
 
-    RUN_TEST(new TagListTest());
     RUN_TEST(new DBManagerTest());
     RUN_TEST(new TagDAOTest());
     RUN_TEST(new DirectoryDAOTest());
