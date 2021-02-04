@@ -4,6 +4,9 @@
 #include "QFileDialog"
 #include "iostream"
 
+#include "db/db.h"
+#include "model/image.h"
+
 using namespace std;
 
 
@@ -36,18 +39,24 @@ QFileInfoList ImageFinder::getImagesList() const
                 if (fileInfo.isDir()) {
                     queue.enqueue(fileInfo.absoluteFilePath());
                 } else {
-                    files.append(fileInfo);
+                    QImage q_img (fileInfo.absoluteFilePath());
+                    if (!q_img.isNull()) {
+                        files.append(fileInfo);
+                    }
                 }
             }
         }
 
-    for (QFileInfo fic : files)
+    for (const QFileInfo &fic : files)
     {
+        Image img(fic);
+        img.categoryTags.append(Tag("meme", "#ff0000"));
+        img.feelingTags.append(Tag("fun", "#00ff00"));
+        img.descriptiveTags.append(Tag("yes", "#0000ff"));
+        DB::getImageDao().save(img);
         cout << fic.baseName().toStdString() << endl;
     }
+
     return files;
-
-
-
 }
 
