@@ -31,9 +31,9 @@ void TagDAOTest::test_save()
     QVERIFY(tag_3 == tags[2]);
 
     tag_1.color = "#ff0000";
-    QVERIFY(tag_1 != tags[0]);
+    QVERIFY(!tag_1.equal(tags[0]));
     tag_2.color = "#00ff00";
-    QVERIFY(tag_2 != tags[1]);
+    QVERIFY(!tag_2.equal(tags[1]));
 
     tagDao.saveAll({tag_1, tag_2});
 

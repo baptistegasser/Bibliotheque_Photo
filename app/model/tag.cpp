@@ -30,3 +30,12 @@ Tag::operator QString() const {
     QString s = QString("{ Value: %1, Color: %2 }").arg(value, color);
     return s;
 }
+
+QString Tag::listToQString(const QList<Tag> list)
+{
+    QString s;
+    for (const Tag &tag : list) {
+        s += tag + ", ";
+    }
+    return s;
+}

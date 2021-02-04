@@ -15,6 +15,7 @@ public:
 
 private:
     QList<Image> images;
+    void COMPARE_IMAGES(QList<Image> l1, QList<Image> l2);
 
 private slots:
     void init();

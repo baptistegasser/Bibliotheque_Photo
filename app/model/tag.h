@@ -20,6 +20,7 @@ public:
     bool operator== (const Tag& tag) const;
     bool operator!= (const Tag& tag) const;
     operator QString() const;
+    static QString listToQString(const QList<Tag> list);
 };
 
 #endif // TAG_H

@@ -174,44 +174,45 @@ bool TagDAO::saveImageTags(const Image &img)
 bool TagDAO::saveImageTags(const Image &img, const QList<Tag> tags, QString table)
 {
     const QList<Tag> current = getImageTags(img, table);
+    saveAll(tags);
 
-    QVariantList toInsert;
-    QVariantList toRemove;
+    QList<Tag> toInsert;
+    QList<Tag> toRemove;
 
     for (const Tag &t : tags) {
         if (!current.contains(t)) {
-            toInsert << t.value;
+            toInsert << t;
         }
     }
     for (const Tag &t : current) {
         if (!tags.contains(t)) {
-            toRemove << t.value;
+            toRemove << t;
         }
     }
 
     bool success = true;
 
-    if (!toInsert.isEmpty()) {
+    for (const Tag &t : toInsert) {
         QSqlQuery query = getNewQuery();
         query.prepare(QString("INSERT INTO %1 (ImgPath, TagValue) VALUES(?, ?);").arg(table));
         query.addBindValue(img.path);
-        query.addBindValue(toInsert);
+        query.addBindValue(t.value);
 
-        if (!query.execBatch()) {
+        if (!query.exec()) {
             qWarning() << "Inserting image tags failed" << img << table;
             qCritical() << query.lastError().text();
             success = false;
         }
     }
 
-    if (!toRemove.isEmpty()) {
+    for (const Tag &t : toRemove) {
         QSqlQuery query = getNewQuery();
-        query.prepare(QString("DELETE FROM %1 WHERE ImgPath = ? AND TagValue = ?").arg(table));
+        query.prepare(QString("INSERT INTO %1 (ImgPath, TagValue) VALUES(?, ?);").arg(table));
         query.addBindValue(img.path);
-        query.addBindValue(toRemove);
+        query.addBindValue(t.value);
 
-        if (!query.execBatch()) {
-            qWarning() << "Cleaning image tags failed" << img << table;
+        if (!query.exec()) {
+            qWarning() << "Inserting image tags failed" << img << table;
             qCritical() << query.lastError().text();
             success = false;
         }
@@ -222,13 +223,13 @@ bool TagDAO::saveImageTags(const Image &img, const QList<Tag> tags, QString tabl
 
 bool TagDAO::removeImageTags(const Image &img)
 {
-    bool success = true;
     QList<QString> tables = {
         "ImageFeeling",
         "ImageDescriptive",
         "ImageCategory"
     };
 
+    bool success = true;
     for (const QString &t : tables) {
         QSqlQuery query = getNewQuery();
         query.prepare(QString("DELETE FROM %1 WHERE ImgPath = ?").arg(t));
@@ -239,8 +240,6 @@ bool TagDAO::removeImageTags(const Image &img)
             qCritical() << query.lastError().text();
             success &= false;
         }
-
-        success &= query.numRowsAffected() != 0;
     }
 
     return success;

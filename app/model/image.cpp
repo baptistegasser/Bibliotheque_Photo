@@ -22,7 +22,7 @@ Image::Image(QFileInfo infos) : Image()
     path = infos.absoluteFilePath();
 
     if (!infos.exists()) {
-        qCritical("The given file don't exist");
+        //qCritical("The given file don't exist");
         return;
     }
 
@@ -65,5 +65,19 @@ bool Image::operator!= (const Image& img) const
 
 Image::operator QString() const
 {
-    return QString("{ Path: %1 }").arg(path);
+    QString s("{\n\tpath: %path%\n\tname: %name%\n\tsize: %size%, width: %width%, height: %height%, rating: %rating%\n\tcomment: %comment%\n\tfeelingTags: { %feelingTags% }\n\tdescriptiveTags: { %descriptiveTags% }\n\tcategoryTags: { %categoryTags% }\n}");
+
+    s.replace("\t", "    ");
+    s.replace("%path%", path);
+    s.replace("%name%", name);
+    s.replace("%size%", QString::number(size));
+    s.replace("%width%", QString::number(width));
+    s.replace("%height%", QString::number(height));
+    s.replace("%rating%", QString::number(rating));
+    s.replace("%comment%", comment);
+    s.replace("%feelingTags%", Tag::listToQString(feelingTags));
+    s.replace("%descriptiveTags%", Tag::listToQString(descriptiveTags));
+    s.replace("%categoryTags%", Tag::listToQString(categoryTags));
+
+    return s;
 }

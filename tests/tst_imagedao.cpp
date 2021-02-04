@@ -2,6 +2,19 @@
 
 #include "db/imagedao.h"
 
+void ImageDAOTest::COMPARE_IMAGES(QList<Image> actual, QList<Image> expected)
+{
+    for (const Image &img : actual) {
+        int i = expected.indexOf(img);
+        QVERIFY2(i != -1, "Image in l1 not present in l2");
+
+        if (!img.equal(expected.at(i))) {
+            qDebug().noquote() << "\nActual:" << img << "\n" << "\nExpected:" << expected.at(i);
+            QVERIFY2(img.equal(expected.at(i)), "Image in l1 not equal to image in l2");
+        }
+    }
+}
+
 void ImageDAOTest::init()
 {
     DBTest::init();
@@ -12,6 +25,10 @@ void ImageDAOTest::init()
         Image("/fake/path/04"),
         Image("/fake/path/05"),
     };
+
+    images[0].feelingTags = { Tag("first feel") };
+    images[0].descriptiveTags = { Tag("first descr") };
+    images[0].categoryTags = { Tag("first cat") };
 }
 
 void ImageDAOTest::cleanup()
@@ -42,20 +59,23 @@ void ImageDAOTest::test_creation()
     QVERIFY(imageDao.saveAll(images.mid(3)));
     QCOMPARE(imageDao.getAll().size(), 5);
 
-    QCOMPARE(imageDao.getAll(), images);
+    COMPARE_IMAGES(imageDao.getAll(), images);
 }
 
 void ImageDAOTest::test_update()
 {
     ImageDAO imageDao = DBManager::getImageDao();
+    imageDao.save(images[0]);
+    COMPARE_IMAGES(imageDao.getAll(), {images[0]});
+
     // Insert datas
     QVERIFY(imageDao.saveAll(images));
-    QCOMPARE(imageDao.getAll(), images);
+    COMPARE_IMAGES(imageDao.getAll(), images);
 
     // Change a dir strategy and save
     images[0].name = "Custom name";
     QVERIFY(imageDao.save(images[0]));
-    QCOMPARE(imageDao.getAll(), images);
+    COMPARE_IMAGES(imageDao.getAll(), images);
 
     // A valid update always success even when not changing anything
     images[4].name = images[4].name;
@@ -68,11 +88,11 @@ void ImageDAOTest::test_remove()
     ImageDAO imageDao = DBManager::getImageDao();
     // Insert datas
     QVERIFY(imageDao.saveAll(images));
-    QCOMPARE(imageDao.getAll(), images);
+    COMPARE_IMAGES(imageDao.getAll(), images);
 
     QVERIFY(imageDao.remove(images[0]));
     QCOMPARE(imageDao.getAll().size(), images.size()-1);
-    QCOMPARE(imageDao.getAll(), images.mid(1));
+    COMPARE_IMAGES(imageDao.getAll(), images.mid(1));
 
     // Deleting something already deleted
     QVERIFY(imageDao.remove(images[0]) == false);
