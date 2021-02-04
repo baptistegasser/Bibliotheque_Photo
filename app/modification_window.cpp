@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "QPushButton"
+#include "qinputcustom.h"
 
 Modification_window::Modification_window(QWidget *parent) :
     QWidget(parent)
@@ -54,11 +55,7 @@ void Modification_window::resizeImage(int w, int h)
 
 void Modification_window::openResizeDialog()
 {
-  bool done;
-  QString input = QInputDialog::getText(this,tr("Redimmensionner la photo"),tr("Width/Height"),QLineEdit::Normal,nullptr,&done);
-  if (done)
-  {
-      QStringList values = input.split('/');
-      resizeImage(values.at(0).toInt(),values.at(1).toInt());
-  }
+    QInputCustom input(this,2,{"Largeur","Hauteur"});
+    QStringList list = input.getStrings();
+    resizeImage(list[0].toInt(),list[1].toInt());
 }
