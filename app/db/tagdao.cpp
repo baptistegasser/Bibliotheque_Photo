@@ -207,12 +207,12 @@ bool TagDAO::saveImageTags(const Image &img, const QList<Tag> tags, QString tabl
 
     for (const Tag &t : toRemove) {
         QSqlQuery query = getNewQuery();
-        query.prepare(QString("INSERT INTO %1 (ImgPath, TagValue) VALUES(?, ?);").arg(table));
+        query.prepare(QString("DELETE FROM %1 WHERE ImgPath = ? AND TagValue = ?;").arg(table));
         query.addBindValue(img.path);
         query.addBindValue(t.value);
 
         if (!query.exec()) {
-            qWarning() << "Inserting image tags failed" << img << table;
+            qWarning() << "Removing image tags failed" << img << table;
             qCritical() << query.lastError().text();
             success = false;
         }
