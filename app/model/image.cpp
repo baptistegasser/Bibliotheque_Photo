@@ -11,6 +11,14 @@ Image::Image()
     height = 0;
     rating = 0;
     comment = "";
+    resized = false;
+    res_width = 0;
+    res_height = 0;
+    cropped = false;
+    crop_x = 0;
+    crop_y = 0;
+    crop_width = 0;
+    crop_height = 0;
 }
 
 Image::Image(QString path) : Image(QFileInfo(path))

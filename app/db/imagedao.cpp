@@ -62,14 +62,23 @@ bool ImageDAO::saveAll(QList<Image> images)
 bool ImageDAO::create(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("INSERT INTO Image(\"Path\", Name, \"Size\", Width, Height, Rating, Comment) VALUES(?, ?, ?, ?, ?, ?, ?);");
-    query.bindValue(0, image.path);
-    query.bindValue(1, image.name);
-    query.bindValue(2, image.size);
-    query.bindValue(3, image.width);
-    query.bindValue(4, image.height);
-    query.bindValue(5, image.rating);
-    query.bindValue(6, image.comment);
+    query.prepare("INSERT INTO Image (\"Path\", Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+
+    query.addBindValue(image.path);
+    query.addBindValue(image.name);
+    query.addBindValue(image.size);
+    query.addBindValue(image.width);
+    query.addBindValue(image.height);
+    query.addBindValue(image.rating);
+    query.addBindValue(image.comment);
+    query.addBindValue(image.resized);
+    query.addBindValue(image.res_width);
+    query.addBindValue(image.res_height);
+    query.addBindValue(image.cropped);
+    query.addBindValue(image.crop_x);
+    query.addBindValue(image.crop_y);
+    query.addBindValue(image.crop_width);
+    query.addBindValue(image.crop_height);
 
     if (!query.exec()) {
         qWarning() << "Creating image failed" << image;
@@ -83,14 +92,22 @@ bool ImageDAO::create(Image &image)
 bool ImageDAO::update(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("UPDATE Image SET Name = ?, \"Size\" = ?, Width = ?, Height = ?, Rating = ?, Comment = ? WHERE \"Path\" = ?;");
-    query.bindValue(0, image.name);
-    query.bindValue(1, image.size);
-    query.bindValue(2, image.width);
-    query.bindValue(3, image.height);
-    query.bindValue(4, image.rating);
-    query.bindValue(5, image.comment);
-    query.bindValue(6, image.path);
+    query.prepare("UPDATE Image SET Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=? WHERE \"Path\"=?;");
+    query.addBindValue(image.name);
+    query.addBindValue(image.size);
+    query.addBindValue(image.width);
+    query.addBindValue(image.height);
+    query.addBindValue(image.rating);
+    query.addBindValue(image.comment);
+    query.addBindValue(image.resized);
+    query.addBindValue(image.res_width);
+    query.addBindValue(image.res_height);
+    query.addBindValue(image.cropped);
+    query.addBindValue(image.crop_x);
+    query.addBindValue(image.crop_y);
+    query.addBindValue(image.crop_width);
+    query.addBindValue(image.crop_height);
+    query.addBindValue(image.path);
 
     if (!query.exec()) {
         qWarning() << "Updating image failed" << image;
@@ -151,6 +168,14 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     img.height = record.value("Height").toInt();
     img.rating = record.value("Rating").toInt();
     img.comment = record.value("Comment").toString();
+    img.resized = record.value("Resized").toBool();
+    img.res_width = record.value("ResWidth").toInt();
+    img.res_height = record.value("ResHeight").toInt();
+    img.cropped = record.value("Cropped").toBool();
+    img.crop_x = record.value("CropX").toInt();
+    img.crop_y = record.value("CropY").toInt();
+    img.crop_width = record.value("CropWidth").toInt();
+    img.crop_height = record.value("CropHeight").toInt();
 
     TagDAO tagDao = DB::getTagDao();
     img.feelingTags = tagDao.getFeelingTags(img);

@@ -23,6 +23,16 @@ public:
     QList<Tag> categoryTags;    // Tags relative to general/abstract aspect of an image
     QList<Tag> descriptiveTags; // Tags that describe precisly the image content
 
+    bool resized;     // Is this image resized
+    float res_width;  // The resize width
+    float res_height; // The resize height
+
+    bool cropped;       // Is this image cropped ?
+    float crop_x;       // The X position of the top left corner of the rectangle
+    float crop_y;       // The Y position of the top left corner of the rectangle
+    float crop_width;   // The crop' rectangle width
+    float crop_height;  // The crop' rectangle height
+
     Image();
     Image(QString path);
     Image(QFileInfo infos);
