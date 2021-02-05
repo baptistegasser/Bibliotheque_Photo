@@ -22,6 +22,7 @@ SOURCES += \
     model/tag.cpp \
     modification_window.cpp \
     photocard.cpp \
+    qinputcustom.cpp \
     tagbutton.cpp
 
 HEADERS += \
@@ -38,6 +39,7 @@ HEADERS += \
     model/tag.h \
     modification_window.h \
     photocard.h \
+    qinputcustom.h \
     tagbutton.h
 
 FORMS += \
