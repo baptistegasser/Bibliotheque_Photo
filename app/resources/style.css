@@ -2,6 +2,9 @@
 *{
     font-family: 'Open Sans', sans-serif;
 }
+QMainWindow#MainWindow{
+    background-color: #FFFFFF;
+}
 /*******************/
 /*    photoCard    */
 /*******************/

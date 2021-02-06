@@ -51,7 +51,7 @@ void photoCard::setImage(Image *image)
     int height = image->height;
     int width = image->width;
     float ratio = height/width;
-    ui->photo->setMinimumHeight(ui->photo->width()*ratio);
+    ui->photo->setMinimumHeight(ui->photo->width()*ratio+30);
     ui->photo->setStyleSheet("border-image: url("+image->path+") 0 0 0 0 stretch stretch;");
 
     QVector<int> rgb = this->image->main_color;
