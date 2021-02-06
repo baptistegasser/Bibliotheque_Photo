@@ -161,32 +161,19 @@
        </widget>
       </item>
       <item>
-       <widget class="QScrollArea" name="desc_scroll">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
+       <widget class="QFrame" name="desc_frame">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>30</height>
+          <height>40</height>
          </size>
         </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>300</width>
-           <height>28</height>
-          </rect>
-         </property>
-        </widget>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
        </widget>
       </item>
       <item>

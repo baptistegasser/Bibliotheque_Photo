@@ -30,12 +30,23 @@ photoCard::photoCard(QWidget *parent, Image *image) :
     TagButton * tagbutton = new TagButton(nullptr);
     TagButton * tagbutton2 = new TagButton(nullptr);
     TagButton * tagbutton3 = new TagButton(nullptr);
+    TagButton * tagbutton4 = new TagButton(nullptr);
 
     tagbutton->setMinimumWidth(70);
     tagbutton2->setMinimumWidth(70);
     tagbutton3->setMinimumWidth(70);
+    tagbutton4->setMinimumWidth(70);
 
-    QHBoxLayout *layout = new QHBoxLayout(ui->desc_scroll);
+    QScrollArea * area_scroll = new QScrollArea( ui->desc_frame );
+    area_scroll->setGeometry(0, 0, 250, 40);
+    area_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    area_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    area_scroll->setWidgetResizable(true);
+
+    QWidget *area = new QWidget();
+    QHBoxLayout *layout = new QHBoxLayout(area);
+
+    area_scroll->setWidget(area);
 
     /*
     for(int i(0); i < image->feelingTags.size(); i++){
@@ -48,14 +59,7 @@ photoCard::photoCard(QWidget *parent, Image *image) :
     layout->addWidget(tagbutton);
     layout->addWidget(tagbutton2);
     layout->addWidget(tagbutton3);
-
-     QWidget *area = new QWidget(ui->desc_scroll);
-     area->setLayout(layout);
-     ui->desc_scroll->setWidget(area);
-     ui->desc_scroll->setWidgetResizable(true);
-
-     ui->desc_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-     ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    layout->addWidget(tagbutton4);
 }
 
 photoCard::~photoCard()
