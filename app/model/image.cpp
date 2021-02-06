@@ -10,7 +10,7 @@ Image::Image()
     size = 0;
     width = 0;
     height = 0;
-    rating = 0;
+    rating = 2;
     comment = "";
     resized = false;
     res_width = 0;

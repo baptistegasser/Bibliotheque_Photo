@@ -14,8 +14,6 @@ photoCard::photoCard(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //if (img.load(image->path)) ui->photo->setStyleSheet("background-image: url('"+image->path+"')");
-
     QPalette pal = palette();
     pal.setColor(QPalette::Background, Qt::white);
     setAutoFillBackground(true);
@@ -29,30 +27,15 @@ photoCard::photoCard(QWidget *parent) :
 
     ui->photo->setGraphicsEffect(effect);
 
-    TagButton * tagbutton = new TagButton(nullptr);
-    TagButton * tagbutton2 = new TagButton(nullptr);
-    TagButton * tagbutton3 = new TagButton(nullptr);
-    TagButton * tagbutton4 = new TagButton(nullptr);
-
-    tagbutton->setMinimumWidth(70);
-    tagbutton2->setMinimumWidth(70);
-    tagbutton3->setMinimumWidth(70);
-    tagbutton4->setMinimumWidth(70);
-
+    /*
     QScrollArea * area_scroll = new QScrollArea( ui->desc_frame );
     area_scroll->setGeometry(0, 0, 200, 40);
-    area_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    area_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     area_scroll->setWidgetResizable(true);
 
-    QWidget *area = new QWidget();
-    QHBoxLayout *layout = new QHBoxLayout(area);
+    QHBoxLayout * layout = new QHBoxLayout(area);
 
     layout->setGeometry(QRect(0,0, 300, 50));
 
-    area_scroll->setWidget(area);
-
-    /*
     for(int i(0); i < image->feelingTags.size(); i++){
         TagButton * tagbutton = new TagButton(nullptr);
         tagbutton->setTag(image->feelingTags[i]);
@@ -60,12 +43,10 @@ photoCard::photoCard(QWidget *parent) :
     }
     */
 
-    layout->addWidget(tagbutton);
-    layout->addWidget(tagbutton2);
-    layout->addWidget(tagbutton3);
-    layout->addWidget(tagbutton4);
 }
-void photoCard::setImage(Image *image){
+
+void photoCard::setImage(Image *image)
+{
     this->image = image;
     int height = image->height;
     int width = image->width;
@@ -75,6 +56,73 @@ void photoCard::setImage(Image *image){
 
     QVector<int> rgb = this->image->main_color;
     ui->main_color_frame->setStyleSheet("border-image: none; background-color: rgb("+QString::number(rgb[0])+','+QString::number(rgb[1])+','+QString::number(rgb[2])+")");
+
+    showDescriptionTags();
+    showRateStars();
+
+}
+
+
+void photoCard::showDescriptionTags()
+{
+    QHBoxLayout * grid_layout = new QHBoxLayout();
+    QWidget * area = new QWidget();
+
+    TagButton * tagbutton = new TagButton(area);
+    TagButton * tagbutton2 = new TagButton(area);
+    TagButton * tagbutton3 = new TagButton(area);
+    TagButton * tagbutton4 = new TagButton(area);
+
+    tagbutton->setMinimumWidth(70);
+    tagbutton2->setMinimumWidth(70);
+    tagbutton3->setMinimumWidth(70);
+    tagbutton4->setMinimumWidth(70);
+
+    grid_layout->addWidget(tagbutton);
+    grid_layout->addWidget(tagbutton2);
+    grid_layout->addWidget(tagbutton3);
+    grid_layout->addWidget(tagbutton4);
+
+    ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->desc_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    area->setLayout(grid_layout);
+
+    ui->desc_scroll->setWidget(area);
+}
+
+void photoCard::showRateStars()
+{
+    QString fill = "border-image: url(:/image/resources/star_fill.png) 0 0 0 0 stretch stretch;";
+    switch (image->rating) {
+        case 1:
+            ui->star1_frame->setStyleSheet(fill);
+            break;
+        case 2:
+            ui->star1_frame->setStyleSheet(fill);
+            ui->star2_frame->setStyleSheet(fill);
+            break;
+        case 3:
+            ui->star1_frame->setStyleSheet(fill);
+            ui->star2_frame->setStyleSheet(fill);
+            ui->star3_frame->setStyleSheet(fill);
+            break;
+        case 4:
+            ui->star1_frame->setStyleSheet(fill);
+            ui->star2_frame->setStyleSheet(fill);
+            ui->star3_frame->setStyleSheet(fill);
+            ui->star4_frame->setStyleSheet(fill);
+            break;
+        case 5:
+            ui->star1_frame->setStyleSheet(fill);
+            ui->star2_frame->setStyleSheet(fill);
+            ui->star3_frame->setStyleSheet(fill);
+            ui->star4_frame->setStyleSheet(fill);
+            ui->star5_frame->setStyleSheet(fill);
+            break;
+        default:
+            break;
+    }
 }
 
 photoCard::~photoCard()

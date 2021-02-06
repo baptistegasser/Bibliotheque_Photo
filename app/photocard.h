@@ -20,6 +20,8 @@ public:
 private:
     Ui::photoCard *ui;
     Image *image;
+    void showDescriptionTags();
+    void showRateStars();
 };
 
 #endif // PHOTOCARD_H

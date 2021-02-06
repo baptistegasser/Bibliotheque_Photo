@@ -12,9 +12,10 @@ QWidget#photoCard QFrame#photo{
     border-radius: 15px;
 }
 QWidget#photoCard QFrame#photo QFrame#main_color_frame{
-    border: 1px solid black;
+    border: 0.5px solid black;
     border-radius: 10px;
     background-color: red;
+    margin: 0px 4px 0px 0px;
 }
 QWidget#photoCard QLabel{
     color: #B3B2B2;
