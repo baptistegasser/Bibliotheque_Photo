@@ -4,6 +4,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMainWindow>
+#include <QScrollArea>
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -15,5 +16,6 @@ public:
 
 protected slots:
     void onClose();
+    void showSearchMenu(QString s);
 };
 #endif // MAINWINDOW_H
