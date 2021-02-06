@@ -13,7 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
     connect(_search_Text, &QLineEdit::textChanged, this, &MainWindow::showSearchMenu);
 
+    Image *image = new Image(":/image/resources/example.jpg");
     photoCard *pC = new photoCard(this);
+    pC->setImage(image);
     _my_stack->addWidget(pC);
     pC->show();
 

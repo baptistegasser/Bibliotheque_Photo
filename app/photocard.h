@@ -13,7 +13,8 @@ class photoCard : public QWidget
     Q_OBJECT
 
 public:
-    explicit photoCard(QWidget *parent = nullptr, Image *image = nullptr);
+    photoCard(QWidget *parent = nullptr);
+    void setImage(Image *image);
     ~photoCard();
 
 private:

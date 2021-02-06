@@ -1,6 +1,7 @@
 #include "image.h"
 
 #include <QImage>
+#include <iostream>
 
 Image::Image()
 {
@@ -23,6 +24,18 @@ Image::Image()
 
 Image::Image(QString path) : Image(QFileInfo(path))
 {
+    this->path = path;
+
+    QImage q_img (path);
+    if (q_img.isNull()) {
+        qCritical("The given file is not a valid image");
+        return;
+    }
+
+    width = q_img.width();
+    height = q_img.height();
+
+    main_color = this->get_mean_rgb();
 }
 
 Image::Image(QFileInfo infos) : Image()
@@ -45,6 +58,8 @@ Image::Image(QFileInfo infos) : Image()
 
     width = q_img.width();
     height = q_img.height();
+
+    main_color = this->get_mean_rgb();
 }
 
 bool Image::equal(const Image& img) const
@@ -88,4 +103,60 @@ Image::operator QString() const
     s.replace("%categoryTags%", Tag::listToQString(categoryTags));
 
     return s;
+}
+//  Source : https://stackoverflow.com/a/61581999
+QVector<int> Image::get_mean_rgb(){
+    QImage img(path);
+    if (img.isNull()) {
+        qCritical("The given file is not a valid image");
+    }
+
+    QRgb *ct;
+    int width , height;
+    width = img.width();
+    height = img.height();
+
+    QVector<int> red(256);
+    QVector<int> green(256);
+    QVector<int> blue(256);
+    for(int i = 0 ; i < height ; i++){
+        ct = (QRgb *)img.scanLine(i);
+        for(int j = 0 ; j < width ; j++){
+            red[qRed(ct[j])]+=1;
+        }
+    }
+    for(int i = 0 ; i < height ; i++){
+        ct = (QRgb *)img.scanLine(i);
+        for(int j = 0 ; j < width ; j++){
+            green[qGreen(ct[j])]+=1;
+        }
+    }
+    for(int i = 0 ; i < height ; i++){
+        ct = (QRgb *)img.scanLine(i);
+        for(int j = 0 ; j < width ; j++){
+            blue[qBlue(ct[j])]+=1;
+        }
+    }
+
+    int red_val = this->get_max(red);
+    int green_val = get_max(green);
+    int blue_val = get_max(blue);
+
+    QVector<int> result(3);
+    result.insert(0 , red_val);
+    result.insert(1 , green_val);
+    result.insert(2 , blue_val);
+
+    return result;
+}
+int Image::get_max(QVector<int> vec){
+    int max = vec[0];
+    int index = 0;
+    for(int i = 0 ; i < 255 ; i++){
+        if(vec[i] > max){
+            max = vec[i];
+            index = i;
+        }
+    }
+    return index;
 }

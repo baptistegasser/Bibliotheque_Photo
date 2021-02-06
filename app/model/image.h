@@ -33,6 +33,8 @@ public:
     float crop_width;   // The crop' rectangle width
     float crop_height;  // The crop' rectangle height
 
+    QVector<int> main_color;  // Vector of RGB main color of the image
+
     Image();
     Image(QString path);
     Image(QFileInfo infos);
@@ -41,6 +43,10 @@ public:
     bool operator== (const Image& img) const;
     bool operator!= (const Image& img) const;
     operator QString() const;
+
+private:
+    QVector<int> get_mean_rgb();
+    int get_max(QVector<int> vec);
 };
 
 #endif // IMAGE_H

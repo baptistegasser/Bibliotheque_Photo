@@ -11,5 +11,6 @@
         <file>resources/star_half.png</file>
         <file>resources/star_empty.png</file>
         <file>resources/close.png</file>
+        <file>resources/example.jpg</file>
     </qresource>
 </RCC>
