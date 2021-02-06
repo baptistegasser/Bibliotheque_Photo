@@ -50,6 +50,10 @@ FORMS += \
 RESOURCES += \
     resources.qrc
 
+# For MacOS BigSur, when running qmake to silence warning about SDK version
+CONFIG += \
+    sdk_no_version_check
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
