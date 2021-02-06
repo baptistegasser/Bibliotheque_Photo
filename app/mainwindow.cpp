@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "photocard.h"
 
+#include <QDebug>
+
 #include "db/db.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -12,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     photoCard *pC = new photoCard(this);
     _my_stack->addWidget(pC);
     pC->show();
+
+    qDebug() << groupBox_2->contentsRect();
+    _search_Text->setGeometry(1000,10,101,31);
 }
 
 MainWindow::~MainWindow()

@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     a.setStyleSheet(styleSheet);
 
     MainWindow w;
-    w.show();
+    w.showMaximized();
 
     Modification_window win;
     win.setImage(":/image/resources/star_fill.png");
