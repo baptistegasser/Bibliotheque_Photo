@@ -3,6 +3,7 @@
 
 #include "dao.h"
 #include "model/image.h"
+#include "model/directory.h"
 #include "filter.h"
 #include "QSqlRecord"
 
@@ -17,6 +18,7 @@ public:
     bool saveAll(QList<Image> images);
     bool remove(Image &image);
     QList<Image> getAll();
+    QList<Image> getInDir(const Directory &dir);
     QList<Image> search(Filter filter);
 
 private:

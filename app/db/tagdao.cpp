@@ -136,7 +136,7 @@ QList<Tag> TagDAO::search(QString key)
     QSqlQuery query = getNewQuery();
     query.prepare("SELECT * FROM Tag WHERE Value = :key OR Value LIKE :search;");
     query.bindValue(":key", key);
-    query.bindValue(":search", "%" + key + "%");
+    query.bindValue(":search", key + "%");
 
     if (!query.exec()) {
         qWarning("Failed to search tags");

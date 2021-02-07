@@ -153,6 +153,27 @@ QList<Image> ImageDAO::getAll()
     return result;
 }
 
+QList<Image> ImageDAO::getInDir(const Directory &dir)
+{
+    QList<Image> result;
+
+    QSqlQuery query = getNewQuery();
+    query.prepare("SELECT * FROM Image WHERE \"Path\" LIKE ?;");
+    query.addBindValue(dir.absolutePath() + "%");
+
+    if (!query.exec()) {
+        qWarning() << "Failed to search images in dir" << dir;
+        qCritical() << query.lastError().text();
+        return result;
+    }
+
+    while (query.next()) {
+        result.append(fromRecord(query.record()));
+    }
+
+    return result;
+}
+
 QList<Image> ImageDAO::search(Filter filter)
 {
     return QList<Image>();
