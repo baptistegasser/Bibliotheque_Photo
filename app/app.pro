@@ -14,6 +14,7 @@ SOURCES += \
     db/filter.cpp \
     db/imagedao.cpp \
     db/tagdao.cpp \
+    foldertreeview.cpp \
     imagefinder.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     db/filter.h \
     db/imagedao.h \
     db/tagdao.h \
+    foldertreeview.h \
     imagefinder.h \
     mainwindow.h \
     model/directory.h \
