@@ -13,4 +13,9 @@
         <file>resources/close.png</file>
         <file>resources/example.jpg</file>
     </qresource>
+    <qresource prefix="/icon">
+        <file alias="folder_closed">resources/folder_closed.png</file>
+        <file alias="folder_open">resources/folder_open.png</file>
+        <file alias="image_frame">resources/image_frame.png</file>
+    </qresource>
 </RCC>
