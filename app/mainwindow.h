@@ -16,6 +16,9 @@ public:
 
 protected slots:
     void onClose();
-    void showSearchMenu(QString s);
+    void constructSearchBar(QString s);
+
+private:
+    bool isCleared;
 };
 #endif // MAINWINDOW_H
