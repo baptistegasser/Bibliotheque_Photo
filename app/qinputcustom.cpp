@@ -5,7 +5,7 @@
 #include "iostream"
 
 
-QInputCustom::QInputCustom(QWidget * parent, int numInput, QList<QString> texts) : QDialog(parent)
+QInputCustom::QInputCustom(QWidget * parent, int numInput, QList<QString> texts,QList<QString> preTexts) : QDialog(parent)
 {
     QFormLayout *main = new QFormLayout(this);
     for (int i = 0;i< numInput ;i++)
@@ -13,6 +13,7 @@ QInputCustom::QInputCustom(QWidget * parent, int numInput, QList<QString> texts)
 
         QLabel *label = new QLabel(QString(texts[i]),this);
         QLineEdit *line = new QLineEdit(this);
+        line->setText(preTexts[i]);
         main->addRow(label,line);
         fields.append(line);
     }

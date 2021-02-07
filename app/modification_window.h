@@ -3,20 +3,21 @@
 
 #include "ui_modification_window.h"
 #include "QFileInfo"
+#include "model/image.h"
 
 class Modification_window : public QWidget, private Ui::modification_window
 {
     Q_OBJECT
 private:
-    QLabel _my_image;
-    QFileInfo img;
+    Image img;
+    QLabel _frame;
 
 public:
-    explicit Modification_window(QWidget *parent = nullptr);
-    void setImage(QImage image);
-    void setImage(char* path);
+    explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);
+    void setImage();
     void setQFileInfo(QFileInfo img);
     void resizeImage(int w, int h);
+    void backToOriginal();
 
 
 
