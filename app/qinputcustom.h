@@ -9,7 +9,7 @@
 class QInputCustom : public QDialog
 {
 public:
-    QInputCustom(QWidget *parent = nullptr, int num = 1, QList<QString> texts = {});
+    QInputCustom(QWidget *parent = nullptr, int num = 1, QList<QString> texts = {},QList<QString> preTexts = {});
     QStringList getStrings();
 
 private:

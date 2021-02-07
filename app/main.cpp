@@ -33,15 +33,16 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.showMaximized();
 
-    Modification_window win;
-    win.setImage(":/image/resources/star_fill.png");
+    ImageFinder img;
+    img.getImagesList();
+
+    Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));
     win.show();
 
     /*photoCard pC;
     pC.show();*/
 
-    /*ImageFinder img;
-    img.getImagesList();*/
+
 
     return a.exec();
 }
