@@ -123,22 +123,12 @@ QVector<int> Image::get_mean_rgb(){
         ct = (QRgb *)img.scanLine(i);
         for(int j = 0 ; j < width ; j++){
             red[qRed(ct[j])]+=1;
-        }
-    }
-    for(int i = 0 ; i < height ; i++){
-        ct = (QRgb *)img.scanLine(i);
-        for(int j = 0 ; j < width ; j++){
             green[qGreen(ct[j])]+=1;
-        }
-    }
-    for(int i = 0 ; i < height ; i++){
-        ct = (QRgb *)img.scanLine(i);
-        for(int j = 0 ; j < width ; j++){
             blue[qBlue(ct[j])]+=1;
         }
     }
 
-    int red_val = this->get_max(red);
+    int red_val = get_max(red);
     int green_val = get_max(green);
     int blue_val = get_max(blue);
 

@@ -7,22 +7,22 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QScrollArea>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
     connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
-    connect(_search_Text, &QLineEdit::textChanged, this, &MainWindow::showSearchMenu);
+    connect(_search_comboBox, &QComboBox::currentTextChanged, this, &MainWindow::constructSearchBar);
+
+    isCleared = false;
 
     Image *image = new Image(":/image/resources/example.jpg");
     photoCard *pC = new photoCard(this);
     pC->setImage(image);
     _my_stack->addWidget(pC);
     pC->show();
-
-    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     _dir_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     _dir_tree->displayDirs(DB::getDirectoryDao().getAll());
@@ -38,34 +38,20 @@ void MainWindow::onClose() {
     DB::close();
 }
 
-void MainWindow::showSearchMenu(QString s)
+void MainWindow::constructSearchBar(QString s)
 {
-    //Qlist Test
-    QList<Tag> listTag;
-    listTag.append(Tag("Pain"));
-    listTag.append(Tag("Patate"));
-    listTag.append(Tag("Patate douce"));
-    listTag.append(Tag("Radis"));
+    if (!isCleared) {
+        isCleared = true;
+        _search_comboBox->clear();
 
-    QGridLayout * mobile = new QGridLayout();
-    QWidget * dummy = new QWidget();
-    dummy->setStyleSheet("background-color: white;border:1px solid rgb(186,186,186); border-radius: 3px; ");
+        QList<Tag> all = DB::getTagDao().search(s);
 
-    for (int i = 0; i< listTag.size(); i++) {
-        QPushButton * button = new QPushButton(dummy);
-        button->setText(listTag[i].value);
-        button->setCheckable(true);
-        button->setChecked(true);
-        button->setStyleSheet("QPushButton {Text-align:left; padding: 3px; border: none} QPushButton:hover { background-color: rgb(186,186,186);border-style: inset;}");
-        mobile->addWidget(button);
+        for (int i = 0; i< all.size(); i++) {
+            _search_comboBox->addItem(all[i].value);
+        }
+         _search_comboBox->setCurrentText(s);
+        isCleared = false;
     }
-
-    dummy->setLayout(mobile);
-
-    scrollArea->setWidget(dummy);
-
-
-    qDebug() << s;
 }
 
 void MainWindow::chooseFolder()

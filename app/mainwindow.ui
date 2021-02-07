@@ -229,72 +229,28 @@ margin-left: 5px;</string>
               </spacer>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <property name="spacing">
-                <number>0</number>
+              <widget class="QComboBox" name="_search_comboBox">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
                </property>
-               <item>
-                <widget class="QLineEdit" name="_search_Text">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color:white;
+               <property name="styleSheet">
+                <string notr="true">background-color:white;
 color: black;
 border: 0.5px  solid black;
 border-radius: 5px;
-padding: 5px;</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Rechercher</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QScrollArea" name="scrollArea">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>123</width>
-                   <height>150</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border: none;</string>
-                 </property>
-                 <property name="lineWidth">
-                  <number>0</number>
-                 </property>
-                 <property name="widgetResizable">
-                  <bool>true</bool>
-                 </property>
-                 <widget class="QWidget" name="scrollAreaWidgetContents">
-                  <property name="geometry">
-                   <rect>
-                    <x>0</x>
-                    <y>0</y>
-                    <width>123</width>
-                    <height>68</height>
-                   </rect>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                 </widget>
-                </widget>
-               </item>
-              </layout>
+padding: 5px;
+</string>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <property name="currentIndex">
+                <number>-1</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
