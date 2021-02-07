@@ -42,9 +42,15 @@
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
          <widget class="QGroupBox" name="groupBox_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
-            <width>125</width>
+            <width>200</width>
             <height>0</height>
            </size>
           </property>
@@ -64,6 +70,15 @@ border-left: none;</string>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="sizeConstraint">
             <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
            <item>
             <widget class="QPushButton" name="btn_quit">
@@ -93,17 +108,59 @@ border-left: none;</string>
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <property name="bottomMargin">
+              <number>0</number>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
+             <item>
+              <widget class="QPushButton" name="_del_dir">
+               <property name="text">
+                <string>PushButton</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="_add_dir">
+               <property name="text">
+                <string>add</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="FolderTreeView" name="_dir_tree">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="dragDropMode">
+                <enum>QAbstractItemView::DropOnly</enum>
+               </property>
+               <property name="horizontalScrollMode">
+                <enum>QAbstractItemView::ScrollPerPixel</enum>
+               </property>
+               <property name="indentation">
+                <number>12</number>
+               </property>
+               <attribute name="headerVisible">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="headerStretchLastSection">
+                <bool>false</bool>
+               </attribute>
+               <column>
+                <property name="text">
+                 <string>1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -227,7 +284,7 @@ padding: 5px;</string>
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>118</width>
+                    <width>123</width>
                     <height>68</height>
                    </rect>
                   </property>
@@ -250,7 +307,7 @@ padding: 5px;</string>
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page"/>
           <widget class="QWidget" name="page_2"/>
@@ -263,6 +320,13 @@ padding: 5px;</string>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FolderTreeView</class>
+   <extends>QTreeWidget</extends>
+   <header>foldertreeview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>
@@ -274,7 +338,7 @@ padding: 5px;</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>25</x>
+     <x>21</x>
      <y>26</y>
     </hint>
     <hint type="destinationlabel">

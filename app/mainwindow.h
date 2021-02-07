@@ -17,5 +17,7 @@ public:
 protected slots:
     void onClose();
     void showSearchMenu(QString s);
+    void chooseFolder();
+    void addFolder(const QString path);
 };
 #endif // MAINWINDOW_H

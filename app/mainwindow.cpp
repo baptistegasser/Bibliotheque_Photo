@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "photocard.h"
 
-#include <QDebug>
-#include <QScrollArea>
-
 #include "db/db.h"
+#include "imagefinder.h"
+
+#include <QDebug>
+#include <QFileDialog>
+#include <QScrollArea>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    _dir_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    _dir_tree->displayDirs(DB::getDirectoryDao().getAll());
+    connect(_add_dir, &QPushButton::clicked, this, &MainWindow::chooseFolder);
+    //connect(_del_dir, &QPushButton::clicked, this, &MainWindow::removeFolder);
 }
 
 MainWindow::~MainWindow()
@@ -59,4 +66,24 @@ void MainWindow::showSearchMenu(QString s)
 
 
     qDebug() << s;
+}
+
+void MainWindow::chooseFolder()
+{
+    QString title = "Ouvrir un dossier d'images";
+    QString baseDir = "/home";
+    QFileDialog::Options options = QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks;
+
+    QString dir = QFileDialog::getExistingDirectory(this, title, baseDir, options);
+    addFolder(dir);
+}
+
+void MainWindow::addFolder(const QString path)
+{
+    Directory dir(path, Directory::INCLUDE);
+    DB::getDirectoryDao().save(dir);
+
+    ImageFinder(path).index();
+
+    _dir_tree->displayDir(dir);
 }
