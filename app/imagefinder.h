@@ -10,8 +10,9 @@ private:
     QDir rootDir;
 
 public:
-    ImageFinder();
-    QFileInfoList getImagesList() const;
+    ImageFinder(QDir dir);
+    ImageFinder(QString dirPath);
+    void index() const;
 };
 
 #endif // IMAGEFINDER_H
