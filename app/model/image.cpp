@@ -24,18 +24,6 @@ Image::Image()
 
 Image::Image(QString path) : Image(QFileInfo(path))
 {
-    this->path = path;
-
-    QImage q_img (path);
-    if (q_img.isNull()) {
-        qCritical("The given file is not a valid image");
-        return;
-    }
-
-    width = q_img.width();
-    height = q_img.height();
-
-    main_color = this->get_mean_rgb();
 }
 
 Image::Image(QFileInfo infos) : Image()
@@ -43,7 +31,7 @@ Image::Image(QFileInfo infos) : Image()
     path = infos.absoluteFilePath();
 
     if (!infos.exists()) {
-        //qCritical("The given file don't exist");
+        qCritical("The given file don't exist");
         return;
     }
 
