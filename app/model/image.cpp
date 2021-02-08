@@ -22,34 +22,6 @@ Image::Image()
     crop_height = 0;
 }
 
-Image::Image(QString path) : Image(QFileInfo(path))
-{
-}
-
-Image::Image(QFileInfo infos) : Image()
-{
-    path = infos.absoluteFilePath();
-
-    if (!infos.exists()) {
-        qCritical("The given file don't exist");
-        return;
-    }
-
-    name = infos.baseName();
-    size = infos.size();
-
-    QImage q_img (infos.absoluteFilePath());
-    if (q_img.isNull()) {
-        qCritical("The given file is not a valid image");
-        return;
-    }
-
-    width = q_img.width();
-    height = q_img.height();
-
-    main_color = this->get_mean_rgb();
-}
-
 bool Image::equal(const Image& img) const
 {
     return path == img.path &&

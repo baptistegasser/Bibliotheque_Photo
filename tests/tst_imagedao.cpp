@@ -19,12 +19,16 @@ void ImageDAOTest::init()
 {
     DBTest::init();
     images = {
-        Image("/fake/path/01"),
-        Image("/fake/path/02"),
-        Image("/fake/path/03"),
-        Image("/fake/path/04"),
-        Image("/fake/path/05"),
+        Image(),
+        Image(),
+        Image(),
+        Image(),
+        Image(),
     };
+
+    for (int i = 0; i < 5; ++i) {
+        images[i].path = "/fake/path/0" + QString::number(i);
+    }
 
     images[0].feelingTags = { Tag("first feel") };
     images[0].descriptiveTags = { Tag("first descr") };

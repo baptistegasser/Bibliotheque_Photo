@@ -62,9 +62,10 @@ bool ImageDAO::saveAll(QList<Image> images)
 bool ImageDAO::create(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("INSERT INTO Image (\"Path\", Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+    query.prepare("INSERT INTO Image (\"Path\", ParentDir, Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
     query.addBindValue(image.path);
+    query.addBindValue(image.parentDir);
     query.addBindValue(image.name);
     query.addBindValue(image.size);
     query.addBindValue(image.width);
@@ -92,7 +93,8 @@ bool ImageDAO::create(Image &image)
 bool ImageDAO::update(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("UPDATE Image SET Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=? WHERE \"Path\"=?;");
+    query.prepare("UPDATE Image SET ParentDir=?, Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=? WHERE \"Path\"=?;");
+    query.addBindValue(image.parentDir);
     query.addBindValue(image.name);
     query.addBindValue(image.size);
     query.addBindValue(image.width);
@@ -158,8 +160,8 @@ QList<Image> ImageDAO::getInDir(const Directory &dir)
     QList<Image> result;
 
     QSqlQuery query = getNewQuery();
-    query.prepare("SELECT * FROM Image WHERE \"Path\" LIKE ?;");
-    query.addBindValue(dir.absolutePath() + "%");
+    query.prepare("SELECT * FROM Image WHERE ParentDir = ?;");
+    query.addBindValue(dir.absolutePath());
 
     if (!query.exec()) {
         qWarning() << "Failed to search images in dir" << dir;
@@ -183,6 +185,7 @@ Image ImageDAO::fromRecord(QSqlRecord record)
 {
     Image img;
     img.path = record.value("Path").toString();
+    img.parentDir = record.value("ParentDir").toString();
     img.name = record.value("Name").toString();
     img.size = record.value("Size").toInt();
     img.width = record.value("Width").toInt();
