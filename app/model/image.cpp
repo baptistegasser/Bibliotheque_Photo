@@ -6,6 +6,7 @@
 Image::Image()
 {
     path = "";
+    parentDir = "";
     name = "";
     size = 0;
     width = 0;
@@ -26,6 +27,7 @@ Image::Image()
 Image::Image(const Image &img)
 {
     path = img.path;
+    parentDir = parentDir;
     name = img.name;
     size = img.size;
     width = img.width;
