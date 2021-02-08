@@ -108,7 +108,7 @@ border-left: none;</string>
             </widget>
            </item>
            <item>
-            <widget class="DirectoryManager" name="widget" native="true">
+            <widget class="DirectoryManager" name="_dir_manager" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                <horstretch>0</horstretch>

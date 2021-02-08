@@ -37,8 +37,10 @@ public:
     QVector<int> main_color;  // Vector of RGB main color of the image
 
     Image();
+    Image(const Image &img);
 
     bool equal(const Image& img) const;
+    Image operator= (const Image &img) const;
     bool operator== (const Image& img) const;
     bool operator!= (const Image& img) const;
     operator QString() const;

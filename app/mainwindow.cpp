@@ -23,13 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
     //_my_stack->addWidget(pC);
     //pC->show();
 
-    _dir_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    _dir_tree->displayDirs(DB::getDirectoryDao().getAll());
-    connect(_add_dir, &QPushButton::clicked, this, &MainWindow::chooseFolder);
-    //connect(_del_dir, &QPushButton::clicked, this, &MainWindow::removeFolder);
-
-
-
     gridLayoutPage = new QGridLayout();
     scrollAreaPage = new QScrollArea();
     vBoxPage = new QVBoxLayout();
@@ -43,8 +36,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-
-    constructImageList(DB::getDirectoryDao().getAll());
+    connect(_dir_manager, &DirectoryManager::directoryAdded, this, &MainWindow::updateImages);
+    connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
+    updateImages();
 }
 
 MainWindow::~MainWindow()
@@ -71,28 +65,6 @@ void MainWindow::constructSearchBar(QString s)
     }
 }
 
-void MainWindow::chooseFolder()
-{
-    QString title = "Ouvrir un dossier d'images";
-    QString baseDir = "/home";
-    QFileDialog::Options options = QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks;
-
-    QString dir = QFileDialog::getExistingDirectory(this, title, baseDir, options);
-    addFolder(dir);
-}
-
-void MainWindow::addFolder(const QString path)
-{
-    Directory dir(path, Directory::INCLUDE);
-    DB::getDirectoryDao().save(dir);
-
-    ImageFinder(path).index();
-
-    _dir_tree->displayDir(dir);
-
-    constructImageList(dir);
-}
-
 void MainWindow::constructImageList(Directory dir)
 {
     QLabel * label = new QLabel(scrollContent);
@@ -111,7 +83,7 @@ void MainWindow::constructImageList(Directory dir)
     int cpt = 0;
 
     for(const Image &img : images) {
-        Image *image = new Image(img.path);
+        Image *image = new Image(img);
         qDebug() << img.path;
         photoCard *pC = new photoCard(scrollContent);
         pC->setImage(image);
@@ -136,28 +108,7 @@ void MainWindow::constructImageList(QList<Directory> dirs)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void MainWindow::updateImages()
+{
+    constructImageList(DB::getDirectoryDao().getAll());
+}

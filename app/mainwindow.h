@@ -17,10 +17,9 @@ public:
 protected slots:
     void onClose();
     void constructSearchBar(QString s);
-    void chooseFolder();
-    void addFolder(const QString path);
     void constructImageList(Directory dir);
     void constructImageList(QList<Directory> dirs);
+    void updateImages();
 
 private:
     bool isCleared;

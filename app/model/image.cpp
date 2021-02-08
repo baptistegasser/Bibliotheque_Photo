@@ -20,6 +20,32 @@ Image::Image()
     crop_y = 0;
     crop_width = 0;
     crop_height = 0;
+    main_color = QVector<int>(3);
+}
+
+Image::Image(const Image &img)
+{
+    path = img.path;
+    name = img.name;
+    size = img.size;
+    width = img.width;
+    height = img.height;
+    rating = img.rating;
+    comment = img.comment;
+    resized = img.resized;
+    res_width = img.res_width;
+    res_height = img.res_height;
+    cropped = img.cropped;
+    crop_x = img.crop_x;
+    crop_y = img.crop_y;
+    crop_width = img.crop_width;
+    crop_height = img.crop_height;
+    main_color = img.main_color;
+}
+
+Image Image::operator= (const Image &img) const
+{
+    return Image(img);
 }
 
 bool Image::equal(const Image& img) const
