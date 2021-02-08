@@ -66,29 +66,38 @@ void photoCard::setImage(Image *image)
 void photoCard::showDescriptionTags()
 {
     QHBoxLayout * grid_layout = new QHBoxLayout();
-    QWidget * area = new QWidget();
+    //QWidget * area = new QWidget();
 
-    TagButton * tagbutton = new TagButton(area);
-    TagButton * tagbutton2 = new TagButton(area);
-    TagButton * tagbutton3 = new TagButton(area);
-    TagButton * tagbutton4 = new TagButton(area);
+
+    TagButton * tagbutton = new TagButton(ui->scrollAreaWidgetContents);
+    TagButton * tagbutton2 = new TagButton(ui->scrollAreaWidgetContents);
+    TagButton * tagbutton3 = new TagButton(ui->scrollAreaWidgetContents);
+    TagButton * tagbutton4 = new TagButton(ui->scrollAreaWidgetContents);
+    TagButton * tagbutton5 = new TagButton(ui->scrollAreaWidgetContents);
+    TagButton * tagbutton6 = new TagButton(ui->scrollAreaWidgetContents);
 
     tagbutton->setMinimumWidth(70);
     tagbutton2->setMinimumWidth(70);
     tagbutton3->setMinimumWidth(70);
     tagbutton4->setMinimumWidth(70);
+    tagbutton5->setMinimumWidth(70);
+    tagbutton6->setMinimumWidth(70);
+
+
 
     grid_layout->addWidget(tagbutton);
     grid_layout->addWidget(tagbutton2);
     grid_layout->addWidget(tagbutton3);
     grid_layout->addWidget(tagbutton4);
+    grid_layout->addWidget(tagbutton5);
+    grid_layout->addWidget(tagbutton6);
 
-    ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->desc_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    area->setLayout(grid_layout);
+    //ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //ui->desc_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    ui->desc_scroll->setWidget(area);
+    ui->scrollAreaWidgetContents->setLayout(grid_layout);
+    ui->desc_scroll->setWidget(ui->scrollAreaWidgetContents);
 }
 
 void photoCard::showRateStars()
