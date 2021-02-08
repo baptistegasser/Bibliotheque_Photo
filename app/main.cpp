@@ -31,18 +31,18 @@ int main(int argc, char *argv[])
     QString styleSheet = QLatin1String(file.readAll());
     a.setStyleSheet(styleSheet);
 
-    /*MainWindow w;
-    w.showMaximized();*/
+    MainWindow w;
+    w.showMaximized();
 
     /*QDir dir = QFileDialog::getExistingDirectory();
     cout << dir.path().toStdString() << endl;
     ImageFinder imgFinder (dir);
-    imgFinder.index();*/
+    imgFinder.index();
 
 
 
     Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));
-    win.show();
+    win.show();*/
 
     /*photoCard pC;
     pC.show();*/

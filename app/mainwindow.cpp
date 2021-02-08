@@ -19,10 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     isCleared = false;
 
     Image *image = new Image(":/image/resources/example.jpg");
-    photoCard *pC = new photoCard(this);
+    photoCard *pC = new photoCard(_my_stack);
     pC->setImage(image);
-    _my_stack->addWidget(pC);
-    pC->show();
+    //_my_stack->addWidget(pC);
+    //pC->show();
 
     _dir_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     _dir_tree->displayDirs(DB::getDirectoryDao().getAll());
