@@ -45,9 +45,10 @@ bool DirectoryDAO::saveAll(QList<Directory> directories)
 bool DirectoryDAO::create(Directory &directory)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("INSERT INTO Directory(\"Path\", Strategy) VALUES(?, ?);");
-    query.bindValue(0, directory.absolutePath());
-    query.bindValue(1, (int) directory.strategy);
+    query.prepare("INSERT INTO Directory(\"Path\", ParentDirPath, Strategy) VALUES(?, ?, ?);");
+    query.addBindValue(directory.absolutePath());
+    query.addBindValue(directory.parentDirPath);
+    query.addBindValue((int) directory.strategy);
 
     if (!query.exec()) {
         qWarning() << "Creating directory failed" << directory;
@@ -61,9 +62,10 @@ bool DirectoryDAO::create(Directory &directory)
 bool DirectoryDAO::update(Directory &directory)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("UPDATE Directory SET Strategy = ? WHERE \"Path\" = ?;");
-    query.bindValue(0, (int) directory.strategy);
-    query.bindValue(1, directory.absolutePath());
+    query.prepare("UPDATE Directory SET ParentDirPath=?, Strategy=? WHERE \"Path\" = ?;");
+    query.addBindValue((int) directory.strategy);
+    query.addBindValue(directory.parentDirPath);
+    query.addBindValue(directory.absolutePath());
 
     if (!query.exec()) {
         qWarning() << "Updating directory failed" << directory;
@@ -77,8 +79,9 @@ bool DirectoryDAO::update(Directory &directory)
 bool DirectoryDAO::remove(Directory &directory)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("DELETE FROM Directory WHERE \"Path\" = ?;");
-    query.bindValue(0, directory.absolutePath());
+    query.prepare("DELETE FROM Directory WHERE \"Path\" = ? OR ParentDirPath = ?;");
+    query.addBindValue(directory.absolutePath());
+    query.addBindValue(directory.absolutePath());
 
     if (!query.exec()) {
         qWarning() << "Removing directory failed" << directory;
@@ -101,10 +104,57 @@ QList<Directory> DirectoryDAO::getAll()
     }
 
     while (query.next()) {
-        QString path = query.value("Path").toString();
-        int strategy = query.value("Strategy").toInt();
-        result.append(Directory(path, static_cast<Directory::IndexingStrategy>(strategy)));
+        result << fromRecord(query.record());
     }
 
     return result;
+}
+
+Directory DirectoryDAO::fromRecord(const QSqlRecord &record)
+{
+    Directory dir;
+    dir.setPath(record.value("Path").toString());
+    dir.parentDirPath = record.value("ParentDirPath").toString();
+    dir.strategy = static_cast<Directory::IndexingStrategy>(record.value("Strategy").toInt());
+    return dir;
+}
+
+QList<Directory> DirectoryDAO::getChildDirs(const Directory &dir)
+{
+    QList<Directory> childs;
+    QSqlQuery query = getNewQuery();
+    query.prepare("SELECT * FROM Directory WHERE ParentDirPath = ?;");
+    query.addBindValue(dir.absolutePath());
+
+    if (!query.exec()) {
+        qWarning("Failed to get all child directory");
+        qCritical() << query.lastError().text();
+        return childs;
+    }
+
+    while (query.next()) {
+        childs << fromRecord(query.record());
+    }
+
+    return childs;
+}
+
+Directory DirectoryDAO::getByPath(const QString path)
+{
+    QSqlQuery query = getNewQuery();
+    query.prepare("SELECT * FROM Directory WHERE \"Path\" = ?;");
+    query.addBindValue(path);
+
+    if (!query.exec()) {
+        qWarning("Failed to get all child directory");
+        qCritical() << query.lastError().text();
+        return Directory::INVALID;
+    }
+
+
+    if (query.next()) {
+        return fromRecord(query.record());
+    } else {
+        return Directory::INVALID;
+    }
 }

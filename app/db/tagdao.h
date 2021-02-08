@@ -13,6 +13,7 @@ public:
     using DAO::DAO;
 
     bool exist(Tag &tag);
+    bool exist(QString value);
     bool save(Tag &tag);
     bool saveAll(Tag tags[]);
     bool saveAll(QList<Tag> tags);

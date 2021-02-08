@@ -4,8 +4,7 @@
 #include "modification_window.h"
 #include <iostream>
 
-#include "imagefinder.h"
-#include "QFileDialog"
+#include "dirindexer.h"
 
 #include "db/db.h"
 
@@ -37,12 +36,12 @@ int main(int argc, char *argv[])
     /*QDir dir = QFileDialog::getExistingDirectory();
     cout << dir.path().toStdString() << endl;
     ImageFinder imgFinder (dir);
-    imgFinder.index();
+    imgFinder.index();*/
 
 
 
     Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));
-    win.show();*/
+    win.show();
 
     /*photoCard pC;
     pC.show();*/

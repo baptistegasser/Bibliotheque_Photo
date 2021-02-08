@@ -17,8 +17,6 @@ public:
 protected slots:
     void onClose();
     void constructSearchBar(QString s);
-    void chooseFolder();
-    void addFolder(const QString path);
 
 private:
     bool isCleared;

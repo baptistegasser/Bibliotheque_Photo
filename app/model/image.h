@@ -11,6 +11,7 @@ class Image
 {
 public:
     QString path;       // Absolute path to the image
+    QString parentDir;  // Absolute path to the image dir
     QString name;       // The image name
     qint64 size;        // The file size in bytes
     float width;
@@ -36,8 +37,6 @@ public:
     QVector<int> main_color;  // Vector of RGB main color of the image
 
     Image();
-    Image(QString path);
-    Image(QFileInfo infos);
 
     bool equal(const Image& img) const;
     bool operator== (const Image& img) const;

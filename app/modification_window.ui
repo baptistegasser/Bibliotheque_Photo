@@ -287,7 +287,10 @@ border: 1px solid rgb(180, 179, 179);
 border-radius:5px;</string>
           </property>
           <property name="plainText">
-           <string>Ceci est un exemple de commentaire</string>
+           <string/>
+          </property>
+          <property name="placeholderText">
+           <string>Vous pouvez écrire un petit commentaire en cliquant ici</string>
           </property>
          </widget>
         </item>

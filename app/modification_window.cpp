@@ -25,10 +25,11 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_redimensionner,&QPushButton::clicked,this,&Modification_window::openResizeDialog);
     connect(_my_reset,&QPushButton::clicked,this,&Modification_window::backToOriginal);
     connect(_my_slider,&QSlider::valueChanged,this,&Modification_window::zoom);
+    connect(_my_commentaire_edit,&QPlainTextEdit::textChanged,this,&Modification_window::comment);
 
     updateImage();
-    this->update();
     this->showMaximized();
+
 
 
 }
@@ -55,7 +56,7 @@ void Modification_window::updateImage()
     }
 
     _my_slider->setValue(1);
-
+    _my_commentaire_edit->document()->setPlainText(img.comment);
     _frame.setPixmap(picture);
     _frame.setAlignment(Qt::AlignCenter);
     _my_picture->setWidget(&_frame);
@@ -109,10 +110,10 @@ void Modification_window::zoom()
 
 }
 
-void Modification_window::paintEvent(QPaintEvent * event)
+void Modification_window::comment()
 {
-    QPainter painter (this);
-    painter.setBrush(Qt::cyan);
-    painter.setPen(Qt::blue);
-    painter.drawRect(QRect(15,15,img.width,img.height));
+    img.comment = _my_commentaire_edit->toPlainText();
+    DB::getImageDao().save(img);
 }
+
+
