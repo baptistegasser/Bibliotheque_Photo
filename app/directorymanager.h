@@ -15,11 +15,12 @@ public:
 private:
     QString getDirectoryDialog();
     void displayDirs(const QList<Directory> &dirs);
-    void displayDir(const Directory &dir);
+    void displayDir(const Directory &dir, bool extanded);
     void removeDirs(const QList<Directory> &dirs);
     void removeDir(Directory &dir);
     QTreeWidgetItem *createDirItem(Directory &dir);
     void displayImages(const QList<Image> &images, QTreeWidgetItem *parent);
+    void expandItem(QTreeWidgetItem *item);
     bool isDirItem(const QTreeWidgetItem *item);
 
 private slots:

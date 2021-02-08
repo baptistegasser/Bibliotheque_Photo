@@ -23,7 +23,6 @@ void DirIndexer::indexDir(Directory &dir, QList<Directory> *indexedDirs)
 {
     // Save dir
     DB::getDirectoryDao().save(dir);
-    indexedDirs->append(dir);
 
     QQueue<Directory> subDirs = QQueue<Directory>();
 
@@ -39,6 +38,7 @@ void DirIndexer::indexDir(Directory &dir, QList<Directory> *indexedDirs)
     }
 
     // Index all found directories
+    indexedDirs->append(subDirs);
     for (Directory &currentDir : subDirs) {
         currentDir.parentDirPath = dir.absolutePath();
         indexDir(currentDir, indexedDirs);

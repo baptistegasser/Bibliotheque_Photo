@@ -31,6 +31,7 @@ void DirectoryManager::addDirectory()
     QString dirPath = getDirectoryDialog();
 
     Directory directory(dirPath, Directory::INCLUDE);
+    displayDir(directory, true);
     displayDirs(DirIndexer(directory).index());
 
     emit directoryAdded();
@@ -47,16 +48,19 @@ QString DirectoryManager::getDirectoryDialog()
 void DirectoryManager::displayDirs(const QList<Directory> &dirs)
 {
     for (const Directory &dir : dirs) {
-        displayDir(dir);
+        displayDir(dir, false);
     }
 }
 
-void DirectoryManager::displayDir(const Directory &dir)
+void DirectoryManager::displayDir(const Directory &dir, bool expanded)
 {
     Directory tmp(dir);
     QTreeWidgetItem *item = createDirItem(tmp);
     item->setData(0, Qt::UserRole, QVariant(true));
     item->setData(1, Qt::UserRole, dir.absolutePath());
+    if (expanded) {
+        expandItem(item);
+    }
 
     displayImages(DB::getImageDao().getInDir(dir), item);
 }
@@ -111,6 +115,22 @@ void DirectoryManager::displayImages(const QList<Image> &images, QTreeWidgetItem
         item->setIcon(0, QIcon(":/icon/image_frame"));
         item->setText(0, img.name);
         parent->addChild(item);
+    }
+}
+
+void DirectoryManager::expandItem(QTreeWidgetItem *item)
+{
+    QStack<QTreeWidgetItem *> items;
+    items.push(item);
+
+    QTreeWidgetItem *current = item;
+    while (current->parent() != nullptr) {
+        current = current->parent();
+        items.push(current);
+    }
+
+    while (!items.isEmpty()) {
+        items.pop()->setExpanded(true);
     }
 }
 
@@ -181,7 +201,6 @@ void DirectoryManager::removeDir(Directory &dir)
     QTreeWidgetItem *upItem;
     while (true) {
         upItem = dirItem->parent();
-        qDebug() << dirItem->text(0);
 
         // Quit if at top or parent folder contain other items
         if (upItem == nullptr || upItem->childCount() > 1) {
@@ -191,7 +210,6 @@ void DirectoryManager::removeDir(Directory &dir)
         dirItem = upItem;
     }
 
-    qDebug() << dirItem->text(0);
     delete dirItem;
 }
 
