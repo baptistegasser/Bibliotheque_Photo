@@ -26,13 +26,13 @@ MainWindow::MainWindow(QWidget *parent)
     gridLayoutPage = new QGridLayout();
     scrollAreaPage = new QScrollArea();
     vBoxPage = new QVBoxLayout();
-    scrollContent = new QWidget(scrollAreaPage);
+
 
     page->setLayout(gridLayoutPage);
 
     gridLayoutPage->addWidget(scrollAreaPage);
 
-    scrollContent->setLayout(vBoxPage);
+
 
     scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
@@ -67,6 +67,15 @@ void MainWindow::constructSearchBar(QString s)
 
 void MainWindow::constructImageList(Directory dir)
 {
+    scrollContent = new QWidget(scrollAreaPage);
+
+    scrollContent->setLayout(vBoxPage);
+
+    QLayoutItem *item = NULL;
+    while ((item =vBoxPage->takeAt(0)) != 0) {
+        delete item->widget();
+    }
+
     QLabel * label = new QLabel(scrollContent);
     label->setText("<strong>"+dir.dirName()+"</strong>");
     label->setMaximumSize(9999999, 30);

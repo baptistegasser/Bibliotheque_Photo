@@ -41,7 +41,6 @@ public:
     QVector<int> get_mean_rgb();
 
     bool equal(const Image& img) const;
-    Image operator= (const Image &img) const;
     bool operator== (const Image& img) const;
     bool operator!= (const Image& img) const;
     operator QString() const;
