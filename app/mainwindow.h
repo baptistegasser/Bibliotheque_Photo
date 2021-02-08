@@ -17,8 +17,16 @@ public:
 protected slots:
     void onClose();
     void constructSearchBar(QString s);
+    void chooseFolder();
+    void addFolder(const QString path);
+    void constructImageList(Directory dir);
+    void constructImageList(QList<Directory> dirs);
 
 private:
     bool isCleared;
+    QGridLayout *gridLayoutPage;
+    QScrollArea *scrollAreaPage;
+    QVBoxLayout * vBoxPage;
+    QWidget * scrollContent;
 };
 #endif // MAINWINDOW_H
