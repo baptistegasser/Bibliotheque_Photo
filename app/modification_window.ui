@@ -338,7 +338,7 @@ border-radius:5px;
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents">
+          <widget class="QWidget" name="_desc_area_content">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -395,7 +395,7 @@ border-radius:5px;
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <widget class="QWidget" name="_feeling_area_content">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -451,7 +451,7 @@ border-radius:5px;
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_3">
+          <widget class="QWidget" name="_cat_area_content">
            <property name="geometry">
             <rect>
              <x>0</x>

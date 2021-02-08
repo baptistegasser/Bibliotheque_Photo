@@ -13,3 +13,4 @@ void TagButton::setTag(Tag* tag){
     this->setStyleSheet("background-color:white;color:"+tag->color+";border:solid 1px black;border-radius:10px;");
     this->setText(tag->value);
 }
+

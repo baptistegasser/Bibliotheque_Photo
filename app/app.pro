@@ -14,6 +14,7 @@ SOURCES += \
     db/filter.cpp \
     db/imagedao.cpp \
     db/tagdao.cpp \
+    dialogcreatetag.cpp \
     directorymanager.cpp \
     dirindexer.cpp \
     main.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     db/filter.h \
     db/imagedao.h \
     db/tagdao.h \
+    dialogcreatetag.h \
     directorymanager.h \
     dirindexer.h \
     mainwindow.h \
@@ -45,6 +47,7 @@ HEADERS += \
     tagbutton.h
 
 FORMS += \
+    dialogcreatetag.ui \
     directorymanager.ui \
     mainwindow.ui \
     modification_window.ui \

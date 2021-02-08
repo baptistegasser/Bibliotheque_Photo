@@ -27,6 +27,8 @@ public slots:
     void openResizeDialog();
     void zoom();
     void comment();
+    void addTag();
+
 };
 
 #endif // MODIFICATION_WINDOW_H

@@ -26,6 +26,7 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_reset,&QPushButton::clicked,this,&Modification_window::backToOriginal);
     connect(_my_slider,&QSlider::valueChanged,this,&Modification_window::zoom);
     connect(_my_commentaire_edit,&QPlainTextEdit::textChanged,this,&Modification_window::comment);
+    connect(_my_add_tag_cat_button,&QPushButton::clicked,this,&Modification_window::addTag);
 
     updateImage();
     this->showMaximized();
@@ -116,4 +117,41 @@ void Modification_window::comment()
     DB::getImageDao().save(img);
 }
 
+void Modification_window::addTag()
+{
+    /*QList<Tag> list;
+    QWidget * content;
+    switch (area) {
+        case 0:
+            list = DB::getTagDao().getDescriptiveTags(img);
+            content = _desc_area_content;
+            break;
+        case 1:
+            list = DB::getTagDao().getFeelingTags(img);
+            content = _feeling_area_content;
+            break;
+        default:
+            list = DB::getTagDao().getCategoryTags(img);
+            content = _cat_area_content;
+            break;
+    }
+    bool notDouble = true;
+    for (const Tag &t : qAsConst(list))
+    {
+        if(t.value == value)
+        {
+            notDouble = false;
+        }
+    }
+    if(notDouble)
+    {
+        if(DB::getTagDao().exist(value))
+        {
+            TagButton visualTag (content);
+            visualTag.setText(value);
+        }
+    }*/
+    DialogCreateTag tag;
+
+}
 
