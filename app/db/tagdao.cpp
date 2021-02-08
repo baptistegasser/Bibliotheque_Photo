@@ -6,9 +6,14 @@
 
 bool TagDAO::exist(Tag &tag)
 {
+    return exist(tag.value);
+}
+
+bool TagDAO::exist(QString value)
+{
     QSqlQuery query = getNewQuery();
     query.prepare("SELECT 1 FROM Tag WHERE Value = ?;");
-    query.bindValue(0, tag.value);
+    query.addBindValue(value);
 
     return query.exec() && query.next();
 }
