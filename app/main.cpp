@@ -4,7 +4,7 @@
 #include "modification_window.h"
 #include <iostream>
 
-#include "imagefinder.h"
+#include "dirindexer.h"
 
 #include "db/db.h"
 
