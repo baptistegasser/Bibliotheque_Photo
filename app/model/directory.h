@@ -22,6 +22,7 @@ public:
 
     bool equal(const Directory& dir) const;
     bool operator== (const Directory& dir) const;
+    operator QString() const;
 };
 
 #endif // DIRECTORY_H
