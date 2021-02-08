@@ -63,7 +63,7 @@ void DirIndexer::indexImage(const Directory &parent, const QFileInfo &infos)
 
     // Only update the image color if new
     if (!DB::getImageDao().exist(img)) {
-        //img.main_color = img.get_mean_rgb();
+        img.main_color = img.get_mean_rgb();
     }
 
     DB::getImageDao().save(img);

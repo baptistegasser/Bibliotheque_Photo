@@ -27,15 +27,10 @@ photoCard::photoCard(QWidget *parent) :
 
     ui->photo->setGraphicsEffect(effect);
 
+    setAttribute(Qt::WA_TranslucentBackground);
+    setGraphicsEffect(effect);
+
     /*
-    QScrollArea * area_scroll = new QScrollArea( ui->desc_frame );
-    area_scroll->setGeometry(0, 0, 200, 40);
-    area_scroll->setWidgetResizable(true);
-
-    QHBoxLayout * layout = new QHBoxLayout(area);
-
-    layout->setGeometry(QRect(0,0, 300, 50));
-
     for(int i(0); i < image->feelingTags.size(); i++){
         TagButton * tagbutton = new TagButton(nullptr);
         tagbutton->setTag(image->feelingTags[i]);
@@ -52,36 +47,37 @@ void photoCard::setImage(Image *image)
     int width = image->width;
     float ratio = height/width;
     ui->photo->setMinimumHeight(ui->photo->width()*ratio+30);
-    ui->photo->setStyleSheet("border-image: url("+image->path+") 0 0 0 0 stretch stretch;");
+    qDebug() << image->path;
+    ui->photo->setStyleSheet("border-image: url('"+image->path+"') 0 0 0 0 stretch stretch;");
 
     QVector<int> rgb = this->image->main_color;
     ui->main_color_frame->setStyleSheet("border-image: none; background-color: rgb("+QString::number(rgb[0])+','+QString::number(rgb[1])+','+QString::number(rgb[2])+")");
 
-    showDescriptionTags();
-    showRateStars();
+    ui->date_label->setText(this->image->name);
+    ui->info_label->setText(QString::number(this->image->size/8000)+"Ko");
 
+    showDescriptiveTags();
+    showFeelingTags();
+    showCategoryTags();
+    showRateStars();
 }
 
 
-void photoCard::showDescriptionTags()
+void photoCard::showDescriptiveTags()
 {
     QHBoxLayout * grid_layout = new QHBoxLayout();
-    //QWidget * area = new QWidget();
+    QWidget * area = new QWidget();
 
 
-    TagButton * tagbutton = new TagButton(ui->scrollAreaWidgetContents);
-    TagButton * tagbutton2 = new TagButton(ui->scrollAreaWidgetContents);
-    TagButton * tagbutton3 = new TagButton(ui->scrollAreaWidgetContents);
-    TagButton * tagbutton4 = new TagButton(ui->scrollAreaWidgetContents);
-    TagButton * tagbutton5 = new TagButton(ui->scrollAreaWidgetContents);
-    TagButton * tagbutton6 = new TagButton(ui->scrollAreaWidgetContents);
+    TagButton * tagbutton = new TagButton(area);
+    TagButton * tagbutton2 = new TagButton(area);
+    TagButton * tagbutton3 = new TagButton(area);
+    TagButton * tagbutton4 = new TagButton(area);
 
     tagbutton->setMinimumWidth(70);
     tagbutton2->setMinimumWidth(70);
     tagbutton3->setMinimumWidth(70);
     tagbutton4->setMinimumWidth(70);
-    tagbutton5->setMinimumWidth(70);
-    tagbutton6->setMinimumWidth(70);
 
 
 
@@ -89,16 +85,64 @@ void photoCard::showDescriptionTags()
     grid_layout->addWidget(tagbutton2);
     grid_layout->addWidget(tagbutton3);
     grid_layout->addWidget(tagbutton4);
-    grid_layout->addWidget(tagbutton5);
-    grid_layout->addWidget(tagbutton6);
 
-
-    //ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //ui->desc_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
-    ui->scrollAreaWidgetContents->setLayout(grid_layout);
-    ui->desc_scroll->setWidget(ui->scrollAreaWidgetContents);
+    area->setLayout(grid_layout);
+    ui->desc_scroll->setWidget(area);
 }
+
+void photoCard::showFeelingTags()
+{
+    QHBoxLayout * grid_layout = new QHBoxLayout();
+    QWidget * area = new QWidget();
+
+
+    TagButton * tagbutton = new TagButton(area);
+    TagButton * tagbutton2 = new TagButton(area);
+    TagButton * tagbutton3 = new TagButton(area);
+    TagButton * tagbutton4 = new TagButton(area);
+
+    tagbutton->setMinimumWidth(70);
+    tagbutton2->setMinimumWidth(70);
+    tagbutton3->setMinimumWidth(70);
+    tagbutton4->setMinimumWidth(70);
+
+
+
+    grid_layout->addWidget(tagbutton);
+    grid_layout->addWidget(tagbutton2);
+    grid_layout->addWidget(tagbutton3);
+    grid_layout->addWidget(tagbutton4);
+
+    area->setLayout(grid_layout);
+    ui->ress_scroll->setWidget(area);
+}
+
+void photoCard::showCategoryTags(){
+    QHBoxLayout * grid_layout = new QHBoxLayout();
+    QWidget * area = new QWidget();
+
+
+    TagButton * tagbutton = new TagButton(area);
+    TagButton * tagbutton2 = new TagButton(area);
+    TagButton * tagbutton3 = new TagButton(area);
+    TagButton * tagbutton4 = new TagButton(area);
+
+    tagbutton->setMinimumWidth(70);
+    tagbutton2->setMinimumWidth(70);
+    tagbutton3->setMinimumWidth(70);
+    tagbutton4->setMinimumWidth(70);
+
+
+
+    grid_layout->addWidget(tagbutton);
+    grid_layout->addWidget(tagbutton2);
+    grid_layout->addWidget(tagbutton3);
+    grid_layout->addWidget(tagbutton4);
+
+    area->setLayout(grid_layout);
+    ui->keyw_scroll->setWidget(area);
+}
+
 
 void photoCard::showRateStars()
 {

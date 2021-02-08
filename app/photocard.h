@@ -20,7 +20,9 @@ public:
 private:
     Ui::photoCard *ui;
     Image *image;
-    void showDescriptionTags();
+    void showDescriptiveTags();
+    void showFeelingTags();
+    void showCategoryTags();
     void showRateStars();
 };
 

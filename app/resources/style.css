@@ -33,14 +33,13 @@ QWidget#photoCard QLabel#date_label{
 QWidget#photoCard QLabel#info_label{
     font-size: 10px;
 }
-QWidget#photoCard QScrollArea{
-    background-color: transparent;
+QWidget#photoCard QScrollArea, QWidget#photoCard QScrollArea QWidget, QWidget#photoCard QScrollArea QWidget QWidget, QWidget#photoCard QScrollArea QWidget QWidget QHBoxLayout{
     border: 0;
-}
-QWidget#photoCard QScrollArea > QWidget#a > QWidget{
+    padding: 0;
+    margin: 0;
     background: transparent;
 }
-QWidget#photoCard QScrollArea > QWidget#a > QScrollBar{
+QWidget#photoCard QScrollArea > QWidget > QScrollBar {
     background: palette(base);
 }
 QWidget#photoCard QGroupBox#stars_group{

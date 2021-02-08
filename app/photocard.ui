@@ -375,15 +375,18 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>18</width>
-          <height>18</height>
+          <width>16777215</width>
+          <height>45</height>
          </size>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+        <property name="autoFillBackground">
+         <bool>false</bool>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
+        </property>
+        <property name="widgetResizable" stdset="0">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QFrame" name="star1_frame">
@@ -409,15 +412,12 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>18</width>
-          <height>18</height>
+          <width>16777215</width>
+          <height>45</height>
          </size>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
         </property>
        </widget>
        <widget class="QFrame" name="star3_frame">
@@ -443,15 +443,12 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>18</width>
-          <height>18</height>
+          <width>16777215</width>
+          <height>45</height>
          </size>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
         </property>
        </widget>
        <widget class="QLabel" name="title">
