@@ -8,6 +8,8 @@
 #include "model/image.h"
 #include "db/db.h"
 #include "QSlider"
+#include "QtCore"
+#include "QPainter"
 
 Modification_window::Modification_window(QWidget *parent, const Image *image) :
     QWidget(parent)
@@ -25,7 +27,7 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_slider,&QSlider::valueChanged,this,&Modification_window::zoom);
 
     updateImage();
-
+    this->update();
     this->showMaximized();
 
 
@@ -67,9 +69,6 @@ void Modification_window::resizeImage(int w, int h)
    img.resized = true;
    DB::getImageDao().save(img);
    updateImage();
-
-
-
 }
 
 void Modification_window::openResizeDialog()
@@ -108,4 +107,12 @@ void Modification_window::zoom()
     picture = picture.scaled(w*val,h*val);
     _frame.setPixmap(picture);
 
+}
+
+void Modification_window::paintEvent(QPaintEvent * event)
+{
+    QPainter painter (this);
+    painter.setBrush(Qt::cyan);
+    painter.setPen(Qt::blue);
+    painter.drawRect(QRect(15,15,img.width,img.height));
 }

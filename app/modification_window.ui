@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>776</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -26,6 +26,9 @@
    <string notr="true">background-color:rgb(255, 255, 255)</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetNoConstraint</enum>
    </property>
@@ -196,6 +199,9 @@ border-right: 1px black solid;
         <property name="topMargin">
          <number>0</number>
         </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
         <property name="bottomMargin">
          <number>0</number>
         </property>
@@ -334,8 +340,8 @@ border-radius:5px;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>476</width>
-             <height>98</height>
+             <width>475</width>
+             <height>72</height>
             </rect>
            </property>
           </widget>
@@ -343,6 +349,9 @@ border-radius:5px;
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="_my_ressenti_label">
             <property name="maximumSize">
@@ -388,8 +397,8 @@ border-radius:5px;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>476</width>
-             <height>98</height>
+             <width>475</width>
+             <height>71</height>
             </rect>
            </property>
           </widget>
@@ -397,6 +406,9 @@ border-radius:5px;
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="_my_catgorie_label">
             <property name="maximumSize">
@@ -441,8 +453,8 @@ border-radius:5px;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>476</width>
-             <height>98</height>
+             <width>475</width>
+             <height>72</height>
             </rect>
            </property>
            <property name="maximumSize">
@@ -482,7 +494,7 @@ border-radius:5px;
             <x>0</x>
             <y>0</y>
             <width>497</width>
-            <height>688</height>
+            <height>492</height>
            </rect>
           </property>
          </widget>
@@ -507,6 +519,22 @@ border-radius:5px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>_my_redimensionner</tabstop>
+  <tabstop>_my_reset</tabstop>
+  <tabstop>_my_return_button</tabstop>
+  <tabstop>_my_color_dominant_edit</tabstop>
+  <tabstop>_my_commentaire_edit</tabstop>
+  <tabstop>_my_add_tag_desc_button</tabstop>
+  <tabstop>_my_picture</tabstop>
+  <tabstop>_my_descriptif_tag_area</tabstop>
+  <tabstop>_my_add_tag_ress_button</tabstop>
+  <tabstop>_my_ressenti_tag_area</tabstop>
+  <tabstop>_my_add_tag_cat_button</tabstop>
+  <tabstop>_my_categorie_tag_area</tabstop>
+  <tabstop>_my_recadrer</tabstop>
+  <tabstop>_my_slider</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

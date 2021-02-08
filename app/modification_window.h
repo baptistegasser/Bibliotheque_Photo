@@ -20,6 +20,7 @@ public:
     void resizeImage(int w, int h);
     void backToOriginal();
     void zoom();
+    void paintEvent(QPaintEvent*);
 
 
 
