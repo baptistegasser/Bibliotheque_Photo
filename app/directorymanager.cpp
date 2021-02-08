@@ -29,8 +29,8 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
 void DirectoryManager::addDirectory()
 {
     QString dirPath = getDirectoryDialog();
-
     Directory directory(dirPath, Directory::INCLUDE);
+
     displayDir(directory, true);
     displayDirs(DirIndexer(directory).index());
 

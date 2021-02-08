@@ -29,3 +29,19 @@ bool Directory::operator== (const Directory& dir) const
 {
     return absolutePath() == dir.absolutePath();
 }
+
+Directory::operator QString() const
+{
+    QString strat;
+    switch (strategy) {
+    case INCLUDE:
+        strat = "INCLUDE";
+        break;
+    case EXCLUDE:
+        strat = "EXCLUDE";
+        break;
+    default:
+        strat = "UNKNOWN";
+    };
+    return absolutePath() + " " + strat;
+}
