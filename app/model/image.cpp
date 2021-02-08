@@ -26,8 +26,17 @@ Image::Image()
 
 Image::Image(const Image &img)
 {
+    *this = img;
+}
+
+Image &Image::operator =(const Image &img)
+{
+    if (this == &img) {
+        return *this;
+    }
+
     path = img.path;
-    parentDir = parentDir;
+    parentDir = img.parentDir;
     name = img.name;
     size = img.size;
     width = img.width;
@@ -43,11 +52,8 @@ Image::Image(const Image &img)
     crop_width = img.crop_width;
     crop_height = img.crop_height;
     main_color = img.main_color;
-}
 
-Image Image::operator= (const Image &img) const
-{
-    return Image(img);
+    return *this;
 }
 
 bool Image::equal(const Image& img) const
