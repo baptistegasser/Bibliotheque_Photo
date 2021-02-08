@@ -40,8 +40,8 @@ int main(int argc, char *argv[])
 
 
 
-    Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));
-    win.show();
+    /*Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));
+    win.show();*/
 
     /*photoCard pC;
     pC.show();*/
