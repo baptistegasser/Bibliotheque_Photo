@@ -103,6 +103,8 @@ QTreeWidgetItem *DirectoryManager::createDirItem(Directory &dir)
 
 void DirectoryManager::displayImages(const QList<Image> &images, QTreeWidgetItem *parent)
 {
+    foreach(auto child, parent->takeChildren()) delete child;
+
     for (const Image &img : images) {
         QTreeWidgetItem *item = new QTreeWidgetItem(parent);
         item->setIcon(0, QIcon(":/icon/image_frame"));
