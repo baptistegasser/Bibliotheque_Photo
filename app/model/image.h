@@ -38,6 +38,7 @@ public:
 
     Image();
     Image(const Image &img);
+    QVector<int> get_mean_rgb();
 
     bool equal(const Image& img) const;
     Image operator= (const Image &img) const;
@@ -46,7 +47,6 @@ public:
     operator QString() const;
 
 private:
-    QVector<int> get_mean_rgb();
     int get_max(QVector<int> vec);
 };
 
