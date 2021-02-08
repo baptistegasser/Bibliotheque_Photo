@@ -15,7 +15,7 @@ SOURCES += \
     db/imagedao.cpp \
     db/tagdao.cpp \
     foldertreeview.cpp \
-    imagefinder.cpp \
+    dirindexer.cpp \
     main.cpp \
     mainwindow.cpp \
     model/directory.cpp \
@@ -34,7 +34,7 @@ HEADERS += \
     db/imagedao.h \
     db/tagdao.h \
     foldertreeview.h \
-    imagefinder.h \
+    dirindexer.h \
     mainwindow.h \
     model/directory.h \
     model/image.h \
