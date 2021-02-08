@@ -51,7 +51,7 @@ bool DirectoryDAO::create(Directory &directory)
     query.addBindValue((int) directory.strategy);
 
     if (!query.exec()) {
-        qWarning() << "Creating directory failed" << directory;
+        qWarning() << "Creating directory failed" << directory.operator QString();
         qCritical() << query.lastError().text();
         return false;
     } else {
@@ -63,12 +63,12 @@ bool DirectoryDAO::update(Directory &directory)
 {
     QSqlQuery query = getNewQuery();
     query.prepare("UPDATE Directory SET ParentDirPath=?, Strategy=? WHERE \"Path\" = ?;");
-    query.addBindValue((int) directory.strategy);
     query.addBindValue(directory.parentDirPath);
+    query.addBindValue((int) directory.strategy);
     query.addBindValue(directory.absolutePath());
 
     if (!query.exec()) {
-        qWarning() << "Updating directory failed" << directory;
+        qWarning() << "Updating directory failed" << directory.operator QString();
         qCritical() << query.lastError().text();
         return false;
     } else {
@@ -84,7 +84,7 @@ bool DirectoryDAO::remove(Directory &directory)
     query.addBindValue(directory.absolutePath());
 
     if (!query.exec()) {
-        qWarning() << "Removing directory failed" << directory;
+        qWarning() << "Removing directory failed" << directory.operator QString();
         qCritical() << query.lastError().text();
         return false;
     }
