@@ -19,14 +19,14 @@ public:
     void setQFileInfo(QFileInfo img);
     void resizeImage(int w, int h);
     void backToOriginal();
-    void zoom();
-    void paintEvent(QPaintEvent*);
+
 
 
 
 public slots:
     void openResizeDialog();
-
+    void zoom();
+    void comment();
 };
 
 #endif // MODIFICATION_WINDOW_H
