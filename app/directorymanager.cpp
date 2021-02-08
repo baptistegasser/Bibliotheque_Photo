@@ -152,17 +152,14 @@ void DirectoryManager::removeDir(Directory &dir)
     } while (dir.cdUp());
 
     // Get top level item
-    QTreeWidgetItem *parent;
-    qDebug() << "what" << _dir_tree->topLevelItemCount();
-    for (int i = 0; i < _dir_tree->topLevelItemCount(); ++i) {
-        qDebug() << i;
+    QTreeWidgetItem *parent = nullptr;
+    for (int i = 0; i < _dir_tree->topLevelItemCount(); i += 1) {
         if (_dir_tree->topLevelItem(i)->text(0) == aaah[0]) {
             parent = _dir_tree->topLevelItem(i);
             break;
         }
     }
     if (parent == nullptr) {
-        qDebug("no parent in tree");
         return;
     }
 
