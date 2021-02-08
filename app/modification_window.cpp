@@ -10,6 +10,7 @@
 #include "QSlider"
 #include "QtCore"
 #include "QPainter"
+#include "dialogcreatetag.h"
 
 Modification_window::Modification_window(QWidget *parent, const Image *image) :
     QWidget(parent)
