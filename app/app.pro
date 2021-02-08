@@ -14,7 +14,7 @@ SOURCES += \
     db/filter.cpp \
     db/imagedao.cpp \
     db/tagdao.cpp \
-    foldertreeview.cpp \
+    directorymanager.cpp \
     dirindexer.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -33,7 +33,7 @@ HEADERS += \
     db/filter.h \
     db/imagedao.h \
     db/tagdao.h \
-    foldertreeview.h \
+    directorymanager.h \
     dirindexer.h \
     mainwindow.h \
     model/directory.h \
@@ -45,6 +45,7 @@ HEADERS += \
     tagbutton.h
 
 FORMS += \
+    directorymanager.ui \
     mainwindow.ui \
     modification_window.ui \
     photocard.ui
