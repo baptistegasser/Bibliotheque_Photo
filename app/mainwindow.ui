@@ -43,7 +43,7 @@
         <item row="0" column="0">
          <widget class="QGroupBox" name="groupBox_2">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -108,59 +108,14 @@ border-left: none;</string>
             </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <property name="bottomMargin">
-              <number>0</number>
+            <widget class="DirectoryManager" name="widget" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <item>
-              <widget class="QPushButton" name="_del_dir">
-               <property name="text">
-                <string>PushButton</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="_add_dir">
-               <property name="text">
-                <string>add</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="FolderTreeView" name="_dir_tree">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="dragDropMode">
-                <enum>QAbstractItemView::DropOnly</enum>
-               </property>
-               <property name="horizontalScrollMode">
-                <enum>QAbstractItemView::ScrollPerPixel</enum>
-               </property>
-               <property name="indentation">
-                <number>12</number>
-               </property>
-               <attribute name="headerVisible">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="headerStretchLastSection">
-                <bool>false</bool>
-               </attribute>
-               <column>
-                <property name="text">
-                 <string>1</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-            </layout>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -278,9 +233,10 @@ padding: 5px;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FolderTreeView</class>
-   <extends>QTreeWidget</extends>
-   <header>foldertreeview.h</header>
+   <class>DirectoryManager</class>
+   <extends>QWidget</extends>
+   <header>directorymanager.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
