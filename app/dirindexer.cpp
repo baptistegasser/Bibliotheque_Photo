@@ -56,7 +56,7 @@ void DirIndexer::indexImage(const Directory &parent, const QFileInfo &infos)
     Image img;
     img.path = infos.absoluteFilePath();
     img.parentDir = parent.absolutePath();
-    img.name = infos.baseName();
+    img.name = infos.fileName();
     img.size = infos.size();
     img.width = q_img.width();
     img.height = q_img.height();

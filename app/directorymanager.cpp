@@ -103,6 +103,7 @@ QTreeWidgetItem *DirectoryManager::createDirItem(Directory &dir)
 
 void DirectoryManager::displayImages(const QList<Image> &images, QTreeWidgetItem *parent)
 {
+    // Yeet the childs
     foreach(auto child, parent->takeChildren()) delete child;
 
     for (const Image &img : images) {
