@@ -23,6 +23,7 @@ protected slots:
 
 private:
     bool isCleared;
+    int width_window;
     QGridLayout *gridLayoutPage;
     QScrollArea *scrollAreaPage;
     QVBoxLayout * vBoxPage;

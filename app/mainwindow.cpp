@@ -17,11 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     isCleared = false;
 
-    //Image *image = new Image(":/image/resources/example.jpg");
-    //photoCard *pC = new photoCard(_my_stack);
-    //pC->setImage(image);
-    //_my_stack->addWidget(pC);
-    //pC->show();
+    width_window = width();
 
     gridLayoutPage = new QGridLayout();
     scrollAreaPage = new QScrollArea();
@@ -82,7 +78,7 @@ void MainWindow::constructImageList(Directory dir)
         Image *image = new Image(img);
         photoCard *pC = new photoCard(scrollContent);
         pC->setImage(image);
-        pC->setFixedSize(scrollAreaPage->width()-100,268);
+        pC->setFixedSize(width_window-476/2,268);
 
         photoGrid->addWidget(pC);
 
