@@ -93,7 +93,8 @@ void MainWindow::constructImageList(Directory dir)
 
         cpt += 1;
     }
-    vBoxPage->addLayout(photoGrid);
+    if (cpt%2 == 0)
+        vBoxPage->addLayout(photoGrid);
 }
 
 void MainWindow::constructImageList(QList<Directory> dirs)
