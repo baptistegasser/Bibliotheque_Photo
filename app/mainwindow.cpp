@@ -82,7 +82,7 @@ void MainWindow::constructImageList(Directory dir)
         Image *image = new Image(img);
         photoCard *pC = new photoCard(scrollContent);
         pC->setImage(image);
-        pC->setFixedSize(scrollAreaPage->width()-65,268);
+        pC->setFixedSize(scrollAreaPage->width()-80,268);
 
         photoGrid->addWidget(pC);
 
