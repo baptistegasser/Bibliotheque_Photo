@@ -230,6 +230,8 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
         }
     }
 
+    qDebug() << SQL;
+
     QList<Image> result;
     if (!query.exec()) {
         qWarning() << "Failed to get a list of images" << "Keyword: "+keyword << query.lastQuery();
@@ -241,7 +243,7 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
         result << fromRecord(query.record());
     }
 
-    return QList<Image>();
+    return result;
 }
 
 QList<Image> ImageDAO::getInDir(const Directory &dir)
