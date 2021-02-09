@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "photocard.h"
+#include "modification_window.h"
 
 #include "db/db.h"
 
@@ -33,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_dir_manager, &DirectoryManager::directoryAdded, this, &MainWindow::updateImages);
     connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
     updateImages();
+
+    gridLayoutPage2 = new QGridLayout();
+    page_2->setLayout(gridLayoutPage2);
 }
 
 MainWindow::~MainWindow()
@@ -76,9 +80,11 @@ void MainWindow::constructImageList(Directory dir)
 
     for(const Image &img : images) {
         Image *image = new Image(img);
-        photoCard *pC = new photoCard(scrollContent);
+        PhotoCard *pC = new PhotoCard(scrollContent);
         pC->setImage(image);
-        pC->setFixedSize(width_window-476/2,268);
+        pC->setFixedSize(width_window-540/2,268);
+
+        connect(pC, SIGNAL(clicked(PhotoCard *)), this, SLOT(showModificationWindow(PhotoCard *)));
 
         photoGrid->addWidget(pC);
 
@@ -116,4 +122,14 @@ void MainWindow::constructImageList(QList<Directory> dirs)
 void MainWindow::updateImages()
 {
     constructImageList(DB::getDirectoryDao().getAll());
+}
+
+void MainWindow::showModificationWindow(PhotoCard *ph)
+{
+    qDebug() << "Click" << this;
+
+    Modification_window *win =  new Modification_window(nullptr,ph->getImage());
+    gridLayout_2->addWidget(win);
+
+    _my_stack->setCurrentIndex(1);
 }

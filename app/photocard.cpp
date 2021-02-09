@@ -8,9 +8,9 @@
 #include <QImage>
 #include <QDebug>
 
-photoCard::photoCard(QWidget *parent) :
+PhotoCard::PhotoCard(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::photoCard)
+    ui(new Ui::PhotoCard)
 {
     ui->setupUi(this);
 
@@ -26,7 +26,7 @@ photoCard::photoCard(QWidget *parent) :
     setAttribute(Qt::WA_TranslucentBackground);
 }
 
-void photoCard::setImage(Image *image)
+void PhotoCard::setImage(Image *image)
 {
     this->image = image;
     int height = image->height;
@@ -53,7 +53,7 @@ void photoCard::setImage(Image *image)
 }
 
 
-void photoCard::showDescriptiveTags()
+void PhotoCard::showDescriptiveTags()
 {
     QHBoxLayout * grid_layout = new QHBoxLayout();
     QWidget * area = new QWidget();
@@ -75,7 +75,7 @@ void photoCard::showDescriptiveTags()
     ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void photoCard::showFeelingTags()
+void PhotoCard::showFeelingTags()
 {
     QHBoxLayout * grid_layout = new QHBoxLayout();
     QWidget * area = new QWidget();
@@ -97,7 +97,7 @@ void photoCard::showFeelingTags()
     ui->ress_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void photoCard::showCategoryTags(){
+void PhotoCard::showCategoryTags(){
     QHBoxLayout * grid_layout = new QHBoxLayout();
     QWidget * area = new QWidget();
 
@@ -119,7 +119,7 @@ void photoCard::showCategoryTags(){
 }
 
 
-void photoCard::showRateStars()
+void PhotoCard::showRateStars()
 {
     QString fill = "border-image: url(:/image/resources/star_fill.png) 0 0 0 0 stretch stretch;";
     switch (image->rating) {
@@ -153,7 +153,17 @@ void photoCard::showRateStars()
     }
 }
 
-photoCard::~photoCard()
+void PhotoCard::mousePressEvent(QMouseEvent *event)
+{
+    emit clicked(this);
+}
+
+PhotoCard::~PhotoCard()
 {
     delete ui;
+}
+
+Image* PhotoCard::getImage()
+{
+    return image;
 }
