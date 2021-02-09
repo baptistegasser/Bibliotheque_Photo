@@ -25,14 +25,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     gridLayoutPage = new QGridLayout();
     scrollAreaPage = new QScrollArea();
-    vBoxPage = new QVBoxLayout();
+
 
 
     page->setLayout(gridLayoutPage);
 
     gridLayoutPage->addWidget(scrollAreaPage);
-
-
 
     scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
@@ -67,15 +65,6 @@ void MainWindow::constructSearchBar(QString s)
 
 void MainWindow::constructImageList(Directory dir)
 {
-    scrollContent = new QWidget(scrollAreaPage);
-
-    scrollContent->setLayout(vBoxPage);
-
-    QLayoutItem *item = NULL;
-    while ((item =vBoxPage->takeAt(0)) != 0) {
-        delete item->widget();
-    }
-
     QLabel * label = new QLabel(scrollContent);
     label->setText("<strong>"+dir.dirName()+"</strong>");
     label->setMaximumSize(9999999, 30);
@@ -84,8 +73,6 @@ void MainWindow::constructImageList(Directory dir)
     vBoxPage->addWidget(label);
 
     const QList<Image> images = DB::getImageDao().getInDir(dir);
-
-
 
     QHBoxLayout * photoGrid = new QHBoxLayout();
 
@@ -112,9 +99,16 @@ void MainWindow::constructImageList(Directory dir)
 
 void MainWindow::constructImageList(QList<Directory> dirs)
 {
+    vBoxPage = new QVBoxLayout();
+
+     scrollContent = new QWidget();
+
     for (const Directory &dir : dirs) {
         constructImageList(dir);
     }
+
+    scrollContent->setLayout(vBoxPage);
+    scrollAreaPage->setWidget(scrollContent);
 }
 
 void MainWindow::updateImages()
