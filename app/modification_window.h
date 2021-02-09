@@ -12,6 +12,8 @@ private:
     Image img;
     QLabel _frame;
     QPixmap picture;
+    QHBoxLayout * grid_layout;
+    QWidget * area;
 
 public:
     explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);

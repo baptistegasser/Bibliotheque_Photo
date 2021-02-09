@@ -32,7 +32,10 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     updateImage();
     this->showMaximized();
 
-
+    grid_layout = new QHBoxLayout();
+    area = new QWidget();
+    area->setLayout(grid_layout);
+    _my_categorie_tag_area->setWidget(area);
 
 }
 
@@ -120,24 +123,11 @@ void Modification_window::comment()
 
 void Modification_window::addTag()
 {
-<<<<<<< HEAD
-=======
-
     DialogCreateTag tag;
     QString nom = tag.getName();
     QString color = tag.getColor().name();
     std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
-    TagButton tb (_cat_area_content,nom,color);
-    _cat_area->addWidget(&tb);
-    tb.show();
-
->>>>>>> main
-
-    DialogCreateTag tag;
-    QString nom = tag.getName();
-    QString color = tag.getColor().name();
-    std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
-    TagButton tb (_my_categorie_tag_area,nom,color);
-    tb.show();
+    TagButton *tb = new TagButton(area,nom,color);
+    grid_layout->addWidget(tb);
 }
 
