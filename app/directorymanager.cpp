@@ -39,10 +39,25 @@ void DirectoryManager::addDirectory()
 
 QString DirectoryManager::getDirectoryDialog()
 {
-    QString title = "Ouvrir un dossier d'images";
-    QString baseDir = "/home";
-    QFileDialog::Options options = QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks;
-    return QFileDialog::getExistingDirectory(this, title, baseDir, options);
+    QString caption = "Ouvrir un dossier";
+    // Try to get a standard folder
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    if (dir.isEmpty()) {
+        dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    }
+
+    QFileDialog dialog(this, caption, dir);
+    dialog.setFileMode(QFileDialog::Directory);
+    dialog.setOptions(QFileDialog::DontResolveSymlinks);
+
+    if (dialog.exec() == QDialog::Rejected) {
+        return QString::Null();
+    }
+
+    if (!dialog.selectedFiles().isEmpty()) {
+        return dialog.selectedFiles()[0];
+    }
+    return dialog.directory().absolutePath();
 }
 
 void DirectoryManager::displayDirs(const QList<Directory> &dirs)
