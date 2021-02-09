@@ -52,6 +52,9 @@ Image &Image::operator =(const Image &img)
     crop_width = img.crop_width;
     crop_height = img.crop_height;
     main_color = img.main_color;
+    feelingTags = img.feelingTags;
+    categoryTags = img.categoryTags;
+    descriptiveTags = img.descriptiveTags;
 
     return *this;
 }
