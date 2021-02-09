@@ -8,6 +8,7 @@ class DialogCreateTag : public QDialog, private Ui::DialogCreateTag
     Q_OBJECT
     QString nom;
     QColor couleur;
+    bool isClear;
 
 public:
     explicit DialogCreateTag(QWidget *parent = nullptr);

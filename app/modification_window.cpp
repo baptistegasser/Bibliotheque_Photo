@@ -32,7 +32,10 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     updateImage();
     this->showMaximized();
 
-
+    grid_layout = new QHBoxLayout();
+    area = new QWidget();
+    area->setLayout(grid_layout);
+    _my_categorie_tag_area->setWidget(area);
 
 }
 
@@ -120,39 +123,11 @@ void Modification_window::comment()
 
 void Modification_window::addTag()
 {
-    /*QList<Tag> list;
-    QWidget * content;
-    switch (area) {
-        case 0:
-            list = DB::getTagDao().getDescriptiveTags(img);
-            content = _desc_area_content;
-            break;
-        case 1:
-            list = DB::getTagDao().getFeelingTags(img);
-            content = _feeling_area_content;
-            break;
-        default:
-            list = DB::getTagDao().getCategoryTags(img);
-            content = _cat_area_content;
-            break;
-    }
-    bool notDouble = true;
-    for (const Tag &t : qAsConst(list))
-    {
-        if(t.value == value)
-        {
-            notDouble = false;
-        }
-    }
-    if(notDouble)
-    {
-        if(DB::getTagDao().exist(value))
-        {
-            TagButton visualTag (content);
-            visualTag.setText(value);
-        }
-    }*/
     DialogCreateTag tag;
-
+    QString nom = tag.getName();
+    QString color = tag.getColor().name();
+    std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
+    TagButton *tb = new TagButton(area,nom,color);
+    grid_layout->addWidget(tb);
 }
 

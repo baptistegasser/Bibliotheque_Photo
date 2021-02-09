@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>580</height>
+    <width>1020</width>
+    <height>668</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -343,8 +343,8 @@ border-radius:5px;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>475</width>
-             <height>72</height>
+             <width>476</width>
+             <height>98</height>
             </rect>
            </property>
           </widget>
@@ -400,8 +400,8 @@ border-radius:5px;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>475</width>
-             <height>71</height>
+             <width>476</width>
+             <height>98</height>
             </rect>
            </property>
           </widget>
@@ -456,8 +456,8 @@ border-radius:5px;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>475</width>
-             <height>72</height>
+             <width>476</width>
+             <height>98</height>
             </rect>
            </property>
            <property name="maximumSize">
@@ -466,6 +466,17 @@ border-radius:5px;
              <height>100</height>
             </size>
            </property>
+           <widget class="QWidget" name="gridLayoutWidget">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>471</width>
+              <height>101</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="_cat_area"/>
+           </widget>
           </widget>
          </widget>
         </item>
@@ -496,8 +507,8 @@ border-radius:5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>497</width>
-            <height>492</height>
+            <width>516</width>
+            <height>578</height>
            </rect>
           </property>
          </widget>
