@@ -5,6 +5,7 @@
 
 #include <QFileDialog>
 #include <QStack>
+#include <QStandardPaths>
 #include <QMessageBox>
 #include <QTreeWidget>
 
@@ -16,21 +17,47 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
     // Configure buttons
     _del_dir_btn->setEnabled(false);
     connect(_add_dir_btn, &QPushButton::clicked, this, &DirectoryManager::addDirectory);
+    connect(_add_first_btn, &QPushButton::clicked, this, &DirectoryManager::addFirstDirectory);
     connect(_del_dir_btn, &QPushButton::clicked, this, &DirectoryManager::removeDirectory);
 
     // Configure folder tree
     _dir_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    displayDirs(DB::getDirectoryDao().getAll());
     connect(_dir_tree, &QTreeWidget::itemExpanded, this, &DirectoryManager::onItemExpanded);
     connect(_dir_tree, &QTreeWidget::itemCollapsed, this, &DirectoryManager::onItemCollapsed);
     connect(_dir_tree, &QTreeWidget::itemSelectionChanged, this, &DirectoryManager::onItemSelected);
+
+    QList<Directory> dirs = DB::getDirectoryDao().getAll();
+    if (dirs.isEmpty()) {
+        _stackpane->setCurrentIndex(1);
+    } else {
+        displayDirs(dirs);
+    }
 }
 
 void DirectoryManager::addDirectory()
 {
     QString dirPath = getDirectoryDialog();
-    Directory directory(dirPath, Directory::INCLUDE);
+    if (dirPath.isNull()) {
+        return;
+    }
 
+    Directory directory(dirPath, Directory::INCLUDE);
+    displayDir(directory, true);
+    displayDirs(DirIndexer(directory).index());
+
+    emit directoryAdded();
+}
+
+void DirectoryManager::addFirstDirectory()
+{
+    QString dirPath = getDirectoryDialog();
+    if (dirPath.isNull()) {
+        return;
+    }
+
+    _stackpane->setCurrentIndex(0);
+
+    Directory directory(dirPath, Directory::INCLUDE);
     displayDir(directory, true);
     displayDirs(DirIndexer(directory).index());
 
@@ -39,10 +66,25 @@ void DirectoryManager::addDirectory()
 
 QString DirectoryManager::getDirectoryDialog()
 {
-    QString title = "Ouvrir un dossier d'images";
-    QString baseDir = "/home";
-    QFileDialog::Options options = QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks;
-    return QFileDialog::getExistingDirectory(this, title, baseDir, options);
+    QString caption = "Ouvrir un dossier";
+    // Try to get a standard folder
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    if (dir.isEmpty()) {
+        dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    }
+
+    QFileDialog dialog(this, caption, dir);
+    dialog.setFileMode(QFileDialog::Directory);
+    dialog.setOptions(QFileDialog::DontResolveSymlinks);
+
+    if (dialog.exec() == QDialog::Rejected) {
+        return QString::Null();
+    }
+
+    if (!dialog.selectedFiles().isEmpty()) {
+        return dialog.selectedFiles()[0];
+    }
+    return dialog.directory().absolutePath();
 }
 
 void DirectoryManager::displayDirs(const QList<Directory> &dirs)

@@ -25,6 +25,7 @@ private:
 
 private slots:
     void addDirectory();
+    void addFirstDirectory();
     void removeDirectory();
     void onItemSelected();
     void onItemExpanded(QTreeWidgetItem *item);
