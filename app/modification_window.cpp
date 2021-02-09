@@ -120,39 +120,15 @@ void Modification_window::comment()
 
 void Modification_window::addTag()
 {
-    /*QList<Tag> list;
-    QWidget * content;
-    switch (area) {
-        case 0:
-            list = DB::getTagDao().getDescriptiveTags(img);
-            content = _desc_area_content;
-            break;
-        case 1:
-            list = DB::getTagDao().getFeelingTags(img);
-            content = _feeling_area_content;
-            break;
-        default:
-            list = DB::getTagDao().getCategoryTags(img);
-            content = _cat_area_content;
-            break;
-    }
-    bool notDouble = true;
-    for (const Tag &t : qAsConst(list))
-    {
-        if(t.value == value)
-        {
-            notDouble = false;
-        }
-    }
-    if(notDouble)
-    {
-        if(DB::getTagDao().exist(value))
-        {
-            TagButton visualTag (content);
-            visualTag.setText(value);
-        }
-    }*/
+
     DialogCreateTag tag;
+    QString nom = tag.getName();
+    QString color = tag.getColor().name();
+    std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
+    TagButton tb (_cat_area_content,nom,color);
+    _cat_area->addWidget(&tb);
+    tb.show();
+
 
 }
 

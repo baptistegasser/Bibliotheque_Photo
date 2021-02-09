@@ -26,6 +26,7 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
     connect(_dir_tree, &QTreeWidget::itemCollapsed, this, &DirectoryManager::onItemCollapsed);
     connect(_dir_tree, &QTreeWidget::itemSelectionChanged, this, &DirectoryManager::onItemSelected);
 
+    // Detect if no folder was added
     QList<Directory> dirs = DB::getDirectoryDao().getAll();
     if (dirs.isEmpty()) {
         _stackpane->setCurrentIndex(1);
@@ -205,6 +206,11 @@ void DirectoryManager::removeDirectory()
     }
 
     _dir_tree->setDisabled(false);
+
+    // Check that we style have indexed dirs
+    if (_dir_tree->topLevelItemCount() == 0 && DB::getDirectoryDao().getAll().size() == 0) {
+        _stackpane->setCurrentIndex(1);
+    }
 }
 
 void DirectoryManager::removeDir(Directory &dir)
