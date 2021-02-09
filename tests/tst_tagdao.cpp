@@ -67,14 +67,15 @@ void TagDAOTest::test_search()
     QList<Tag> tags = {
         Tag("Moutain"),
         Tag("Dog"),
-        Tag("Tree", "#00ff00")
+        Tag("Drone", "#00ff00")
     };
     TagDAO tagDao = DB::getTagDao();
     tagDao.saveAll(tags);
 
     QCOMPARE(tagDao.search("something").size(), 0);
     QCOMPARE(tagDao.search("Moutain").size(), 1);
-    QCOMPARE(tagDao.search("o").size(), 2);
+    QCOMPARE(tagDao.search("M").size(), 1);
+    QCOMPARE(tagDao.search("D").size(), 2);
 }
 
 
