@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>511</width>
-    <height>268</height>
+    <width>565</width>
+    <height>270</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,19 +30,19 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="spacing">
-    <number>0</number>
+    <number>10</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>10</number>
    </property>
    <item>
     <widget class="QWidget" name="main_widget" native="true">
@@ -212,7 +212,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
+             <width>334</width>
              <height>38</height>
             </rect>
            </property>
@@ -254,7 +254,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
+             <width>334</width>
              <height>28</height>
             </rect>
            </property>
@@ -296,7 +296,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>300</width>
+             <width>334</width>
              <height>28</height>
             </rect>
            </property>

@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     gridLayoutPage = new QGridLayout();
     scrollAreaPage = new QScrollArea();
+    scrollAreaPage->setStyleSheet("background: transparent;");
 
     page->setLayout(gridLayoutPage);
 
@@ -82,7 +83,6 @@ void MainWindow::constructImageList(Directory dir)
         photoCard *pC = new photoCard(scrollContent);
         pC->setImage(image);
         pC->setFixedSize(511,268);
-        pC->setStyleSheet("QWidget#main_widget { border: 1.5px solid rgb(128,128,128); border-radius: 15px}");
 
         photoGrid->addWidget(pC);
 
