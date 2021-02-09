@@ -63,6 +63,12 @@ void photoCard::showDescriptiveTags()
         grid_layout->addWidget(tagbutton);
     }
 
+    if(image->descriptiveTags.size() == 0){
+        QLabel *no_tag = new QLabel("Auncun tag descriptif");
+        no_tag->setStyleSheet("font-style: italic; color: #B3B2B2;");
+        grid_layout->addWidget(no_tag);
+    }
+
     area->setLayout(grid_layout);
     ui->desc_scroll->setWidget(area);
     ui->desc_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -79,8 +85,16 @@ void photoCard::showFeelingTags()
         grid_layout->addWidget(tagbutton);
     }
 
+    if(image->feelingTags.size() == 0){
+        QLabel *no_tag = new QLabel("Auncun tag de ressenti");
+        no_tag->setStyleSheet("font-style: italic; color: #B3B2B2;");
+        grid_layout->addWidget(no_tag);
+    }
+
     area->setLayout(grid_layout);
     ui->ress_scroll->setWidget(area);
+    ui->ress_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->ress_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void photoCard::showCategoryTags(){
@@ -92,8 +106,16 @@ void photoCard::showCategoryTags(){
         grid_layout->addWidget(tagbutton);
     }
 
+    if(image->categoryTags.size() == 0){
+        QLabel *no_tag = new QLabel("Auncun tag mot-clé");
+        no_tag->setStyleSheet("font-style: italic; color: #B3B2B2;");
+        grid_layout->addWidget(no_tag);
+    }
+
     area->setLayout(grid_layout);
     ui->keyw_scroll->setWidget(area);
+    ui->keyw_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->keyw_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 
