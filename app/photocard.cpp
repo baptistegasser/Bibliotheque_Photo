@@ -19,16 +19,17 @@ photoCard::photoCard(QWidget *parent) :
     setAutoFillBackground(true);
     setPalette(pal);
 
-    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect;
-    effect->setBlurRadius(20);
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    effect->setBlurRadius(12);
     effect->setXOffset(0);
     effect->setYOffset(0);
     effect->setColor(Qt::black);
+    effect->setBlurRadius(10);
 
     ui->photo->setGraphicsEffect(effect);
 
     setAttribute(Qt::WA_TranslucentBackground);
-    setGraphicsEffect(effect);
+    ui->main_widget->setGraphicsEffect(effect);
 
     /*
     for(int i(0); i < image->feelingTags.size(); i++){
