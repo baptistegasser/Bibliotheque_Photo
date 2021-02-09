@@ -208,7 +208,7 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
     query.prepare(SQL);
 
     if (!keyword.isEmpty()) {
-        query.bindValue(":keyword", keyword);
+        query.bindValue(":keyword", "%"+keyword+"%");
     }
     if (!filter.isEmpty()) {
         query.addBindValue(filter.minWidth);
@@ -229,8 +229,6 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
             }
         }
     }
-
-    qDebug() << SQL;
 
     QList<Image> result;
     if (!query.exec()) {
