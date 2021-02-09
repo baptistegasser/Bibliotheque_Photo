@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     page->setLayout(gridLayoutPage);
 
+
     gridLayoutPage->addWidget(scrollAreaPage);
 
     scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -79,10 +80,9 @@ void MainWindow::constructImageList(Directory dir)
 
     for(const Image &img : images) {
         Image *image = new Image(img);
-        qDebug() << img.path;
         photoCard *pC = new photoCard(scrollContent);
         pC->setImage(image);
-        pC->setFixedSize(511,268);
+        pC->setFixedSize(scrollAreaPage->width()-65,268);
 
         photoGrid->addWidget(pC);
 
