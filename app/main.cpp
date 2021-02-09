@@ -30,6 +30,9 @@ int main(int argc, char *argv[])
     QString styleSheet = QLatin1String(file.readAll());
     a.setStyleSheet(styleSheet);
 
+    // Logo
+    a.setWindowIcon(QIcon(":/icon/logo"));
+
     MainWindow w;
     w.showMaximized();
 

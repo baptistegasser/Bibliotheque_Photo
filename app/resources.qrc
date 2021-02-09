@@ -17,5 +17,6 @@
         <file alias="folder_closed">resources/folder_closed.png</file>
         <file alias="folder_open">resources/folder_open.png</file>
         <file alias="image_frame">resources/image_frame.png</file>
+        <file alias="logo">resources/logo.png</file>
     </qresource>
 </RCC>
