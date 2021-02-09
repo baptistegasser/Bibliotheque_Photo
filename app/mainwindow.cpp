@@ -25,10 +25,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     gridLayoutPage = new QGridLayout();
     scrollAreaPage = new QScrollArea();
-
-
+    scrollAreaPage->setStyleSheet("background: transparent;");
 
     page->setLayout(gridLayoutPage);
+
 
     gridLayoutPage->addWidget(scrollAreaPage);
 
@@ -80,10 +80,9 @@ void MainWindow::constructImageList(Directory dir)
 
     for(const Image &img : images) {
         Image *image = new Image(img);
-        qDebug() << img.path;
         photoCard *pC = new photoCard(scrollContent);
         pC->setImage(image);
-        pC->setFixedSize(511,268);
+        pC->setFixedSize(scrollAreaPage->width()-100,268);
 
         photoGrid->addWidget(pC);
 
@@ -94,14 +93,21 @@ void MainWindow::constructImageList(Directory dir)
 
         cpt += 1;
     }
-    vBoxPage->addLayout(photoGrid);
+    if (cpt%2 == 0)
+        vBoxPage->addLayout(photoGrid);
 }
 
 void MainWindow::constructImageList(QList<Directory> dirs)
 {
     vBoxPage = new QVBoxLayout();
 
-     scrollContent = new QWidget();
+    scrollContent = new QWidget();
+
+    QSizePolicy test;
+    test.setHorizontalPolicy(QSizePolicy::Expanding);
+    test.setVerticalPolicy(QSizePolicy::Expanding);
+
+    scrollContent->setSizePolicy(test);
 
     for (const Directory &dir : dirs) {
         constructImageList(dir);

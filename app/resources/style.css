@@ -11,6 +11,9 @@ QMainWindow#MainWindow{
 QWidget#photoCard{
     background-color: #FFFFFF;
 }
+QWidget#photoCard QWidget#main_widget {
+    border-radius: 15px
+}
 QWidget#photoCard QFrame#photo{
     border-radius: 15px;
 }

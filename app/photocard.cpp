@@ -14,30 +14,16 @@ photoCard::photoCard(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QPalette pal = palette();
-    pal.setColor(QPalette::Background, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
-
-    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect;
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
     effect->setBlurRadius(20);
-    effect->setXOffset(0);
+    effect->setXOffset(-.1);
     effect->setYOffset(0);
-    effect->setColor(Qt::black);
+    QColor color = QColor(0,0,0,50);
+    effect->setColor(color);
 
-    ui->photo->setGraphicsEffect(effect);
-
+    ui->main_widget->setGraphicsEffect(effect);
+    ui->main_widget->setStyleSheet("background-color: #FFFFFF");
     setAttribute(Qt::WA_TranslucentBackground);
-    setGraphicsEffect(effect);
-
-    /*
-    for(int i(0); i < image->feelingTags.size(); i++){
-        TagButton * tagbutton = new TagButton(nullptr);
-        tagbutton->setTag(image->feelingTags[i]);
-        layout->addWidget(tagbutton);
-    }
-    */
-
 }
 
 void photoCard::setImage(Image *image)
@@ -45,14 +31,19 @@ void photoCard::setImage(Image *image)
     this->image = image;
     int height = image->height;
     int width = image->width;
-    float ratio = height/width;
-    ui->photo->setMinimumHeight(ui->photo->width()*ratio+30);
-    ui->photo->setStyleSheet("border-image: url('"+image->path+"') 0 0 0 0 stretch stretch;");
+    float ratio = (float)height/width;
+    ui->photo->setMinimumHeight(ui->photo->width()*ratio);
+    QLabel *container = new QLabel(ui->photo);
+    container->setPixmap(QPixmap(image->path).scaled(ui->photo->width(), ui->photo->height()*ratio));
+
 
     QVector<int> rgb = this->image->main_color;
     ui->main_color_frame->setStyleSheet("border-image: none; background-color: rgb("+QString::number(rgb[0])+','+QString::number(rgb[1])+','+QString::number(rgb[2])+")");
 
-    ui->date_label->setText(this->image->name);
+    ui->date_label->setStyleSheet("font-size: 11px;");
+    QFontMetrics metrics(ui->date_label->font());
+    QString elidedText = metrics.elidedText(this->image->name, Qt::ElideRight, ui->photo->width());
+    ui->date_label->setText(elidedText);
     ui->info_label->setText(QString::number(this->image->size/8000)+"Ko");
 
     showDescriptiveTags();
@@ -67,26 +58,15 @@ void photoCard::showDescriptiveTags()
     QHBoxLayout * grid_layout = new QHBoxLayout();
     QWidget * area = new QWidget();
 
-
-    TagButton * tagbutton = new TagButton(area);
-    TagButton * tagbutton2 = new TagButton(area);
-    TagButton * tagbutton3 = new TagButton(area);
-    TagButton * tagbutton4 = new TagButton(area);
-
-    tagbutton->setMinimumWidth(70);
-    tagbutton2->setMinimumWidth(70);
-    tagbutton3->setMinimumWidth(70);
-    tagbutton4->setMinimumWidth(70);
-
-
-
-    grid_layout->addWidget(tagbutton);
-    grid_layout->addWidget(tagbutton2);
-    grid_layout->addWidget(tagbutton3);
-    grid_layout->addWidget(tagbutton4);
+    for(int i(0); i < image->descriptiveTags.size(); i++){
+        TagButton * tagbutton = new TagButton(area, image->descriptiveTags[i].value, image->descriptiveTags[i].color);
+        grid_layout->addWidget(tagbutton);
+    }
 
     area->setLayout(grid_layout);
     ui->desc_scroll->setWidget(area);
+    ui->desc_scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void photoCard::showFeelingTags()
@@ -94,23 +74,10 @@ void photoCard::showFeelingTags()
     QHBoxLayout * grid_layout = new QHBoxLayout();
     QWidget * area = new QWidget();
 
-
-    TagButton * tagbutton = new TagButton(area);
-    TagButton * tagbutton2 = new TagButton(area);
-    TagButton * tagbutton3 = new TagButton(area);
-    TagButton * tagbutton4 = new TagButton(area);
-
-    tagbutton->setMinimumWidth(70);
-    tagbutton2->setMinimumWidth(70);
-    tagbutton3->setMinimumWidth(70);
-    tagbutton4->setMinimumWidth(70);
-
-
-
-    grid_layout->addWidget(tagbutton);
-    grid_layout->addWidget(tagbutton2);
-    grid_layout->addWidget(tagbutton3);
-    grid_layout->addWidget(tagbutton4);
+    for(int i(0); i < image->feelingTags.size(); i++){
+        TagButton * tagbutton = new TagButton(area, image->feelingTags[i].value, image->feelingTags[i].color);
+        grid_layout->addWidget(tagbutton);
+    }
 
     area->setLayout(grid_layout);
     ui->ress_scroll->setWidget(area);
@@ -120,23 +87,10 @@ void photoCard::showCategoryTags(){
     QHBoxLayout * grid_layout = new QHBoxLayout();
     QWidget * area = new QWidget();
 
-
-    TagButton * tagbutton = new TagButton(area);
-    TagButton * tagbutton2 = new TagButton(area);
-    TagButton * tagbutton3 = new TagButton(area);
-    TagButton * tagbutton4 = new TagButton(area);
-
-    tagbutton->setMinimumWidth(70);
-    tagbutton2->setMinimumWidth(70);
-    tagbutton3->setMinimumWidth(70);
-    tagbutton4->setMinimumWidth(70);
-
-
-
-    grid_layout->addWidget(tagbutton);
-    grid_layout->addWidget(tagbutton2);
-    grid_layout->addWidget(tagbutton3);
-    grid_layout->addWidget(tagbutton4);
+    for(int i(0); i < image->categoryTags.size(); i++){
+        TagButton * tagbutton = new TagButton(area, image->categoryTags[i].value, image->categoryTags[i].color);
+        grid_layout->addWidget(tagbutton);
+    }
 
     area->setLayout(grid_layout);
     ui->keyw_scroll->setWidget(area);
