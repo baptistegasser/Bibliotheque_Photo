@@ -2,6 +2,7 @@
 #include "QColorDialog"
 #include "db/db.h"
 #include <iostream>
+#include "QCompleter"
 
 DialogCreateTag::DialogCreateTag(QWidget *parent) :
     QDialog(parent)
@@ -14,24 +15,19 @@ DialogCreateTag::DialogCreateTag(QWidget *parent) :
     _my_frame->setStyleSheet("border:1px solid black;");
     connect(_my_combo,&QComboBox::editTextChanged,this,&DialogCreateTag::setName);
     connect(_my_button_color,&QPushButton::clicked,this,&DialogCreateTag::changeColor);
-    isClear = true;
     exec();
+
 }
 
 void DialogCreateTag::setName()
 {
-
-    QStringList alreadySet ;
-    for (int i = 0;i < _my_combo->count() ;i++ ) {
-        alreadySet.append(  _my_combo->itemText(i));
-    }
+    QStringList wordList;
     QList<Tag> list = DB::getTagDao().search(_my_combo->currentText());
     for(const Tag &t : qAsConst(list) ) {
-        if(!alreadySet.contains(t.value))
-        {
-            _my_combo->addItem(t.value);
-        }
+        wordList.append(t.value);
     }
+    QCompleter * completer = new QCompleter(wordList,_my_combo);
+    _my_combo->setCompleter(completer);
     nom = _my_combo->currentText();
     if (DB::getTagDao().exist(nom))
     {

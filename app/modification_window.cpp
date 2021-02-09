@@ -128,6 +128,7 @@ void Modification_window::addTag()
     QString color = tag.getColor().name();
     std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
     TagButton *tb = new TagButton(area,nom,color);
+    tb->resize(tb->sizeHint().width(),tb->sizeHint().height());
     grid_layout->addWidget(tb);
 }
 
