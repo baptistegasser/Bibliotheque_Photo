@@ -5,6 +5,7 @@
 
 #include <QFileDialog>
 #include <QStack>
+#include <QStandardPaths>
 #include <QMessageBox>
 #include <QTreeWidget>
 
@@ -16,21 +17,47 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
     // Configure buttons
     _del_dir_btn->setEnabled(false);
     connect(_add_dir_btn, &QPushButton::clicked, this, &DirectoryManager::addDirectory);
+    connect(_add_first_btn, &QPushButton::clicked, this, &DirectoryManager::addFirstDirectory);
     connect(_del_dir_btn, &QPushButton::clicked, this, &DirectoryManager::removeDirectory);
 
     // Configure folder tree
     _dir_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    displayDirs(DB::getDirectoryDao().getAll());
     connect(_dir_tree, &QTreeWidget::itemExpanded, this, &DirectoryManager::onItemExpanded);
     connect(_dir_tree, &QTreeWidget::itemCollapsed, this, &DirectoryManager::onItemCollapsed);
     connect(_dir_tree, &QTreeWidget::itemSelectionChanged, this, &DirectoryManager::onItemSelected);
+
+    QList<Directory> dirs = DB::getDirectoryDao().getAll();
+    if (dirs.isEmpty()) {
+        _stackpane->setCurrentIndex(1);
+    } else {
+        displayDirs(dirs);
+    }
 }
 
 void DirectoryManager::addDirectory()
 {
     QString dirPath = getDirectoryDialog();
-    Directory directory(dirPath, Directory::INCLUDE);
+    if (dirPath.isNull()) {
+        return;
+    }
 
+    Directory directory(dirPath, Directory::INCLUDE);
+    displayDir(directory, true);
+    displayDirs(DirIndexer(directory).index());
+
+    emit directoryAdded();
+}
+
+void DirectoryManager::addFirstDirectory()
+{
+    QString dirPath = getDirectoryDialog();
+    if (dirPath.isNull()) {
+        return;
+    }
+
+    _stackpane->setCurrentIndex(0);
+
+    Directory directory(dirPath, Directory::INCLUDE);
     displayDir(directory, true);
     displayDirs(DirIndexer(directory).index());
 
