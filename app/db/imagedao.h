@@ -18,13 +18,16 @@ public:
     bool saveAll(QList<Image> images);
     bool remove(Image &image);
     QList<Image> getAll();
+    QList<Image> getAll(Filter filter);
+    QList<Image> search(QString keyword);
+    QList<Image> search(QString keyword, Filter filter);
     QList<Image> getInDir(const Directory &dir);
-    QList<Image> search(Filter filter);
 
 private:
     bool create(Image &image);
     bool update(Image &image);
     Image fromRecord(QSqlRecord record);
+    void bindFilterToQuery(const QSqlQuery &query, Filter filter);
 };
 
 #endif // IMAGEDAO_H

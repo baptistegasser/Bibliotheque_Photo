@@ -139,10 +139,16 @@ bool ImageDAO::remove(Image &image)
 
 QList<Image> ImageDAO::getAll()
 {
+    return search(QString::Null(), Filter::Empty());
+}
+
+QList<Image> ImageDAO::getAll(Filter filter)
+{
+    return search(QString::Null(), filter);
     QList<Image> result;
     QSqlQuery query = getNewQuery();
 
-    if (!query.exec("SELECT * FROM Image;")) {
+    if (!query.exec("SELECT * FROM Image WHERE Width >= ? AND Height <= ? and Rating >= ?;")) {
         qWarning("Failed to get all images");
         qCritical() << query.lastError().text();
         return result;
@@ -153,6 +159,89 @@ QList<Image> ImageDAO::getAll()
     }
 
     return result;
+}
+
+QList<Image> ImageDAO::search(QString keyword)
+{
+    return search(keyword, Filter::Empty());
+}
+
+QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
+{
+    QString SQL = "SELECT * FROM :TABLES: :SEARCH: :FILTER:;";
+
+    QString _tables = "Image";
+    QString _search = "";
+    QString _filter = "";
+
+    if (!keyword.isEmpty()) {
+        _tables = "Image, ImageCategory c, ImageDescriptive d, ImageFeeling f";
+        _search = "WHERE Name LIKE :keyword OR Comment LIKE :keyword OR (\"Path\" = c.ImgPath AND c.TagValue LIKE :keyword) OR (\"Path\" = d.ImgPath AND d.TagValue LIKE :keyword) OR (\"Path\" = f.ImgPath AND f.TagValue LIKE :keyword)";
+    }
+
+    if (!filter.isEmpty()) {
+        _tables = "Image, ImageCategory c, ImageDescriptive d, ImageFeeling f";
+        _filter = "WHERE Width>=? AND Width<=? AND Height>=? AND Height<=? AND Rating>=? ";
+        if (filter.containTag.size()) {
+            QString _in = "IN (";
+            int i = 0;
+            for (; i < filter.containTag.size()-1; ++i) {
+                _in += ":tag"+QString::number(i)+",";
+            }
+            _in += ":tag"+QString::number(i+1)+")";
+            _filter += "AND ( (\"Path\" = c.ImgPath AND c.TagValue "+_in+") OR (\"Path\" = d.ImgPath AND d.TagValue "+_in+") OR (\"Path\" = f.ImgPath AND f.TagValue "+_in+") ) ";
+        }
+        if (filter.dontContainTag.size()) {
+            QString _in = "NOT IN (";
+            int i = 0;
+            for (; i < filter.dontContainTag.size()-1; ++i) {
+                _in += ":tag"+QString::number(i)+",";
+            }
+            _in += ":tag"+QString::number(i+1)+")";
+            _filter += "AND ( (\"Path\" = c.ImgPath AND c.TagValue "+_in+") OR (\"Path\" = d.ImgPath AND d.TagValue "+_in+") OR (\"Path\" = f.ImgPath AND f.TagValue "+_in+") ) ";
+        }
+    }
+
+    SQL = SQL.replace(":TABLES:", _tables).replace(":SEARCH:", _search).replace(":FILTER:", _filter);
+
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+
+    if (!keyword.isEmpty()) {
+        query.bindValue(":keyword", keyword);
+    }
+    if (!filter.isEmpty()) {
+        query.addBindValue(filter.minWidth);
+        query.addBindValue(filter.maxWidth);
+        query.addBindValue(filter.minHeight);
+        query.addBindValue(filter.maxHeight);
+        query.addBindValue(filter.minRating);
+        if (filter.containTag.size()) {
+            const QString tag = ":tag";
+            for (int i = 0; i < filter.containTag.size(); ++i) {
+                query.bindValue(tag+i, filter.containTag[i]);
+            }
+        }
+        if (filter.dontContainTag.size()) {
+            const QString tag = ":tag";
+            for (int i = 0; i < filter.dontContainTag.size(); ++i) {
+                query.bindValue(tag+i, filter.dontContainTag[i]);
+            }
+        }
+    }
+
+    QList<Image> result;
+    if (!query.exec()) {
+        qWarning() << "Failed to get a list of images" << "Keyword: "+keyword << query.lastQuery();
+        qCritical() << query.lastError().text();
+        return result;
+    }
+
+    while (query.next()) {
+        result << fromRecord(query.record());
+    }
+
+    return QList<Image>();
 }
 
 QList<Image> ImageDAO::getInDir(const Directory &dir)
@@ -174,11 +263,6 @@ QList<Image> ImageDAO::getInDir(const Directory &dir)
     }
 
     return result;
-}
-
-QList<Image> ImageDAO::search(Filter filter)
-{
-    return QList<Image>();
 }
 
 Image ImageDAO::fromRecord(QSqlRecord record)
