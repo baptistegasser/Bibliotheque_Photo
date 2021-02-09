@@ -21,20 +21,9 @@ photoCard::photoCard(QWidget *parent) :
     QColor color = QColor(0,0,0,50);
     effect->setColor(color);
 
-    //ui->photo->setGraphicsEffect(effect);
-
     ui->main_widget->setGraphicsEffect(effect);
     ui->main_widget->setStyleSheet("background-color: #FFFFFF");
     setAttribute(Qt::WA_TranslucentBackground);
-
-    /*
-    for(int i(0); i < image->feelingTags.size(); i++){
-        TagButton * tagbutton = new TagButton(nullptr);
-        tagbutton->setTag(image->feelingTags[i]);
-        layout->addWidget(tagbutton);
-    }
-    */
-
 }
 
 void photoCard::setImage(Image *image)
