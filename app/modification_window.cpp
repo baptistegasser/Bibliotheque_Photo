@@ -120,6 +120,18 @@ void Modification_window::comment()
 
 void Modification_window::addTag()
 {
+<<<<<<< HEAD
+=======
+
+    DialogCreateTag tag;
+    QString nom = tag.getName();
+    QString color = tag.getColor().name();
+    std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
+    TagButton tb (_cat_area_content,nom,color);
+    _cat_area->addWidget(&tb);
+    tb.show();
+
+>>>>>>> main
 
     DialogCreateTag tag;
     QString nom = tag.getName();
