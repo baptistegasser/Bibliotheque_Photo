@@ -82,7 +82,7 @@ void MainWindow::constructImageList(Directory dir)
         Image *image = new Image(img);
         photoCard *pC = new photoCard(scrollContent);
         pC->setImage(image);
-        pC->setFixedSize(scrollAreaPage->width()-80,268);
+        pC->setFixedSize(scrollAreaPage->width()-100,268);
 
         photoGrid->addWidget(pC);
 
@@ -101,7 +101,13 @@ void MainWindow::constructImageList(QList<Directory> dirs)
 {
     vBoxPage = new QVBoxLayout();
 
-     scrollContent = new QWidget();
+    scrollContent = new QWidget();
+
+    QSizePolicy test;
+    test.setHorizontalPolicy(QSizePolicy::Expanding);
+    test.setVerticalPolicy(QSizePolicy::Expanding);
+
+    scrollContent->setSizePolicy(test);
 
     for (const Directory &dir : dirs) {
         constructImageList(dir);
