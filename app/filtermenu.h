@@ -13,7 +13,6 @@ class FilterMenu : public QMenu, private Ui::FilterMenu
 
 private:
     Filter *filter;
-    double currentRating;
     QList<QPushButton *> stars;
     void setCurrentRating(int rating);
     void updateDisplay();

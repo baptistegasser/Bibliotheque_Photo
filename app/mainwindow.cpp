@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Configure and connect the search bar and button
     keyword = QString::Null();
-    currentFilter = Filter::Empty();
+    currentFilter = Filter();
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
     shortcut->setContext(Qt::ShortcutContext::WidgetShortcut);
     connect(shortcut, &QShortcut::activated, this, &MainWindow::setSearchKeyword);

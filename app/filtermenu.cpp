@@ -7,9 +7,7 @@ FilterMenu::FilterMenu(Filter *filter, QWidget *parent) :
     setupUi(this);
     connect(this, &QMenu::aboutToHide, this, &FilterMenu::updateFilter);
 
-    currentRating = 0;
     stars = QList<QPushButton *>();
-
     for (int i = 1; i <= 5; ++i) {
         QPushButton *btn = new QPushButton(QIcon(":/image/star_empty"), "");
         connect(btn, &QPushButton::clicked, this, [=]() { this->setCurrentRating(i); });
@@ -26,7 +24,6 @@ void FilterMenu::updateFilter()
     filter->maxWidth = _max_width_box->value();
     filter->minHeight = _min_height_box->value();
     filter->maxHeight = _max_height_box->value();
-    filter->minRating = currentRating;
 
     emit filterUpdated();
 }
@@ -41,7 +38,7 @@ void FilterMenu::setCurrentRating(int rating)
         }
     }
 
-    this->currentRating = rating;
+    filter->minRating = rating;
 }
 
 void FilterMenu::updateDisplay()

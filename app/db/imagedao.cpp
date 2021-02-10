@@ -152,7 +152,7 @@ bool ImageDAO::remove(Image &image)
 
 QList<Image> ImageDAO::getAll()
 {
-    return search(QString::Null(), Filter::Empty());
+    return search(QString::Null(), Filter());
 }
 
 QList<Image> ImageDAO::getAll(Filter filter)
@@ -176,15 +176,15 @@ QList<Image> ImageDAO::getAll(Filter filter)
 
 QList<Image> ImageDAO::search(QString keyword)
 {
-    return search(keyword, Filter::Empty());
+    return search(keyword, Filter());
 }
 
 QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
 {
-    QString SQL = "SELECT * FROM Image Where :SEARCH: AND :FILTER:;";
+    QString SQL = "SELECT * FROM Image Where :SEARCH: :FILTER:;";
 
     QString _search = "True";
-    QString _filter = "True";
+    QString _filter = "";
 
     if (!keyword.isEmpty()) {
         _search = /* sometime I wonder wtf I'm doing */
@@ -197,9 +197,11 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
         "))";
     }
 
-    if (!filter.isEmpty()) {
-        _filter = "Width>=? AND Width<=? AND Height>=? AND Height<=? AND Rating>=?";
-    }
+    if (filter.minWidth != 0)  _filter += " AND Width >=  :minWidth";
+    if (filter.maxWidth != 0)  _filter += " AND Width <=  :maxWidth";
+    if (filter.minHeight != 0) _filter += " AND Height >= :minHeight";
+    if (filter.maxHeight != 0) _filter += " AND Height <= :maxHeight";
+    if (filter.minRating != 0) _filter += " AND Rating >= :minRating";
 
     SQL = SQL.replace(":SEARCH:", _search).replace(":FILTER:", _filter);
 
@@ -210,13 +212,12 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
         query.bindValue(":keyword", "%"+keyword+"%");
         query.bindValue(":tagkeyword", keyword);
     }
-    if (!filter.isEmpty()) {
-        query.addBindValue(filter.minWidth);
-        query.addBindValue(filter.maxWidth);
-        query.addBindValue(filter.minHeight);
-        query.addBindValue(filter.maxHeight);
-        query.addBindValue(filter.minRating);
-    }
+
+    if (filter.minWidth != 0)  query.bindValue(":minWidth", filter.minWidth);
+    if (filter.maxWidth != 0)  query.bindValue(":maxWidth", filter.maxWidth);
+    if (filter.minHeight != 0) query.bindValue(":minHeight", filter.minHeight);
+    if (filter.maxHeight != 0) query.bindValue(":maxHeight", filter.maxHeight);
+    if (filter.minRating != 0) query.bindValue(":minRating", filter.minRating);
 
     QList<Image> result;
     if (!query.exec()) {
