@@ -28,7 +28,7 @@ private:
     void showFeelingTags();
     void showCategoryTags();
     void showRateStars();
-    void mousePressEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 };
 
 #endif // PHOTOCARD_H

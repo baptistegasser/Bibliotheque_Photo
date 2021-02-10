@@ -7,6 +7,7 @@
 #include <QPixmap>
 #include <QImage>
 #include <QDebug>
+#include <QMouseEvent>
 
 PhotoCard::PhotoCard(QWidget *parent) :
     QWidget(parent),
@@ -153,9 +154,10 @@ void PhotoCard::showRateStars()
     }
 }
 
-void PhotoCard::mousePressEvent(QMouseEvent *event)
+void PhotoCard::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    emit clicked(this);
+    if (event->button() == Qt::LeftButton)
+        emit clicked(this);
 }
 
 PhotoCard::~PhotoCard()
