@@ -142,7 +142,44 @@ void MainWindow::constructImageList(QList<Directory> dirs)
 
 void MainWindow::updateImages()
 {
-    constructImageList(DB::getDirectoryDao().getAll());
+    vBoxPage = new QVBoxLayout();
+
+    scrollContent = new QWidget();
+
+    QSizePolicy test;
+    test.setHorizontalPolicy(QSizePolicy::Expanding);
+    test.setVerticalPolicy(QSizePolicy::Expanding);
+
+    scrollContent->setSizePolicy(test);
+
+    const QList<Image> images = DB::getImageDao().search(keyword, currentFilter);
+
+    QHBoxLayout * photoGrid = new QHBoxLayout();
+
+    int cpt = 0;
+
+    for(const Image &img : images) {
+        Image *image = new Image(img);
+        PhotoCard *pC = new PhotoCard(scrollContent);
+        pC->setImage(image);
+        pC->setFixedSize(width_window-540/2,268);
+
+        connect(pC, SIGNAL(clicked(PhotoCard *)), this, SLOT(showModificationWindow(PhotoCard *)));
+
+        photoGrid->addWidget(pC);
+
+        if (cpt%2 != 0) {
+            vBoxPage->addLayout(photoGrid);
+            photoGrid = new QHBoxLayout();
+        }
+
+        cpt += 1;
+    }
+    if (cpt%2 == 0)
+        vBoxPage->addLayout(photoGrid);
+
+    scrollContent->setLayout(vBoxPage);
+    scrollAreaPage->setWidget(scrollContent);
 }
 
 void MainWindow::showModificationWindow(PhotoCard *ph)
