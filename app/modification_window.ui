@@ -258,7 +258,7 @@ border-radius:5px;
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="_my_mark_layout">
+         <layout class="QHBoxLayout" name="_my_rating_layout">
           <property name="spacing">
            <number>0</number>
           </property>
