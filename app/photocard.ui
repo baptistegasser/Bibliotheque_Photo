@@ -179,7 +179,7 @@
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>15</height>
+            <height>10</height>
            </size>
           </property>
           <property name="text">
@@ -194,6 +194,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
           </property>
           <property name="maximumSize">
            <size>
@@ -221,10 +227,16 @@
         </item>
         <item>
          <widget class="QLabel" name="ress_label">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>15</height>
+            <height>10</height>
            </size>
           </property>
           <property name="text">
@@ -237,13 +249,13 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>30</height>
+            <height>40</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>30</height>
+            <height>40</height>
            </size>
           </property>
           <property name="widgetResizable">
@@ -255,7 +267,7 @@
              <x>0</x>
              <y>0</y>
              <width>334</width>
-             <height>28</height>
+             <height>38</height>
             </rect>
            </property>
           </widget>
@@ -266,7 +278,7 @@
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>15</height>
+            <height>10</height>
            </size>
           </property>
           <property name="text">
@@ -279,13 +291,13 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>30</height>
+            <height>40</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>30</height>
+            <height>40</height>
            </size>
           </property>
           <property name="widgetResizable">
@@ -297,7 +309,7 @@
              <x>0</x>
              <y>0</y>
              <width>334</width>
-             <height>28</height>
+             <height>38</height>
             </rect>
            </property>
           </widget>

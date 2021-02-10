@@ -82,4 +82,19 @@ QColor DialogCreateTag::getColor()
     return couleur;
 }
 
+bool DialogCreateTag::getIsDone()
+{
+    return this->isDone;
+}
 
+void DialogCreateTag::accept()
+{
+    this->isDone = true;
+    QDialog::accept();
+}
+
+void DialogCreateTag::reject()
+{
+    this->isDone = false;
+    QDialog::reject();
+}

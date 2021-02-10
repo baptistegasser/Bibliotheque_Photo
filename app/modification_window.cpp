@@ -27,15 +27,17 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_reset,&QPushButton::clicked,this,&Modification_window::backToOriginal);
     connect(_my_slider,&QSlider::valueChanged,this,&Modification_window::zoom);
     connect(_my_commentaire_edit,&QPlainTextEdit::textChanged,this,&Modification_window::comment);
-    connect(_my_add_tag_cat_button,&QPushButton::clicked,this,&Modification_window::addTag);
+    connect(_my_add_tag_cat_button,&QPushButton::clicked,this,&Modification_window::addCategoryTag);
 
     updateImage();
+    //initDetail();
     this->showMaximized();
 
-    grid_layout = new QHBoxLayout();
-    area = new QWidget();
-    area->setLayout(grid_layout);
-    _my_categorie_tag_area->setWidget(area);
+    grid_layout_cat = new QHBoxLayout();
+    area_cat = new QWidget();
+    area_cat->setLayout(grid_layout_cat);
+    _my_categorie_tag_area->setWidget(area_cat);
+    initDetail();
 
 }
 
@@ -121,14 +123,37 @@ void Modification_window::comment()
     DB::getImageDao().save(img);
 }
 
-void Modification_window::addTag()
+void Modification_window::initDetail()
+{
+    QList<Tag> catTag = img.categoryTags;
+    qDebug() << catTag.size();
+    for(Tag &t:catTag)
+    {
+        TagButton *tb = getTagButtonFromTag(t);
+        grid_layout_cat->addWidget(tb);
+    }
+
+}
+
+void Modification_window::addCategoryTag()
 {
     DialogCreateTag tag;
-    QString nom = tag.getName();
-    QString color = tag.getColor().name();
-    std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
-    TagButton *tb = new TagButton(area,nom,color);
-    tb->resize(tb->sizeHint().width(),tb->sizeHint().height());
-    grid_layout->addWidget(tb);
+    if (tag.getIsDone())
+    {
+        QString nom = tag.getName();
+        QString color = tag.getColor().name();
+        std::cout << nom.toStdString() << " " << color.toStdString() << std::endl;
+        TagButton *tb = new TagButton(area_cat,nom,color);
+        grid_layout_cat->addWidget(tb);
+        img.categoryTags.append(Tag(nom,color));
+        bool b = DB::getImageDao().save(img);
+        qDebug() << b;
+    }
+}
+
+TagButton *Modification_window::getTagButtonFromTag(Tag tag)
+{
+    TagButton *tb = new TagButton (nullptr,tag.value,tag.color);
+    return tb;
 }
 

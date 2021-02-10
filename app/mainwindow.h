@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include "ui_mainwindow.h"
+#include "photocard.h"
 #include "db/filter.h"
+
 #include <QMainWindow>
 #include <QScrollArea>
 
@@ -20,6 +22,7 @@ protected slots:
     void constructImageList(Directory dir);
     void constructImageList(QList<Directory> dirs);
     void updateImages();
+    void showModificationWindow(PhotoCard *ph);
     void search();
 
 private:
@@ -28,6 +31,7 @@ private:
     QString keyword;
     Filter currentFilter;
     QGridLayout *gridLayoutPage;
+    QGridLayout *gridLayoutPage2;
     QScrollArea *scrollAreaPage;
     QVBoxLayout * vBoxPage;
     QWidget * scrollContent;
