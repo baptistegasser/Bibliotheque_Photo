@@ -22,9 +22,9 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_reset,&QPushButton::clicked,this,&Modification_window::backToOriginal);
     connect(_my_slider,&QSlider::valueChanged,this,&Modification_window::zoom);
     connect(_my_commentaire_edit,&QPlainTextEdit::textChanged,this,&Modification_window::comment);
-    connect(_my_add_tag_cat_button,&QPushButton::clicked,this,&Modification_window::addCategoryTag);
-    connect(_my_add_tag_desc_button,&QPushButton::clicked,this,&Modification_window::addDescTag);
-    connect(_my_add_tag_ress_button,&QPushButton::clicked,this,&Modification_window::addFeelTag);
+    connect(_my_add_tag_cat_button,&QPushButton::clicked,this,[=](){this->addTag(0);});
+    connect(_my_add_tag_desc_button,&QPushButton::clicked,this,[=](){this->addTag(1);});
+    connect(_my_add_tag_ress_button,&QPushButton::clicked,this,[=](){this->addTag(2);});
 
 
     updateImage();
@@ -117,17 +117,17 @@ void Modification_window::comment()
 
 void Modification_window::initLayout()
 {
-    grid_layout_cat = new QHBoxLayout();
+    grid_layout_cat = new FlowLayout();
     area_cat = new QWidget();
     area_cat->setLayout(grid_layout_cat);
     _my_categorie_tag_area->setWidget(area_cat);
 
-    grid_layout_feel = new QHBoxLayout();
+    grid_layout_feel = new FlowLayout();
     area_feel = new QWidget();
     area_feel->setLayout(grid_layout_feel);
     _my_ressenti_tag_area->setWidget(area_feel);
 
-    grid_layout_desc = new QHBoxLayout();
+    grid_layout_desc = new FlowLayout();
     area_desc = new QWidget();
     area_desc->setLayout(grid_layout_desc);
     _my_descriptif_tag_area->setWidget(area_desc);
@@ -135,6 +135,7 @@ void Modification_window::initLayout()
 
 void Modification_window::initDetail()
 {
+    //_my_color_dominant_edit->setText(img.main_color);
     _my_commentaire_edit->document()->setPlainText(img.comment);
     QVector<Tag> catTag = img.categoryTags.toVector();
     for(Tag &t:catTag)
@@ -148,61 +149,58 @@ void Modification_window::initDetail()
         TagButton *tb = getTagButtonFromTag(t);
         grid_layout_feel->addWidget(tb);
     }
+
+
     QVector<Tag> descTag = img.descriptiveTags.toVector();
+//    int row = grid_layout_desc->rowCount();
+//    int col = 0;
     for(Tag &t:descTag)
     {
         TagButton *tb = getTagButtonFromTag(t);
+        /*f (grid_layout_desc->count()% 4 == 0)
+        {
+            row++;
+            col = 0;
+        }*/
         grid_layout_desc->addWidget(tb);
+//        col++;
     }
 
 }
 
-void Modification_window::addCategoryTag()
+void Modification_window::addTag(int i)
 {
+    QWidget * area;
+    FlowLayout * layout;
+    QList<Tag> * list;
+    switch (i) {
+        case 0:
+            area = area_cat;
+            layout = grid_layout_cat;
+            list = &img.categoryTags;
+            break;
+        case 1:
+            area = area_desc;
+            layout = grid_layout_desc;
+            list = &img.descriptiveTags;
+            break;
+        case 2:
+            area = area_feel;
+            layout = grid_layout_feel;
+            list = &img.feelingTags;
+            break;
+
+    }
     DialogCreateTag tag;
     if (tag.getIsDone())
     {
         QString nom = tag.getName();
         QString color = tag.getColor().name();
-        TagButton *tb = new TagButton(area_cat,nom,color);
-        if(!img.categoryTags.contains(Tag(nom,color)))
+        TagButton *tb = new TagButton(area,nom,color);
+        if(!list->contains(Tag(nom,color)))
         {
-            grid_layout_cat->addWidget(tb);
-            img.categoryTags.append(Tag(nom,color));
-            DB::getImageDao().save(img);
-        }
-    }
-}
-
-void Modification_window::addDescTag()
-{
-    DialogCreateTag tag;
-    if (tag.getIsDone())
-    {
-        QString nom = tag.getName();
-        QString color = tag.getColor().name();
-        TagButton *tb = new TagButton(area_desc,nom,color);
-        if(!img.descriptiveTags.contains(Tag(nom,color)))
-        {
-            grid_layout_desc->addWidget(tb);
-            img.descriptiveTags.append(Tag(nom,color));
-            DB::getImageDao().save(img);
-        }
-    }
-}
-
-void Modification_window::addFeelTag()
-{
-    DialogCreateTag tag;
-    if (tag.getIsDone())
-    {
-        QString nom = tag.getName();
-        QString color = tag.getColor().name();
-        TagButton *tb = new TagButton(area_feel,nom,color);
-        if(!img.feelingTags.contains(Tag(nom,color)))
-        {
-            grid_layout_feel->addWidget(tb);
-            img.feelingTags.append(Tag(nom,color));
+            layout->addWidget(tb);
+            list->append(Tag(nom,color));
             DB::getImageDao().save(img);
         }
     }

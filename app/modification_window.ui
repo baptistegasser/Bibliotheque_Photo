@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1020</width>
-    <height>668</height>
+    <width>1280</width>
+    <height>830</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -256,6 +256,13 @@ border-radius:5px;
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Note&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="_my_mark_layout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+         </layout>
         </item>
         <item>
          <widget class="QLabel" name="_my_commentaire_label">
@@ -507,8 +514,8 @@ border-radius:5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>516</width>
-            <height>578</height>
+            <width>776</width>
+            <height>742</height>
            </rect>
           </property>
          </widget>

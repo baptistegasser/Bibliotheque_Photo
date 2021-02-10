@@ -5,6 +5,7 @@
 #include "QFileInfo"
 #include "model/image.h"
 #include "tagbutton.h"
+#include "flowlayout.h"
 
 class Modification_window : public QWidget, private Ui::modification_window
 {
@@ -13,11 +14,11 @@ private:
     Image img;
     QLabel _frame;
     QPixmap picture;
-    QHBoxLayout * grid_layout_cat;
+    FlowLayout * grid_layout_cat;
     QWidget * area_cat;
-    QHBoxLayout * grid_layout_feel;
+    FlowLayout * grid_layout_feel;
     QWidget * area_feel;
-    QHBoxLayout * grid_layout_desc;
+    FlowLayout * grid_layout_desc;
     QWidget * area_desc;
 
 public:
@@ -37,9 +38,7 @@ public slots:
     void openResizeDialog();
     void zoom();
     void comment();
-    void addCategoryTag();
-    void addFeelTag();
-    void addDescTag();
+    void addTag(int i);
 
 };
 

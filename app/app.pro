@@ -18,6 +18,7 @@ SOURCES += \
     directorymanager.cpp \
     dirindexer.cpp \
     filtermenu.cpp \
+    flowlayout.cpp \
     main.cpp \
     mainwindow.cpp \
     model/directory.cpp \
@@ -38,7 +39,6 @@ HEADERS += \
     dialogcreatetag.h \
     directorymanager.h \
     dirindexer.h \
-    filtermenu.h \
     mainwindow.h \
     model/directory.h \
     model/image.h \
