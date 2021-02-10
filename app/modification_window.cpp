@@ -11,6 +11,7 @@
 #include "QtCore"
 #include "QPainter"
 #include "dialogcreatetag.h"
+#include "QRgb"
 
 Modification_window::Modification_window(QWidget *parent, const Image *image) :
     QWidget(parent)
@@ -81,8 +82,11 @@ void Modification_window::openResizeDialog()
         preWidth = img.res_width;
     }
     QInputCustom input(this,2,{"Largeur","Hauteur"},{QString::number(preWidth),QString::number(preHeight)});
-    QStringList list = input.getStrings();
-    resizeImage(list[0].toInt(),list[1].toInt());
+    if(input.isDone())
+    {
+        QStringList list = input.getStrings();
+        resizeImage(list[0].toInt(),list[1].toInt());
+    }
 }
 
 void Modification_window::backToOriginal()
@@ -135,6 +139,15 @@ void Modification_window::initLayout()
 
 void Modification_window::initDetail()
 {
+    _my_picture_label->setText(img.name);
+    _my_picture_label->setStyleSheet("font:25px");
+    _my_picture_label->setAlignment(Qt::AlignCenter);
+
+    _my_color_dominant_edit->setEnabled(false);
+    QColor domCol (img.main_color.at(0),img.main_color.at(1),img.main_color.at(2));
+    _my_color_dominant_edit->setText(domCol.name());
+    _my_color_dominant_edit->setStyleSheet("background-color:"+domCol.name()+";");
+
     _my_commentaire_edit->document()->setPlainText(img.comment);
     QVector<Tag> catTag = img.categoryTags.toVector();
     for(Tag &t:catTag)
@@ -234,6 +247,7 @@ void Modification_window::changeNote(int rating)
     img.rating = rating+1;
     DB::getImageDao().save(img);
 }
+
 QPushButton *Modification_window::getReturnButton()
 {
     return _my_return_button;
