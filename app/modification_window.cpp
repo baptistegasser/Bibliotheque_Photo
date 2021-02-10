@@ -27,7 +27,6 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_add_tag_desc_button,&QPushButton::clicked,this,[=](){this->addTag(1);});
     connect(_my_add_tag_ress_button,&QPushButton::clicked,this,[=](){this->addTag(2);});
 
-
     updateImage();
     initLayout();
     initDetail();
