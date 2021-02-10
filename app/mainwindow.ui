@@ -242,7 +242,7 @@ margin-left: 5px;</string>
               <widget class="QComboBox" name="_search_comboBox">
                <property name="minimumSize">
                 <size>
-                 <width>100</width>
+                 <width>150</width>
                  <height>0</height>
                 </size>
                </property>
@@ -259,6 +259,22 @@ padding: 5px;
                </property>
                <property name="currentIndex">
                 <number>-1</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="_search_btn">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(240,240,240);
+color: black;
+padding: 5px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/icon/search</normaloff>:/icon/search</iconset>
                </property>
               </widget>
              </item>

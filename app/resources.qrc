@@ -18,5 +18,6 @@
         <file alias="folder_open">resources/folder_open.png</file>
         <file alias="image_frame">resources/image_frame.png</file>
         <file alias="logo">resources/logo.png</file>
+        <file alias="search">resources/search.png</file>
     </qresource>
 </RCC>
