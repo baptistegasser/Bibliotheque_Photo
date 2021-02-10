@@ -32,10 +32,27 @@ QStringList QInputCustom::getStrings()
 {
 
         QStringList list;
-        for(QLineEdit *qle:this->fields)
+        for(QLineEdit *qle:qAsConst(this->fields))
         {
             list.append(qle->text());
         }
         return list;
+}
+
+void QInputCustom::accept()
+{
+    QDialog::accept();
+    done = true;
+}
+
+void QInputCustom::reject()
+{
+    QDialog::reject();
+    done = false;
+}
+
+bool QInputCustom::isDone()
+{
+    return done;
 }
 

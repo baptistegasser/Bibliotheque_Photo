@@ -62,7 +62,7 @@
       <enum>QLayout::SetMinimumSize</enum>
      </property>
      <item>
-      <widget class="QLabel" name="my_picture_label">
+      <widget class="QLabel" name="_my_picture_label">
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -240,6 +240,12 @@ color:rgb(167, 167, 167);</string>
         </item>
         <item>
          <widget class="QLineEdit" name="_my_color_dominant_edit">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">color:rgb(180, 179, 179);
 border: 1px solid rgb(180, 179, 179);
