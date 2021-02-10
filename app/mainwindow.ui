@@ -124,9 +124,6 @@ border-left: none;</string>
                 <property name="styleSheet">
                  <string notr="true">border-image: url(:/icon/logo);</string>
                 </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
                </widget>
               </item>
               <item>
@@ -141,6 +138,9 @@ border-left: none;</string>
                  <font>
                   <pointsize>14</pointsize>
                  </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border: none;</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
