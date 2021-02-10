@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     gridLayoutPage->addWidget(scrollAreaPage);
 
     scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollAreaPage->setStyleSheet("background-color : white;");
 
     connect(_dir_manager, &DirectoryManager::directoryAdded, this, &MainWindow::updateImages);
     connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
