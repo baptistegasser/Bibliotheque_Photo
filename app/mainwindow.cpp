@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "photocard.h"
-#include "modification_window.h"
 #include "filtermenu.h"
 #include "db/db.h"
 
@@ -55,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
     gridLayoutPage->addWidget(scrollAreaPage);
 
     scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollAreaPage->setStyleSheet("background-color : white;");
 
     connect(_dir_manager, &DirectoryManager::directoryAdded, this, &MainWindow::updateImages);
     connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
@@ -62,6 +62,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     gridLayoutPage2 = new QGridLayout();
     page_2->setLayout(gridLayoutPage2);
+
+    gridLayoutModification_Window = new QGridLayout();
+    modification_Window_Widget = new QStackedWidget();
+
+    modification_Window_Widget->setLayout(gridLayoutModification_Window);
+
+    _my_stack->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
@@ -88,6 +95,11 @@ void MainWindow::constructSearchBar(QString s)
     }
 }
 
+/**
+ * Construct list of image of one Directory
+ * @brief MainWindow::constructImageList
+ * @param dir
+ */
 void MainWindow::constructImageList(Directory dir)
 {
     QLabel * label = new QLabel(scrollContent);
@@ -124,6 +136,11 @@ void MainWindow::constructImageList(Directory dir)
         vBoxPage->addLayout(photoGrid);
 }
 
+/**
+ * Construct a list of image with a list of Directory
+ * @brief MainWindow::constructImageList
+ * @param dirs
+ */
 void MainWindow::constructImageList(QList<Directory> dirs)
 {
     vBoxPage = new QVBoxLayout();
@@ -186,14 +203,38 @@ void MainWindow::updateImages()
     scrollAreaPage->setWidget(scrollContent);
 }
 
+/**
+ * Show a modification window of the photocard
+ * @brief MainWindow::showModificationWindow
+ * @param ph
+ */
 void MainWindow::showModificationWindow(PhotoCard *ph)
 {
-    qDebug() << "Click" << this;
+    if (currentWin != nullptr) {
+        gridLayoutModification_Window->removeWidget(currentWin);
+    }
 
-    Modification_window *win =  new Modification_window(nullptr,ph->getImage());
-    gridLayout_2->addWidget(win);
+    currentWin =  new Modification_window(modification_Window_Widget,ph->getImage());
 
+    gridLayoutModification_Window->addWidget(currentWin);
+
+    gridLayoutPage2->addWidget(modification_Window_Widget);
+
+    connect(currentWin->getReturnButton(), SIGNAL(clicked()), this, SLOT(showImageList()));
+
+    currentWin->getReturnButton();
     _my_stack->setCurrentIndex(1);
+}
+
+/**
+ * Slot for return to the image list
+ * @brief MainWindow::showModificationWindow
+ * @param ph
+ */
+void MainWindow::showImageList()
+{
+    updateImages();
+    _my_stack->setCurrentIndex(0);
 }
 
 void MainWindow::setSearchKeyword()
