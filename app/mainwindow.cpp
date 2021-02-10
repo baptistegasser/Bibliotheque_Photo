@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "photocard.h"
 #include "modification_window.h"
-
+#include "filtermenu.h"
 #include "db/db.h"
 
 #include <QDebug>
@@ -9,6 +9,7 @@
 #include <QScrollArea>
 #include <QShortcut>
 #include <QLabel>
+#include <QMenu>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,9 +21,14 @@ MainWindow::MainWindow(QWidget *parent)
     currentFilter = Filter::Empty();
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
     shortcut->setContext(Qt::ShortcutContext::WidgetShortcut);
-    connect(shortcut, &QShortcut::activated, this, &MainWindow::search);
-    connect(_search_btn, &QPushButton::clicked, this, &MainWindow::search);
+    connect(shortcut, &QShortcut::activated, this, &MainWindow::setSearchKeyword);
+    connect(_search_btn, &QAbstractButton::clicked, this, &MainWindow::setSearchKeyword);
     connect(_search_comboBox, &QComboBox::currentTextChanged, this, &MainWindow::constructSearchBar);
+
+    // Config filter and sort buttons
+    FilterMenu *menu = new FilterMenu(&this->currentFilter);
+    _filter_btn->setMenu(menu);
+    connect(menu, &FilterMenu::filterUpdated, this, &MainWindow::updateImages);
 
     // Handle windows closing
     connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
@@ -145,10 +151,9 @@ void MainWindow::showModificationWindow(PhotoCard *ph)
     _my_stack->setCurrentIndex(1);
 }
 
-void MainWindow::search()
+void MainWindow::setSearchKeyword()
 {
     _search_comboBox->clearFocus();
     keyword = _search_comboBox->currentText();
-    qDebug() << "search: " + keyword;
-    //displayImageList(DB::getImageDao().search(keyword, currentFilter));
+    updateImages();
 }

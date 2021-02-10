@@ -7,9 +7,9 @@
     </qresource>
     <qresource prefix="/image">
         <file>resources/filter.png</file>
-        <file>resources/star_fill.png</file>
-        <file>resources/star_half.png</file>
-        <file>resources/star_empty.png</file>
+        <file alias="star_full">resources/star_fill.png</file>
+        <file alias="star_half">resources/star_half.png</file>
+        <file alias="star_empty">resources/star_empty.png</file>
         <file>resources/close.png</file>
         <file>resources/example.jpg</file>
     </qresource>

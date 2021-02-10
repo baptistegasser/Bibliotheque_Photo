@@ -23,7 +23,7 @@ protected slots:
     void constructImageList(QList<Directory> dirs);
     void updateImages();
     void showModificationWindow(PhotoCard *ph);
-    void search();
+    void setSearchKeyword();
 
 private:
     bool isCleared;
