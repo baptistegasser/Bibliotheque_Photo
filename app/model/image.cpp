@@ -22,6 +22,9 @@ Image::Image()
     crop_width = 0;
     crop_height = 0;
     main_color = QVector<int>(3);
+    for (int i = 0; i < 3; ++i) {
+        main_color[i] = 0;
+    }
 }
 
 Image::Image(const Image &img)
