@@ -15,6 +15,10 @@ private:
     QPixmap picture;
     QHBoxLayout * grid_layout_cat;
     QWidget * area_cat;
+    QHBoxLayout * grid_layout_feel;
+    QWidget * area_feel;
+    QHBoxLayout * grid_layout_desc;
+    QWidget * area_desc;
 
 public:
     explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);
@@ -22,6 +26,7 @@ public:
     void setQFileInfo(QFileInfo img);
     void resizeImage(int w, int h);
     void backToOriginal();
+    void initLayout();
     void initDetail();
     TagButton* getTagButtonFromTag(Tag tag);
 
@@ -33,6 +38,8 @@ public slots:
     void zoom();
     void comment();
     void addCategoryTag();
+    void addFeelTag();
+    void addDescTag();
 
 };
 
