@@ -21,6 +21,7 @@ private:
     FlowLayout * grid_layout_desc;
     QWidget * area_desc;
     QList<QPushButton*> stars;
+    bool ratio;
 
 public:
     explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);

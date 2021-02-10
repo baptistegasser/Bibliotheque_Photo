@@ -12,6 +12,7 @@
 #include "QPainter"
 #include "dialogcreatetag.h"
 #include "QRgb"
+#include "QRadioButton"
 
 Modification_window::Modification_window(QWidget *parent, const Image *image) :
     QWidget(parent)
@@ -37,13 +38,10 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
 void Modification_window::updateImage()
 {
     _my_reset->hide();
-
     if(img.resized)
     {
         _my_reset->show();
     }
-
-
     picture  = QPixmap(img.path);
     if(img.resized)
     {
@@ -64,12 +62,44 @@ void Modification_window::updateImage()
 
 void Modification_window::resizeImage(int w, int h)
 {
-   img.res_height = h;
-   img.res_width = w;
-   img.resized = true;
-   DB::getImageDao().save(img);
-   updateImage();
+    if(ratio)
+    {
+        if(img.resized)
+        {
+            picture = picture.scaled(img.width,img.height);
+            if(w > img.res_width || h > img.res_height)
+            {
+                picture = picture.scaled(w,h,Qt::KeepAspectRatioByExpanding);
+            }
+            else
+            {
+                picture = picture.scaled(w,h,Qt::KeepAspectRatio);
+            }
+        }
+        else
+        {
+            if(w > img.width || h > img.height)
+            {
+                picture = picture.scaled(w,h,Qt::KeepAspectRatioByExpanding);
+            }
+            else
+            {
+                picture = picture.scaled(w,h,Qt::KeepAspectRatio);
+            }
+        }
+    }
+    else
+    {
+        picture = picture.scaled(w,h);
+    }
+    img.res_height = picture.height();
+    img.res_width = picture.width();
+    img.resized = true;
+    DB::getImageDao().save(img);
+    updateImage();
 }
+
+
 
 void Modification_window::openResizeDialog()
 {
@@ -81,9 +111,13 @@ void Modification_window::openResizeDialog()
         preWidth = img.res_width;
     }
     QInputCustom input(this,2,{"Largeur","Hauteur"},{QString::number(preWidth),QString::number(preHeight)});
+    QRadioButton ratio ("garder le ratio");
+    input.addWidget(&ratio);
+    input.exec();
     if(input.isDone())
     {
         QStringList list = input.getStrings();
+        this->ratio = ratio.isChecked();
         resizeImage(list[0].toInt(),list[1].toInt());
     }
 }
@@ -163,7 +197,7 @@ void Modification_window::initDetail()
     QVector<Tag> descTag = img.descriptiveTags.toVector();
     for(Tag &t:descTag)
     {
-        TagButton *tb = getTagButtonFromTag(t);  
+        TagButton *tb = getTagButtonFromTag(t);
         grid_layout_desc->addWidget(tb);
     }
     for (int i = 0; i< 5 ;i++ )
@@ -192,21 +226,21 @@ void Modification_window::addTag(int i)
     FlowLayout * layout;
     QList<Tag> * list;
     switch (i) {
-        case 0:
-            area = area_cat;
-            layout = grid_layout_cat;
-            list = &img.categoryTags;
-            break;
-        case 1:
-            area = area_desc;
-            layout = grid_layout_desc;
-            list = &img.descriptiveTags;
-            break;
-        case 2:
-            area = area_feel;
-            layout = grid_layout_feel;
-            list = &img.feelingTags;
-            break;
+    case 0:
+        area = area_cat;
+        layout = grid_layout_cat;
+        list = &img.categoryTags;
+        break;
+    case 1:
+        area = area_desc;
+        layout = grid_layout_desc;
+        list = &img.descriptiveTags;
+        break;
+    case 2:
+        area = area_feel;
+        layout = grid_layout_feel;
+        list = &img.feelingTags;
+        break;
 
     }
     DialogCreateTag tag;
