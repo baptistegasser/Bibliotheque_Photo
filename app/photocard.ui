@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>photoCard</class>
- <widget class="QWidget" name="photoCard">
+ <class>PhotoCard</class>
+ <widget class="QWidget" name="PhotoCard">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>565</width>
-    <height>270</height>
+    <height>282</height>
    </rect>
   </property>
   <property name="sizePolicy">
