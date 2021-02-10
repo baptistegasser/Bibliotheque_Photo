@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "ui_mainwindow.h"
-
+#include "db/filter.h"
 #include <QMainWindow>
 #include <QScrollArea>
 
@@ -20,10 +20,13 @@ protected slots:
     void constructImageList(Directory dir);
     void constructImageList(QList<Directory> dirs);
     void updateImages();
+    void search();
 
 private:
     bool isCleared;
     int width_window;
+    QString keyword;
+    Filter currentFilter;
     QGridLayout *gridLayoutPage;
     QScrollArea *scrollAreaPage;
     QVBoxLayout * vBoxPage;

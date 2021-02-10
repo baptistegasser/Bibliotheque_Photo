@@ -203,7 +203,7 @@ border-left: none;</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QPushButton" name="Filter">
+              <widget class="QPushButton" name="_filter_btn">
                <property name="maximumSize">
                 <size>
                  <width>100</width>

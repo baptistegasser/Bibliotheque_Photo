@@ -6,14 +6,25 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QScrollArea>
+#include <QShortcut>
 #include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
-    connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
+
+    // Configure and connect the search bar and button
+    keyword = QString::Null();
+    currentFilter = Filter::Empty();
+    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
+    shortcut->setContext(Qt::ShortcutContext::WidgetShortcut);
+    connect(shortcut, &QShortcut::activated, this, &MainWindow::search);
+    connect(_search_btn, &QPushButton::clicked, this, &MainWindow::search);
     connect(_search_comboBox, &QComboBox::currentTextChanged, this, &MainWindow::constructSearchBar);
+
+    // Handle windows closing
+    connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
 
     isCleared = false;
 
@@ -116,4 +127,12 @@ void MainWindow::constructImageList(QList<Directory> dirs)
 void MainWindow::updateImages()
 {
     constructImageList(DB::getDirectoryDao().getAll());
+}
+
+void MainWindow::search()
+{
+    _search_comboBox->clearFocus();
+    keyword = _search_comboBox->currentText();
+    qDebug() << "search: " + keyword;
+    //displayImageList(DB::getImageDao().search(keyword, currentFilter));
 }
