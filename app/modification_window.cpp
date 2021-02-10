@@ -13,6 +13,7 @@
 #include "dialogcreatetag.h"
 #include "QRgb"
 #include "QRadioButton"
+#include "QFileDialog"
 
 Modification_window::Modification_window(QWidget *parent, const Image *image) :
     QWidget(parent)
@@ -27,7 +28,7 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_add_tag_cat_button,&QPushButton::clicked,this,[=](){this->addTag(0);});
     connect(_my_add_tag_desc_button,&QPushButton::clicked,this,[=](){this->addTag(1);});
     connect(_my_add_tag_ress_button,&QPushButton::clicked,this,[=](){this->addTag(2);});
-
+    connect(_my_download_button,&QPushButton::clicked,this,&Modification_window::save);
     updateImage();
     initLayout();
     initDetail();
@@ -284,5 +285,11 @@ void Modification_window::changeNote(int rating)
 QPushButton *Modification_window::getReturnButton()
 {
     return _my_return_button;
+}
+
+void Modification_window::save()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),img.name,tr("Images (*.png *.jpeg *.jpg)"));
+    picture.save(fileName);
 }
 

@@ -43,6 +43,7 @@ public slots:
     void comment();
     void addTag(int i);
     void changeNote(int i);
+    void save();
 
 };
 
