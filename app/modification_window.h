@@ -31,6 +31,7 @@ public:
     void initLayout();
     void initDetail();
     TagButton* getTagButtonFromTag(Tag tag);
+    QPushButton* getReturnButton();
 
 
 

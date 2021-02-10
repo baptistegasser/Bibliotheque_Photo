@@ -4,6 +4,7 @@
 #include "ui_mainwindow.h"
 #include "photocard.h"
 #include "db/filter.h"
+#include "modification_window.h"
 
 #include <QMainWindow>
 #include <QScrollArea>
@@ -23,6 +24,7 @@ protected slots:
     void constructImageList(QList<Directory> dirs);
     void updateImages();
     void showModificationWindow(PhotoCard *ph);
+    void showImageList();
     void setSearchKeyword();
 
     void sortItemChanged(int index);
@@ -36,9 +38,12 @@ private:
     int orderType;
     bool orderedSort;
     QGridLayout *gridLayoutPage;
-    QGridLayout *gridLayoutPage2;
     QScrollArea *scrollAreaPage;
     QVBoxLayout * vBoxPage;
     QWidget * scrollContent;
+    QGridLayout *gridLayoutPage2;
+    QGridLayout *gridLayoutModification_Window;
+    QStackedWidget *modification_Window_Widget;
+    Modification_window *currentWin;
 };
 #endif // MAINWINDOW_H

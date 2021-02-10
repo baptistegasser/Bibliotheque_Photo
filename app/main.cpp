@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.showMaximized();
 
-    Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));
+    /*Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));*/
 
     /*photoCard pC;
     pC.show();*/

@@ -234,3 +234,8 @@ void Modification_window::changeNote(int rating)
     img.rating = rating+1;
     DB::getImageDao().save(img);
 }
+QPushButton *Modification_window::getReturnButton()
+{
+    return _my_return_button;
+}
+
