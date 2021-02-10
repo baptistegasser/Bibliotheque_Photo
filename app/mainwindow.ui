@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>795</width>
+    <width>913</width>
     <height>628</height>
    </rect>
   </property>
@@ -216,7 +216,7 @@ color: black;
 padding: 5px;</string>
                </property>
                <property name="text">
-                <string>  Filter</string>
+                <string>  Filtrer</string>
                </property>
                <property name="icon">
                 <iconset resource="resources.qrc">
@@ -227,6 +227,82 @@ padding: 5px;</string>
                </property>
                <property name="toolButtonStyle">
                 <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+	border: none;
+}</string>
+               </property>
+               <property name="text">
+                <string>Trier par:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="_sort_comboBox">
+               <property name="minimumSize">
+                <size>
+                 <width>125</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color:white;
+color: black;
+border: 0.5px  solid black;
+border-radius: 5px;
+padding: 5px;
+</string>
+               </property>
+               <property name="editable">
+                <bool>false</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Nom</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Date</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Taille</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="_sort_order_btn">
+               <property name="styleSheet">
+                <string notr="true">border: none;
+padding: 5px 0px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/icon/sort</normaloff>:/icon/sort</iconset>
                </property>
               </widget>
              </item>
@@ -270,9 +346,8 @@ padding: 5px;
              <item>
               <widget class="QPushButton" name="_search_btn">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(240,240,240);
-color: black;
-padding: 5px;</string>
+                <string notr="true">border: none;
+padding: 5px 0px;</string>
                </property>
                <property name="text">
                 <string/>
@@ -322,5 +397,42 @@ padding: 5px;</string>
  <resources>
   <include location="resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>_sort_order_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sortOrderChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>639</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>913</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_sort_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sortItemChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>568</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>sortOrderChanged()</slot>
+  <slot>sortItemChanged(int)</slot>
+ </slots>
 </ui>

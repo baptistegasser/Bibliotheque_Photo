@@ -25,11 +25,16 @@ protected slots:
     void showModificationWindow(PhotoCard *ph);
     void setSearchKeyword();
 
+    void sortItemChanged(int index);
+    void sortOrderChanged();
+
 private:
     bool isCleared;
     int width_window;
     QString keyword;
     Filter currentFilter;
+    int orderType;
+    bool orderedSort;
     QGridLayout *gridLayoutPage;
     QGridLayout *gridLayoutPage2;
     QScrollArea *scrollAreaPage;

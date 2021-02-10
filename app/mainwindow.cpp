@@ -30,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent)
     _filter_btn->setMenu(menu);
     connect(menu, &FilterMenu::filterUpdated, this, &MainWindow::updateImages);
 
+    orderType = 0;
+    orderedSort = true;
+
     // Handle windows closing
     connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
 
@@ -155,5 +158,27 @@ void MainWindow::setSearchKeyword()
 {
     _search_comboBox->clearFocus();
     keyword = _search_comboBox->currentText();
+    updateImages();
+}
+
+void MainWindow::sortItemChanged(int index)
+{
+    if (index == -1) {
+        _sort_comboBox->setCurrentIndex(index);
+        return;
+    }
+
+    this->orderType = index;
+    updateImages();
+}
+
+void MainWindow::sortOrderChanged()
+{
+    this->orderedSort = !orderedSort;
+    if (orderedSort) {
+        _sort_order_btn->setIcon(QIcon(":/icon/sort"));
+    } else {
+        _sort_order_btn->setIcon(QIcon(":/icon/sort_reverse"));
+    }
     updateImages();
 }
