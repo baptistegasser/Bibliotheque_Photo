@@ -19,5 +19,7 @@
         <file alias="image_frame">resources/image_frame.png</file>
         <file alias="logo">resources/logo.png</file>
         <file alias="search">resources/search.png</file>
+        <file alias="sort">resources/sort.png</file>
+        <file alias="sort_reverse">resources/sort_reverse.png</file>
     </qresource>
 </RCC>
