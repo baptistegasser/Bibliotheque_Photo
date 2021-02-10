@@ -180,47 +180,34 @@ QList<Image> ImageDAO::search(QString keyword)
 
 QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
 {
-    QString SQL = "SELECT * FROM :TABLES: :SEARCH: :FILTER:;";
+    QString SQL = "SELECT * FROM Image Where :SEARCH: AND :FILTER:;";
 
-    QString _tables = "Image";
-    QString _search = "";
-    QString _filter = "";
+    QString _search = "True";
+    QString _filter = "True";
 
     if (!keyword.isEmpty()) {
-        _tables = "Image, ImageCategory c, ImageDescriptive d, ImageFeeling f";
-        _search = "WHERE Name LIKE :keyword OR Comment LIKE :keyword OR (\"Path\" = c.ImgPath AND c.TagValue LIKE :keyword) OR (\"Path\" = d.ImgPath AND d.TagValue LIKE :keyword) OR (\"Path\" = f.ImgPath AND f.TagValue LIKE :keyword)";
+        _search = /* sometime I wonder wtf I'm doing */
+        "(Name LIKE :keyword OR Comment LIKE :keyword OR \"Path\" IN ("
+        "  SELECT ImgPath FROM ImageCategory WHERE TagValue = :tagkeyword"
+        "    UNION"
+        "  SELECT ImgPath FROM ImageDescriptive WHERE TagValue = :tagkeyword"
+        "    UNION"
+        "  SELECT ImgPath FROM ImageFeeling WHERE TagValue = :tagkeyword"
+        "))";
     }
 
     if (!filter.isEmpty()) {
-        _tables = "Image, ImageCategory c, ImageDescriptive d, ImageFeeling f";
-        _filter = "WHERE Width>=? AND Width<=? AND Height>=? AND Height<=? AND Rating>=? ";
-        if (filter.containTag.size()) {
-            QString _in = "IN (";
-            int i = 0;
-            for (; i < filter.containTag.size()-1; ++i) {
-                _in += ":tag"+QString::number(i)+",";
-            }
-            _in += ":tag"+QString::number(i+1)+")";
-            _filter += "AND ( (\"Path\" = c.ImgPath AND c.TagValue "+_in+") OR (\"Path\" = d.ImgPath AND d.TagValue "+_in+") OR (\"Path\" = f.ImgPath AND f.TagValue "+_in+") ) ";
-        }
-        if (filter.dontContainTag.size()) {
-            QString _in = "NOT IN (";
-            int i = 0;
-            for (; i < filter.dontContainTag.size()-1; ++i) {
-                _in += ":tag"+QString::number(i)+",";
-            }
-            _in += ":tag"+QString::number(i+1)+")";
-            _filter += "AND ( (\"Path\" = c.ImgPath AND c.TagValue "+_in+") OR (\"Path\" = d.ImgPath AND d.TagValue "+_in+") OR (\"Path\" = f.ImgPath AND f.TagValue "+_in+") ) ";
-        }
+        _filter = "Width>=? AND Width<=? AND Height>=? AND Height<=? AND Rating>=?";
     }
 
-    SQL = SQL.replace(":TABLES:", _tables).replace(":SEARCH:", _search).replace(":FILTER:", _filter);
+    SQL = SQL.replace(":SEARCH:", _search).replace(":FILTER:", _filter);
 
     QSqlQuery query = getNewQuery();
     query.prepare(SQL);
 
     if (!keyword.isEmpty()) {
         query.bindValue(":keyword", "%"+keyword+"%");
+        query.bindValue(":tagkeyword", keyword);
     }
     if (!filter.isEmpty()) {
         query.addBindValue(filter.minWidth);
@@ -228,18 +215,6 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
         query.addBindValue(filter.minHeight);
         query.addBindValue(filter.maxHeight);
         query.addBindValue(filter.minRating);
-        if (filter.containTag.size()) {
-            const QString tag = ":tag";
-            for (int i = 0; i < filter.containTag.size(); ++i) {
-                query.bindValue(tag+i, filter.containTag[i]);
-            }
-        }
-        if (filter.dontContainTag.size()) {
-            const QString tag = ":tag";
-            for (int i = 0; i < filter.dontContainTag.size(); ++i) {
-                query.bindValue(tag+i, filter.dontContainTag[i]);
-            }
-        }
     }
 
     QList<Image> result;
