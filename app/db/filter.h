@@ -13,9 +13,6 @@ private:
     bool m_empty = true;
 
 public:
-    QList<QString> containTag;      // List of tag that should be on the image
-    QList<QString> dontContainTag;  // List of tag value not to be found on the image
-
     int minWidth, maxWidth;
     int minHeight, maxHeight;
     int minRating;
