@@ -7,11 +7,7 @@ Filter* Filter::EMPTY;
 
 Filter::Filter()
 {
-    minWidth = FLT_MIN;
-    minHeight = FLT_MIN;
-    maxWidth = FLT_MAX;
-    maxHeight = FLT_MAX;
-    minRating = 0;
+    reset();
 }
 
 Filter Filter::Empty()
@@ -27,4 +23,13 @@ Filter Filter::Empty()
 bool Filter::isEmpty() const
 {
     return this->m_empty;
+}
+
+void Filter::reset()
+{
+    minWidth = 0;
+    maxWidth = 0;
+    minHeight = 0;
+    maxHeight = 0;
+    minRating = 0;
 }

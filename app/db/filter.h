@@ -16,13 +16,14 @@ public:
     QList<QString> containTag;      // List of tag that should be on the image
     QList<QString> dontContainTag;  // List of tag value not to be found on the image
 
-    float minWidth, maxWidth;
-    float minHeight, maxHeight;
+    int minWidth, maxWidth;
+    int minHeight, maxHeight;
     int minRating;
 
     Filter();
     static Filter Empty();
     bool isEmpty() const;
+    void reset();
 };
 
 #endif // FILTER_H
