@@ -115,13 +115,14 @@ bool ImageDAO::update(Image &image)
     query.addBindValue(image.crop_y);
     query.addBindValue(image.crop_width);
     query.addBindValue(image.crop_height);
-    query.addBindValue(image.path);
 
     QString mainColorStr = QString("%1;%2;%3")
             .arg(image.main_color[0])
             .arg(image.main_color[1])
             .arg(image.main_color[2]);
     query.addBindValue(mainColorStr);
+
+    query.addBindValue(image.path);
 
     if (!query.exec()) {
         qWarning() << "Updating image failed" << image;

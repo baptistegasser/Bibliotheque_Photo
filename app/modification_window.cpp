@@ -135,7 +135,6 @@ void Modification_window::initLayout()
 
 void Modification_window::initDetail()
 {
-    //_my_color_dominant_edit->setText(img.main_color);
     _my_commentaire_edit->document()->setPlainText(img.comment);
     QVector<Tag> catTag = img.categoryTags.toVector();
     for(Tag &t:catTag)
@@ -149,23 +148,30 @@ void Modification_window::initDetail()
         TagButton *tb = getTagButtonFromTag(t);
         grid_layout_feel->addWidget(tb);
     }
-
-
     QVector<Tag> descTag = img.descriptiveTags.toVector();
-//    int row = grid_layout_desc->rowCount();
-//    int col = 0;
     for(Tag &t:descTag)
     {
-        TagButton *tb = getTagButtonFromTag(t);
-        /*f (grid_layout_desc->count()% 4 == 0)
-        {
-            row++;
-            col = 0;
-        }*/
+        TagButton *tb = getTagButtonFromTag(t);  
         grid_layout_desc->addWidget(tb);
-//        col++;
     }
+    for (int i = 0; i< 5 ;i++ )
+    {
+        QIcon icon;
+        if (i <= img.rating-1)
+        {
+            icon.addPixmap(QPixmap(":/image/star_full").scaled(200,200));
+        }
+        else
+        {
+            icon.addPixmap(QPixmap(":/image/star_empty").scaled(200,200));
+        }
+        QPushButton * button = new QPushButton(icon,"");
+        button->setStyleSheet("border:none;background-color:rgb(250,250,250);");
+        connect(button,&QPushButton::clicked,this,[=](){this->changeNote(i);});
+        _my_rating_layout->addWidget(button);
+        stars.append(button);
 
+    }
 }
 
 void Modification_window::addTag(int i)
@@ -212,3 +218,19 @@ TagButton *Modification_window::getTagButtonFromTag(Tag tag)
     return tb;
 }
 
+void Modification_window::changeNote(int rating)
+{
+    if (rating == img.rating-1)
+    {
+        rating--;
+    }
+    for (int i = 0; i < 5; ++i) {
+        if (rating >= i) {
+            stars.at(i)->setIcon(QIcon(":/image/star_full"));
+        } else {
+            stars.at(i)->setIcon(QIcon(":/image/star_empty"));
+        }
+    }
+    img.rating = rating+1;
+    DB::getImageDao().save(img);
+}

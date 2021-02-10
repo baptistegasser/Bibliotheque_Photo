@@ -20,6 +20,7 @@ private:
     QWidget * area_feel;
     FlowLayout * grid_layout_desc;
     QWidget * area_desc;
+    QList<QPushButton*> stars;
 
 public:
     explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);
@@ -39,6 +40,7 @@ public slots:
     void zoom();
     void comment();
     void addTag(int i);
+    void changeNote(int i);
 
 };
 

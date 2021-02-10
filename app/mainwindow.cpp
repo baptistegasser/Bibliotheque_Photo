@@ -24,6 +24,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(shortcut, &QShortcut::activated, this, &MainWindow::setSearchKeyword);
     connect(_search_btn, &QAbstractButton::clicked, this, &MainWindow::setSearchKeyword);
     connect(_search_comboBox, &QComboBox::currentTextChanged, this, &MainWindow::constructSearchBar);
+    // If focus is lost from combobox and is not due to switching to another app, update search
+    connect(qApp, &QApplication::focusChanged, this, [=](QWidget *old, QWidget *now) {
+        if (old == _search_comboBox && now != nullptr)
+            setSearchKeyword();
+    });
 
     // Config filter and sort buttons
     FilterMenu *menu = new FilterMenu(&this->currentFilter);
