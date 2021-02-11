@@ -3,6 +3,7 @@
 
 #include "tag.h"
 
+#include <QDateTime>
 #include <QFileInfo>
 #include "QList"
 #include "QString"
@@ -14,6 +15,7 @@ public:
     QString parentDir;  // Absolute path to the image dir
     QString name;       // The image name
     qint64 size;        // The file size in bytes
+    QDateTime date;     // The file creation date
     float width;
     float height;
 

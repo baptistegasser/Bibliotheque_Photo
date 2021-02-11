@@ -25,6 +25,7 @@ Image::Image()
     for (int i = 0; i < 3; ++i) {
         main_color[i] = 0;
     }
+    date = QDateTime::currentDateTime();
 }
 
 Image::Image(const Image &img)
@@ -58,6 +59,7 @@ Image &Image::operator =(const Image &img)
     feelingTags = img.feelingTags;
     categoryTags = img.categoryTags;
     descriptiveTags = img.descriptiveTags;
+    date = img.date;
 
     return *this;
 }

@@ -102,6 +102,7 @@ void DirIndexer::indexImage(const Directory &parent, const QFileInfo &infos)
     img.size = infos.size();
     img.width = q_img.width();
     img.height = q_img.height();
+    img.date = infos.birthTime();
 
     // Only update the image color if new
     if (!DB::getImageDao().exist(img)) {

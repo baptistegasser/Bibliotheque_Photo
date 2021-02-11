@@ -62,7 +62,7 @@ bool ImageDAO::saveAll(QList<Image> images)
 bool ImageDAO::create(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("INSERT INTO Image (\"Path\", ParentDir, Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight, MainColor) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+    query.prepare("INSERT INTO Image (\"Path\", ParentDir, Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight, MainColor, Date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
     query.addBindValue(image.path);
     query.addBindValue(image.parentDir);
@@ -80,12 +80,12 @@ bool ImageDAO::create(Image &image)
     query.addBindValue(image.crop_y);
     query.addBindValue(image.crop_width);
     query.addBindValue(image.crop_height);
-
     QString mainColorStr = QString("%1;%2;%3")
             .arg(image.main_color[0])
             .arg(image.main_color[1])
             .arg(image.main_color[2]);
     query.addBindValue(mainColorStr);
+    query.addBindValue(image.date.toString("dd-MM-yyyy hh:mm:ss"));
 
     if (!query.exec()) {
         qWarning() << "Creating image failed" << image;
@@ -99,7 +99,7 @@ bool ImageDAO::create(Image &image)
 bool ImageDAO::update(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("UPDATE Image SET ParentDir=?, Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=?, MainColor=? WHERE \"Path\"=?;");
+    query.prepare("UPDATE Image SET ParentDir=?, Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=?, MainColor=?, Date=? WHERE \"Path\"=?;");
     query.addBindValue(image.parentDir);
     query.addBindValue(image.name);
     query.addBindValue(image.size);
@@ -115,12 +115,12 @@ bool ImageDAO::update(Image &image)
     query.addBindValue(image.crop_y);
     query.addBindValue(image.crop_width);
     query.addBindValue(image.crop_height);
-
     QString mainColorStr = QString("%1;%2;%3")
             .arg(image.main_color[0])
             .arg(image.main_color[1])
             .arg(image.main_color[2]);
     query.addBindValue(mainColorStr);
+    query.addBindValue(image.date.toString("dd-MM-yyyy hh:mm:ss"));
 
     query.addBindValue(image.path);
 
@@ -279,6 +279,8 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     for (int i = 0; i < 3; ++i) {
         img.main_color[i] = rgb[0].toInt();
     }
+
+    img.date = QDateTime::fromString(record.value("Date").toString(), "dd-MM-yyyy hh:mm:ss");
 
     TagDAO tagDao = DB::getTagDao();
     img.feelingTags = tagDao.getFeelingTags(img);
