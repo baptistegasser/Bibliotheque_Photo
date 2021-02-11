@@ -7,7 +7,7 @@
 
 QInputCustom::QInputCustom(QWidget * parent, int numInput, QList<QString> texts,QList<QString> preTexts) : QDialog(parent)
 {
-    QFormLayout *main = new QFormLayout(this);
+    main = new QFormLayout(this);
     for (int i = 0;i< numInput ;i++)
     {
 
@@ -18,13 +18,6 @@ QInputCustom::QInputCustom(QWidget * parent, int numInput, QList<QString> texts,
         fields.append(line);
     }
 
-    QDialogButtonBox buttonBox (QDialogButtonBox::Ok|QDialogButtonBox::Cancel,Qt::Horizontal,this);
-    main->addWidget(&buttonBox);
-    bool conn = connect(&buttonBox, &QDialogButtonBox::accepted,this, &QInputCustom::accept);
-    Q_ASSERT(conn);
-    conn = connect(&buttonBox, &QDialogButtonBox::rejected,this, &QInputCustom::reject);
-    Q_ASSERT(conn);
-    this->exec();
 
 }
 
@@ -54,5 +47,21 @@ void QInputCustom::reject()
 bool QInputCustom::isDone()
 {
     return done;
+}
+
+void QInputCustom::addWidget(QWidget * w)
+{
+    main->addWidget(w);
+}
+
+int QInputCustom::exec()
+{
+    QDialogButtonBox buttonBox (QDialogButtonBox::Ok|QDialogButtonBox::Cancel,Qt::Horizontal,this);
+    main->addWidget(&buttonBox);
+    bool conn = connect(&buttonBox, &QDialogButtonBox::accepted,this, &QInputCustom::accept);
+    Q_ASSERT(conn);
+    conn = connect(&buttonBox, &QDialogButtonBox::rejected,this, &QInputCustom::reject);
+    Q_ASSERT(conn);
+    return QDialog::exec();
 }
 

@@ -2,6 +2,7 @@
 #include "photocard.h"
 #include "filtermenu.h"
 #include "db/db.h"
+#include "ui_photocard.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -186,6 +187,7 @@ void MainWindow::updateImages()
         pC->setFixedSize(width_window-540/2,268);
 
         connect(pC, SIGNAL(clicked(PhotoCard *)), this, SLOT(showModificationWindow(PhotoCard *)));
+        connect(pC, SIGNAL(isSelectionned(PhotoCard *)), this, SLOT(showSelectionnedPhoto(PhotoCard *)));
 
         photoGrid->addWidget(pC);
 
@@ -224,6 +226,18 @@ void MainWindow::showModificationWindow(PhotoCard *ph)
 
     currentWin->getReturnButton();
     _my_stack->setCurrentIndex(1);
+}
+
+void MainWindow::showSelectionnedPhoto(PhotoCard *ph)
+{
+    if (photoSelectionned != nullptr) {
+        photoSelectionned->getUi()->main_widget->setStyleSheet("QWidget#main_widget {border: none}");
+        photoSelectionned->setIsClicked(false);
+    }
+
+    photoSelectionned = ph;
+
+    photoSelectionned->getUi()->main_widget->setStyleSheet("QWidget#main_widget {border:2px solid rgb(25,25,25)}");
 }
 
 /**

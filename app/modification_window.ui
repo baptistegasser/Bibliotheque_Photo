@@ -59,26 +59,91 @@
       <number>0</number>
      </property>
      <property name="sizeConstraint">
-      <enum>QLayout::SetMinimumSize</enum>
+      <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="QLabel" name="_my_picture_label">
-       <property name="maximumSize">
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="minimumSize">
         <size>
-         <width>16777215</width>
-         <height>70</height>
+         <width>0</width>
+         <height>50</height>
         </size>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(239, 239, 239)</string>
        </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#838383;&quot;&gt;Photo du XX Mois 20XX à XX:XX&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#a7a7a7;&quot;&gt;XXX Mo - Format XXX - Image originale&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <property name="title">
+        <string/>
        </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="_my_return_button">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+color:rgb(100, 100, 100);
+padding
+-left: 20px;
+</string>
+          </property>
+          <property name="text">
+           <string>&lt; RETOUR</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="_my_picture_label">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">padding-right: 140px;</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#838383;&quot;&gt;Photo du XX Mois 20XX à XX:XX&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#a7a7a7;&quot;&gt;XXX Mo - Format XXX - Image originale&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
       <widget class="QGroupBox" name="groupBox">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -111,6 +176,22 @@ border:none;
          <number>0</number>
         </property>
         <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QPushButton" name="_my_recadrer">
           <property name="styleSheet">
            <string notr="true">border-style: solid;
@@ -128,6 +209,22 @@ font-size:15px;
            <string>Recadrer</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <widget class="QPushButton" name="_my_redimensionner">
@@ -148,6 +245,22 @@ font-size:15px;</string>
          </widget>
         </item>
         <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QPushButton" name="_my_reset">
           <property name="styleSheet">
            <string notr="true">border-style: solid;
@@ -164,6 +277,22 @@ font-size:15px;</string>
            <string>Revenir à l'original</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -214,17 +343,6 @@ border-right: 1px black solid;
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item>
-         <widget class="QPushButton" name="_my_return_button">
-          <property name="styleSheet">
-           <string notr="true">border:0;
-color:rgb(167, 167, 167);</string>
-          </property>
-          <property name="text">
-           <string>&lt; RETOUR</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QLabel" name="_my_dominant_color_label">
           <property name="maximumSize">
@@ -530,24 +648,67 @@ border-radius:5px;
             <x>0</x>
             <y>0</y>
             <width>776</width>
-            <height>740</height>
+            <height>711</height>
            </rect>
           </property>
          </widget>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="_my_slider">
-         <property name="minimum">
-          <number>1</number>
+        <layout class="QHBoxLayout" name="zoom_layout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetFixedSize</enum>
          </property>
-         <property name="maximum">
-          <number>10</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="maximumSize">
+            <size>
+             <width>500</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">margin-left:200%</string>
+           </property>
+           <property name="text">
+            <string>Zoom:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="_my_slider">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="_my_download_button">
+           <property name="text">
+            <string>Enregistrer</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -558,7 +719,6 @@ border-radius:5px;
  <tabstops>
   <tabstop>_my_redimensionner</tabstop>
   <tabstop>_my_reset</tabstop>
-  <tabstop>_my_return_button</tabstop>
   <tabstop>_my_color_dominant_edit</tabstop>
   <tabstop>_my_commentaire_edit</tabstop>
   <tabstop>_my_add_tag_desc_button</tabstop>
@@ -569,7 +729,6 @@ border-radius:5px;
   <tabstop>_my_add_tag_cat_button</tabstop>
   <tabstop>_my_categorie_tag_area</tabstop>
   <tabstop>_my_recadrer</tabstop>
-  <tabstop>_my_slider</tabstop>
  </tabstops>
  <resources/>
  <connections/>

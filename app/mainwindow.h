@@ -24,6 +24,7 @@ protected slots:
     void constructImageList(QList<Directory> dirs);
     void updateImages();
     void showModificationWindow(PhotoCard *ph);
+    void showSelectionnedPhoto(PhotoCard *ph);
     void showImageList();
     void setSearchKeyword();
 
@@ -45,5 +46,6 @@ private:
     QGridLayout *gridLayoutModification_Window;
     QStackedWidget *modification_Window_Widget;
     Modification_window *currentWin;
+    PhotoCard *photoSelectionned = nullptr;
 };
 #endif // MAINWINDOW_H
