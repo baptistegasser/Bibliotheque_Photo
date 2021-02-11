@@ -25,6 +25,8 @@ PhotoCard::PhotoCard(QWidget *parent) :
     ui->main_widget->setGraphicsEffect(effect);
     ui->main_widget->setStyleSheet("background-color: #FFFFFF");
     setAttribute(Qt::WA_TranslucentBackground);
+
+    isClicked = false;
 }
 
 void PhotoCard::setImage(Image *image)
@@ -154,6 +156,19 @@ void PhotoCard::showRateStars()
     }
 }
 
+void PhotoCard::mousePressEvent(QMouseEvent *event)
+{
+    if (this->isClicked) {
+        emit clicked(this);
+    }
+
+    this->isClicked = true;
+
+    if (event->button() == Qt::LeftButton) {
+        emit isSelectionned(this);
+    }
+}
+
 void PhotoCard::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
@@ -168,4 +183,14 @@ PhotoCard::~PhotoCard()
 Image* PhotoCard::getImage()
 {
     return image;
+}
+
+Ui::PhotoCard *PhotoCard::getUi()
+{
+    return ui;
+}
+
+void PhotoCard::setIsClicked(bool b)
+{
+    this->isClicked = b;
 }
