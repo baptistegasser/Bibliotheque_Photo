@@ -3,18 +3,36 @@
 
 #include "model/directory.h"
 #include "QFileInfo"
+#include <QFuture>
 
-class DirIndexer
+#include <QObject>
+
+class DirIndexer : public QObject
 {
-public:
-    DirIndexer(Directory dir);
-    QList<Directory> index();  // Index the dirToIndex and return all indexed subdirs
+    Q_OBJECT
 
 private:
+    int fileToIndex;
+    int indexedFiles;
     Directory dirToIndex;
     QDir::Filters indexFilters;
+    QList<QString> supportedFilesExtentions;
+    QFuture<QList<Directory>> future;
+
+    QList<Directory> index();
+    void findFilesToIndex();
     void indexDir(Directory &dir, QList<Directory> *indexedDirs);
     void indexImage(const Directory &parent, const QFileInfo &infos);
+
+public:
+    explicit DirIndexer(Directory dir, QObject *parent = nullptr);
+    void startIndexing();
+    QList<Directory> getResult() const;
+
+signals:
+    void doneIndexing();
+    void fileToIndexChanged(int count);
+    void indexedFilesChanged(int count);
 };
 
 #endif // DIRINDEXER_H

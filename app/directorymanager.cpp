@@ -17,7 +17,7 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
     // Configure buttons
     _del_dir_btn->setEnabled(false);
     connect(_add_dir_btn, &QPushButton::clicked, this, &DirectoryManager::addDirectory);
-    connect(_add_first_btn, &QPushButton::clicked, this, &DirectoryManager::addFirstDirectory);
+    connect(_add_first_btn, &QPushButton::clicked, this, &DirectoryManager::addDirectory);
     connect(_del_dir_btn, &QPushButton::clicked, this, &DirectoryManager::removeDirectory);
 
     // Configure folder tree
@@ -29,7 +29,7 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
     // Detect if no folder was added
     QList<Directory> dirs = DB::getDirectoryDao().getAll();
     if (dirs.isEmpty()) {
-        _stackpane->setCurrentIndex(1);
+        _stackpane->setCurrentIndex(2);
     } else {
         displayDirs(dirs);
     }
@@ -42,27 +42,24 @@ void DirectoryManager::addDirectory()
         return;
     }
 
-    Directory directory(dirPath, Directory::INCLUDE);
-    displayDir(directory, true);
-    displayDirs(DirIndexer(directory).index());
-
-    emit directoryAdded();
-}
-
-void DirectoryManager::addFirstDirectory()
-{
-    QString dirPath = getDirectoryDialog();
-    if (dirPath.isNull()) {
-        return;
-    }
-
-    _stackpane->setCurrentIndex(0);
+    // Show progress
+    _stackpane->setCurrentIndex(1);
 
     Directory directory(dirPath, Directory::INCLUDE);
-    displayDir(directory, true);
-    displayDirs(DirIndexer(directory).index());
+    DirIndexer *indexer = new DirIndexer(directory);
+    connect(indexer, &DirIndexer::fileToIndexChanged, this,  [=](int i) {
+        _progress->setMaximum(i);
+        _progress->setFormat("%p% fichier traité sur " + QString::number(i));
+    });
+    connect(indexer, &DirIndexer::indexedFilesChanged, this, [=](int i) { _progress->setValue(i); });
+    connect(indexer, &DirIndexer::doneIndexing, this, [=]() {
+        displayDir(directory, true);
+        displayDirs(indexer->getResult());
+        _stackpane->setCurrentIndex(0);
+        emit directoryAdded();
+    });
 
-    emit directoryAdded();
+    indexer->startIndexing();
 }
 
 QString DirectoryManager::getDirectoryDialog()
@@ -209,7 +206,7 @@ void DirectoryManager::removeDirectory()
 
     // Check that we style have indexed dirs
     if (_dir_tree->topLevelItemCount() == 0 && DB::getDirectoryDao().getAll().size() == 0) {
-        _stackpane->setCurrentIndex(1);
+        _stackpane->setCurrentIndex(2);
     }
 }
 
