@@ -317,176 +317,14 @@
         </item>
         <item>
          <widget class="QGroupBox" name="stars_group">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	border: none;
+}</string>
+          </property>
           <property name="title">
            <string/>
           </property>
-          <widget class="QFrame" name="star5_frame">
-           <property name="geometry">
-            <rect>
-             <x>120</x>
-             <y>10</y>
-             <width>18</width>
-             <height>18</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>18</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>18</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-          </widget>
-          <widget class="QFrame" name="star2_frame">
-           <property name="geometry">
-            <rect>
-             <x>60</x>
-             <y>10</y>
-             <width>18</width>
-             <height>18</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>18</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>18</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-          </widget>
-          <widget class="QFrame" name="star4_frame">
-           <property name="geometry">
-            <rect>
-             <x>100</x>
-             <y>10</y>
-             <width>18</width>
-             <height>18</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>18</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>45</height>
-            </size>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="widgetResizable" stdset="0">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QFrame" name="star1_frame">
-           <property name="geometry">
-            <rect>
-             <x>40</x>
-             <y>10</y>
-             <width>18</width>
-             <height>18</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>18</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>45</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-          </widget>
-          <widget class="QFrame" name="star3_frame">
-           <property name="geometry">
-            <rect>
-             <x>80</x>
-             <y>10</y>
-             <width>18</width>
-             <height>18</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>18</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>45</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-          </widget>
           <widget class="QLabel" name="title">
            <property name="geometry">
             <rect>
@@ -498,6 +336,71 @@
            </property>
            <property name="text">
             <string>Note</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="star_1">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>10</y>
+             <width>24</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="star_2">
+           <property name="geometry">
+            <rect>
+             <x>64</x>
+             <y>10</y>
+             <width>24</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="star_3">
+           <property name="geometry">
+            <rect>
+             <x>88</x>
+             <y>10</y>
+             <width>24</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="star_4">
+           <property name="geometry">
+            <rect>
+             <x>112</x>
+             <y>10</y>
+             <width>24</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="star_5">
+           <property name="geometry">
+            <rect>
+             <x>136</x>
+             <y>10</y>
+             <width>24</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </widget>

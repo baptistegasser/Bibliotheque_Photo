@@ -124,35 +124,20 @@ void PhotoCard::showCategoryTags(){
 
 void PhotoCard::showRateStars()
 {
-    QString fill = "border-image: url(:/image/resources/star_fill.png) 0 0 0 0 stretch stretch;";
-    switch (image->rating) {
-        case 1:
-            ui->star1_frame->setStyleSheet(fill);
-            break;
-        case 2:
-            ui->star1_frame->setStyleSheet(fill);
-            ui->star2_frame->setStyleSheet(fill);
-            break;
-        case 3:
-            ui->star1_frame->setStyleSheet(fill);
-            ui->star2_frame->setStyleSheet(fill);
-            ui->star3_frame->setStyleSheet(fill);
-            break;
-        case 4:
-            ui->star1_frame->setStyleSheet(fill);
-            ui->star2_frame->setStyleSheet(fill);
-            ui->star3_frame->setStyleSheet(fill);
-            ui->star4_frame->setStyleSheet(fill);
-            break;
-        case 5:
-            ui->star1_frame->setStyleSheet(fill);
-            ui->star2_frame->setStyleSheet(fill);
-            ui->star3_frame->setStyleSheet(fill);
-            ui->star4_frame->setStyleSheet(fill);
-            ui->star5_frame->setStyleSheet(fill);
-            break;
-        default:
-            break;
+    QList<QPushButton *> stars = {
+        ui->star_1,
+        ui->star_2,
+        ui->star_3,
+        ui->star_4,
+        ui->star_5
+    };
+
+    for (int i = 0; i < 5; ++i) {
+        if (i+1 <= image->rating) {
+            stars[i]->setIcon(QIcon(":/image/star_full"));
+        } else {
+            stars[i]->setIcon(QIcon(":/image/star_empty"));
+        }
     }
 }
 
