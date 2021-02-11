@@ -35,7 +35,7 @@ HEADERS += # Well actually, QObject is no more but keep this in case
 
 SOURCES += \
     $$APP/db/db.cpp \
-    $$APP/db/filter.cpp \
+    $$APP/db/imagesearch.cpp \
     $$APP/db/imagedao.cpp \
     $$APP/db/tagdao.cpp \
     $$APP/db/directorydao.cpp \

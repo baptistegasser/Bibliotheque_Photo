@@ -2,7 +2,7 @@
 #define FILTERMENU_H
 
 #include "ui_filtermenu.h"
-#include "db/filter.h"
+#include "db/imagesearch.h"
 #include <QList>
 #include <QMenu>
 #include <QPushButton>
@@ -12,7 +12,7 @@ class FilterMenu : public QMenu, private Ui::FilterMenu
     Q_OBJECT
 
 private:
-    Filter *filter;
+    ImageSearch *search;
     QList<QPushButton *> stars;
     void setCurrentRating(int rating);
     void updateDisplay();
@@ -21,7 +21,7 @@ private slots:
     void resetFilter();
 
 public:
-    explicit FilterMenu(Filter *filter, QWidget *parent = nullptr);
+    explicit FilterMenu(ImageSearch *search, QWidget *parent = nullptr);
     void updateFilter();
 
 signals:

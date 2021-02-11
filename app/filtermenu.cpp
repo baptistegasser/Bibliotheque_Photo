@@ -1,8 +1,8 @@
 #include "filtermenu.h"
 
-FilterMenu::FilterMenu(Filter *filter, QWidget *parent) :
+FilterMenu::FilterMenu(ImageSearch *search, QWidget *parent) :
     QMenu(parent),
-    filter(filter)
+    search(search)
 {
     setupUi(this);
     connect(this, &QMenu::aboutToHide, this, &FilterMenu::updateFilter);
@@ -20,10 +20,10 @@ FilterMenu::FilterMenu(Filter *filter, QWidget *parent) :
 
 void FilterMenu::updateFilter()
 {
-    filter->minWidth = _min_width_box->value();
-    filter->maxWidth = _max_width_box->value();
-    filter->minHeight = _min_height_box->value();
-    filter->maxHeight = _max_height_box->value();
+    search->minWidth = _min_width_box->value();
+    search->maxWidth = _max_width_box->value();
+    search->minHeight = _min_height_box->value();
+    search->maxHeight = _max_height_box->value();
 
     emit filterUpdated();
 }
@@ -38,20 +38,20 @@ void FilterMenu::setCurrentRating(int rating)
         }
     }
 
-    filter->minRating = rating;
+    search->minRating = rating;
 }
 
 void FilterMenu::updateDisplay()
 {
-    _min_width_box->setValue(filter->minWidth);
-    _max_width_box->setValue(filter->maxWidth);
-    _min_height_box->setValue(filter->minHeight);
-    _max_height_box->setValue(filter->maxHeight);
-    setCurrentRating(filter->minRating);
+    _min_width_box->setValue(search->minWidth);
+    _max_width_box->setValue(search->maxWidth);
+    _min_height_box->setValue(search->minHeight);
+    _max_height_box->setValue(search->maxHeight);
+    setCurrentRating(search->minRating);
 }
 
 void FilterMenu::resetFilter()
 {
-    filter->reset();
+    search->resetFilter();
     updateDisplay();
 }

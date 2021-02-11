@@ -11,8 +11,8 @@ include(../Bibliotheque_Photo.pri)
 SOURCES += \
     db/db.cpp \
     db/directorydao.cpp \
-    db/filter.cpp \
     db/imagedao.cpp \
+    db/imagesearch.cpp \
     db/tagdao.cpp \
     dialogcreatetag.cpp \
     directorymanager.cpp \
@@ -33,8 +33,8 @@ HEADERS += \
     db/dao.h \
     db/db.h \
     db/directorydao.h \
-    db/filter.h \
     db/imagedao.h \
+    db/imagesearch.h \
     db/tagdao.h \
     dialogcreatetag.h \
     directorymanager.h \

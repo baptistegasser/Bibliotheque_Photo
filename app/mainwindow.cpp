@@ -17,8 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(this);
 
     // Configure and connect the search bar and button
-    keyword = QString::Null();
-    currentFilter = Filter();
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
     shortcut->setContext(Qt::ShortcutContext::WidgetShortcut);
     connect(shortcut, &QShortcut::activated, this, &MainWindow::setSearchKeyword);
@@ -26,12 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_search_comboBox, &QComboBox::currentTextChanged, this, &MainWindow::constructSearchBar);
 
     // Config filter and sort buttons
-    FilterMenu *menu = new FilterMenu(&this->currentFilter);
+    FilterMenu *menu = new FilterMenu(&this->currentSearch);
     _filter_btn->setMenu(menu);
     connect(menu, &FilterMenu::filterUpdated, this, &MainWindow::updateImages);
-
-    orderType = ImageDAO::SortBy::None;
-    orderedSort = true;
 
     // Handle windows closing
     connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
@@ -169,7 +164,7 @@ void MainWindow::updateImages()
 
     scrollContent->setSizePolicy(test);
 
-    const QList<Image> images = DB::getImageDao().search(keyword, currentFilter, orderType, orderedSort);
+    const QList<Image> images = DB::getImageDao().search(currentSearch);
 
     QHBoxLayout * photoGrid = new QHBoxLayout();
 
@@ -251,7 +246,7 @@ void MainWindow::showImageList()
 void MainWindow::setSearchKeyword()
 {
     _search_comboBox->clearFocus();
-    keyword = _search_comboBox->currentText();
+    this->currentSearch.keyword = _search_comboBox->currentText();
     updateImages();
 }
 
@@ -264,19 +259,19 @@ void MainWindow::sortItemChanged(int index)
 
     switch (index) {
     case 0:
-        this->orderType = ImageDAO::SortBy::Name;
+        this->currentSearch.sortOrder = currentSearch.Name;
         break;
     case 1:
-        this->orderType = ImageDAO::SortBy::Date;
+        this->currentSearch.sortOrder = currentSearch.Date;
         break;
     case 2:
-        this->orderType = ImageDAO::SortBy::Size;
+        this->currentSearch.sortOrder = currentSearch.Size;
         break;
     case 3:
-        this->orderType = ImageDAO::SortBy::Rating;
+        this->currentSearch.sortOrder = currentSearch.Rating;
         break;
     default:
-        this->orderType = ImageDAO::SortBy::None;
+        this->currentSearch.sortOrder = currentSearch.None;
         break;
     }
 
@@ -285,8 +280,8 @@ void MainWindow::sortItemChanged(int index)
 
 void MainWindow::sortOrderChanged()
 {
-    this->orderedSort = !orderedSort;
-    if (orderedSort) {
+    this->currentSearch.sortDescendant = !currentSearch.sortDescendant;
+    if (currentSearch.sortDescendant) {
         _sort_order_btn->setIcon(QIcon(":/icon/sort"));
     } else {
         _sort_order_btn->setIcon(QIcon(":/icon/sort_reverse"));

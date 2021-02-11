@@ -3,7 +3,7 @@
 
 #include "ui_mainwindow.h"
 #include "photocard.h"
-#include "db/filter.h"
+#include "db/imagesearch.h"
 #include "modification_window.h"
 
 #include <QMainWindow>
@@ -35,10 +35,8 @@ protected slots:
 private:
     bool isCleared;
     int width_window;
-    QString keyword;
-    Filter currentFilter;
-    ImageDAO::SortBy orderType;
-    bool orderedSort;
+    ImageSearch currentSearch;
+
     QGridLayout *gridLayoutPage;
     QScrollArea *scrollAreaPage;
     QVBoxLayout * vBoxPage;

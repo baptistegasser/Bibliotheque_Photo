@@ -152,25 +152,10 @@ bool ImageDAO::remove(Image &image)
 
 QList<Image> ImageDAO::getAll()
 {
-    return search(QString::Null(), Filter(), None, true);
+    return search(ImageSearch());
 }
 
-QList<Image> ImageDAO::getAll(Filter filter)
-{
-    return search(QString::Null(), filter, None, true);
-}
-
-QList<Image> ImageDAO::search(QString keyword)
-{
-    return search(keyword, Filter(), None, true);
-}
-
-QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
-{
-    return search(keyword, filter, None, true);
-}
-
-QList<Image> ImageDAO::search(const QString keyword, const Filter filter, SortBy sort, bool ascendant)
+QList<Image> ImageDAO::search(const ImageSearch &search)
 {
     QString SQL = "SELECT * FROM Image Where :SEARCH: :FILTER: :SORT:;";
 
@@ -178,7 +163,7 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter, SortBy
     QString _filter = "";
     QString _sort = "";
 
-    if (!keyword.isEmpty()) {
+    if (!search.keyword.isEmpty()) {
         _search = /* sometime I wonder wtf I'm doing */
         "(Name LIKE :keyword OR Comment LIKE :keyword OR \"Path\" IN ("
         "  SELECT ImgPath FROM ImageCategory WHERE TagValue = :tagkeyword"
@@ -189,28 +174,28 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter, SortBy
         "))";
     }
 
-    if (filter.minWidth != 0)  _filter += " AND Width >=  :minWidth";
-    if (filter.maxWidth != 0)  _filter += " AND Width <=  :maxWidth";
-    if (filter.minHeight != 0) _filter += " AND Height >= :minHeight";
-    if (filter.maxHeight != 0) _filter += " AND Height <= :maxHeight";
-    if (filter.minRating != 0) _filter += " AND Rating >= :minRating";
+    if (search.minWidth != 0)  _filter += " AND Width >=  :minWidth";
+    if (search.maxWidth != 0)  _filter += " AND Width <=  :maxWidth";
+    if (search.minHeight != 0) _filter += " AND Height >= :minHeight";
+    if (search.maxHeight != 0) _filter += " AND Height <= :maxHeight";
+    if (search.minRating != 0) _filter += " AND Rating >= :minRating";
 
-    if (sort != None) {
-        switch (sort) {
-        case Name:
+    if (search.sortOrder != ImageSearch::None) {
+        switch (search.sortOrder) {
+        case ImageSearch::Name:
             _sort = "ORDER BY Name ";
             break;
-        case Size:
+        case ImageSearch::Size:
             _sort = "ORDER BY Size ";
             break;
-        case Date:
+        case ImageSearch::Date:
             _sort = "ORDER BY Date ";
             break;
-        case Rating:
+        case ImageSearch::Rating:
             _sort = "ORDER BY Rating ";
             break;
         }
-        _sort += ascendant ? "ASC" : "DESC";
+        _sort += search.sortDescendant? "DESC" : "ASC";
     }
 
     SQL = SQL.replace(":SEARCH:", _search).replace(":FILTER:", _filter).replace(":SORT:", _sort);
@@ -218,20 +203,20 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter, SortBy
     QSqlQuery query = getNewQuery();
     query.prepare(SQL);
 
-    if (!keyword.isEmpty()) {
-        query.bindValue(":keyword", "%"+keyword+"%");
-        query.bindValue(":tagkeyword", keyword);
+    if (!search.keyword.isEmpty()) {
+        query.bindValue(":keyword", "%"+search.keyword+"%");
+        query.bindValue(":tagkeyword", search.keyword);
     }
 
-    if (filter.minWidth != 0)  query.bindValue(":minWidth", filter.minWidth);
-    if (filter.maxWidth != 0)  query.bindValue(":maxWidth", filter.maxWidth);
-    if (filter.minHeight != 0) query.bindValue(":minHeight", filter.minHeight);
-    if (filter.maxHeight != 0) query.bindValue(":maxHeight", filter.maxHeight);
-    if (filter.minRating != 0) query.bindValue(":minRating", filter.minRating);
+    if (search.minWidth != 0)  query.bindValue(":minWidth", search.minWidth);
+    if (search.maxWidth != 0)  query.bindValue(":maxWidth", search.maxWidth);
+    if (search.minHeight != 0) query.bindValue(":minHeight", search.minHeight);
+    if (search.maxHeight != 0) query.bindValue(":maxHeight", search.maxHeight);
+    if (search.minRating != 0) query.bindValue(":minRating", search.minRating);
 
     QList<Image> result;
     if (!query.exec()) {
-        qWarning() << "Failed to get a list of images" << "Keyword: "+keyword << query.lastQuery();
+        qWarning() << "Failed to get a list of images" << "Keyword: "+search.keyword << query.lastQuery();
         qCritical() << query.lastError().text();
         return result;
     }
