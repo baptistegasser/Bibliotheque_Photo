@@ -85,7 +85,7 @@ bool ImageDAO::create(Image &image)
             .arg(image.main_color[1])
             .arg(image.main_color[2]);
     query.addBindValue(mainColorStr);
-    query.addBindValue(image.date.toString("dd-MM-yyyy hh:mm:ss"));
+    query.addBindValue(image.date.toString("yyyy-MM-dd hh:mm:ss"));
 
     if (!query.exec()) {
         qWarning() << "Creating image failed" << image;
@@ -120,7 +120,7 @@ bool ImageDAO::update(Image &image)
             .arg(image.main_color[1])
             .arg(image.main_color[2]);
     query.addBindValue(mainColorStr);
-    query.addBindValue(image.date.toString("dd-MM-yyyy hh:mm:ss"));
+    query.addBindValue(image.date.toString("yyyy-MM-dd hh:mm:ss"));
 
     query.addBindValue(image.path);
 
@@ -280,7 +280,7 @@ Image ImageDAO::fromRecord(QSqlRecord record)
         img.main_color[i] = rgb[0].toInt();
     }
 
-    img.date = QDateTime::fromString(record.value("Date").toString(), "dd-MM-yyyy hh:mm:ss");
+    img.date = QDateTime::fromString(record.value("Date").toString(), "yyyy-MM-dd hh:mm:ss");
 
     TagDAO tagDao = DB::getTagDao();
     img.feelingTags = tagDao.getFeelingTags(img);
