@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     _filter_btn->setMenu(menu);
     connect(menu, &FilterMenu::filterUpdated, this, &MainWindow::updateImages);
 
-    orderType = 0;
+    orderType = ImageDAO::SortBy::None;
     orderedSort = true;
 
     // Handle windows closing
@@ -174,7 +174,7 @@ void MainWindow::updateImages()
 
     scrollContent->setSizePolicy(test);
 
-    const QList<Image> images = DB::getImageDao().search(keyword, currentFilter);
+    const QList<Image> images = DB::getImageDao().search(keyword, currentFilter, orderType, orderedSort);
 
     QHBoxLayout * photoGrid = new QHBoxLayout();
 
@@ -265,7 +265,24 @@ void MainWindow::sortItemChanged(int index)
         return;
     }
 
-    this->orderType = index;
+    switch (index) {
+    case 0:
+        this->orderType = ImageDAO::SortBy::Name;
+        break;
+    case 1:
+        this->orderType = ImageDAO::SortBy::Date;
+        break;
+    case 2:
+        this->orderType = ImageDAO::SortBy::Size;
+        break;
+    case 3:
+        this->orderType = ImageDAO::SortBy::Rating;
+        break;
+    default:
+        this->orderType = ImageDAO::SortBy::None;
+        break;
+    }
+
     updateImages();
 }
 

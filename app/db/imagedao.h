@@ -12,6 +12,14 @@ class ImageDAO : public DAO<Image>
 public:
     using DAO::DAO;
 
+    enum SortBy {
+        Name,
+        Size,
+        Date,
+        Rating,
+        None
+    };
+
     bool exist(Image &image);
     bool save(Image &image);
     bool saveAll(Image images[]);
@@ -21,6 +29,7 @@ public:
     QList<Image> getAll(Filter filter);
     QList<Image> search(QString keyword);
     QList<Image> search(QString keyword, Filter filter);
+    QList<Image> search(QString keyword, Filter filter, SortBy sort, bool ascendant);
     QList<Image> getInDir(const Directory &dir);
 
 private:

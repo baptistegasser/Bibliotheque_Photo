@@ -8,6 +8,7 @@
 
 #include <QMainWindow>
 #include <QScrollArea>
+#include "db/imagedao.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -36,7 +37,7 @@ private:
     int width_window;
     QString keyword;
     Filter currentFilter;
-    int orderType;
+    ImageDAO::SortBy orderType;
     bool orderedSort;
     QGridLayout *gridLayoutPage;
     QScrollArea *scrollAreaPage;

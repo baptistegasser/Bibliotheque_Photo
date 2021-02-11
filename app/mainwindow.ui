@@ -289,6 +289,11 @@ padding: 5px;
                  <string>Taille</string>
                 </property>
                </item>
+               <item>
+                <property name="text">
+                 <string>Note</string>
+                </property>
+               </item>
               </widget>
              </item>
              <item>

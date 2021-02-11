@@ -152,39 +152,31 @@ bool ImageDAO::remove(Image &image)
 
 QList<Image> ImageDAO::getAll()
 {
-    return search(QString::Null(), Filter());
+    return search(QString::Null(), Filter(), None, true);
 }
 
 QList<Image> ImageDAO::getAll(Filter filter)
 {
-    return search(QString::Null(), filter);
-    QList<Image> result;
-    QSqlQuery query = getNewQuery();
-
-    if (!query.exec("SELECT * FROM Image WHERE Width >= ? AND Height <= ? and Rating >= ?;")) {
-        qWarning("Failed to get all images");
-        qCritical() << query.lastError().text();
-        return result;
-    }
-
-    while (query.next()) {
-        result.append(fromRecord(query.record()));
-    }
-
-    return result;
+    return search(QString::Null(), filter, None, true);
 }
 
 QList<Image> ImageDAO::search(QString keyword)
 {
-    return search(keyword, Filter());
+    return search(keyword, Filter(), None, true);
 }
 
 QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
 {
-    QString SQL = "SELECT * FROM Image Where :SEARCH: :FILTER:;";
+    return search(keyword, filter, None, true);
+}
+
+QList<Image> ImageDAO::search(const QString keyword, const Filter filter, SortBy sort, bool ascendant)
+{
+    QString SQL = "SELECT * FROM Image Where :SEARCH: :FILTER: :SORT:;";
 
     QString _search = "True";
     QString _filter = "";
+    QString _sort = "";
 
     if (!keyword.isEmpty()) {
         _search = /* sometime I wonder wtf I'm doing */
@@ -203,7 +195,25 @@ QList<Image> ImageDAO::search(const QString keyword, const Filter filter)
     if (filter.maxHeight != 0) _filter += " AND Height <= :maxHeight";
     if (filter.minRating != 0) _filter += " AND Rating >= :minRating";
 
-    SQL = SQL.replace(":SEARCH:", _search).replace(":FILTER:", _filter);
+    if (sort != None) {
+        switch (sort) {
+        case Name:
+            _sort = "ORDER BY Name ";
+            break;
+        case Size:
+            _sort = "ORDER BY Size ";
+            break;
+        case Date:
+            _sort = "ORDER BY Date ";
+            break;
+        case Rating:
+            _sort = "ORDER BY Rating ";
+            break;
+        }
+        _sort += ascendant ? "ASC" : "DESC";
+    }
+
+    SQL = SQL.replace(":SEARCH:", _search).replace(":FILTER:", _filter).replace(":SORT:", _sort);
 
     QSqlQuery query = getNewQuery();
     query.prepare(SQL);
