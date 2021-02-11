@@ -232,12 +232,15 @@ void MainWindow::showSelectionnedPhoto(PhotoCard *ph)
 {
     if (photoSelectionned != nullptr) {
         photoSelectionned->getUi()->main_widget->setStyleSheet("QWidget#main_widget {border: none}");
+
         photoSelectionned->setIsClicked(false);
     }
 
     photoSelectionned = ph;
 
     photoSelectionned->getUi()->main_widget->setStyleSheet("QWidget#main_widget {border:2px solid rgb(25,25,25)}");
+
+    photoSelectionned->setIsClicked(true);
 }
 
 /**
@@ -247,7 +250,6 @@ void MainWindow::showSelectionnedPhoto(PhotoCard *ph)
  */
 void MainWindow::showImageList()
 {
-    updateImages();
     _my_stack->setCurrentIndex(0);
 }
 

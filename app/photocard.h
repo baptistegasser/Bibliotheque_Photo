@@ -19,6 +19,7 @@ public:
     Image *getImage();
     Ui::PhotoCard *getUi();
     void setIsClicked(bool b);
+    bool getIsClicked();
 
 signals:
     void clicked(PhotoCard *ph);
@@ -33,8 +34,6 @@ private:
     void showCategoryTags();
     void showRateStars();
     void mousePressEvent(QMouseEvent *event) override;
-    void mouseDoubleClickEvent(QMouseEvent *event) override;
-    static void deleteBorderSelected();
 };
 
 #endif // PHOTOCARD_H

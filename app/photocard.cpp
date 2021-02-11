@@ -158,21 +158,14 @@ void PhotoCard::showRateStars()
 
 void PhotoCard::mousePressEvent(QMouseEvent *event)
 {
-    if (this->isClicked) {
-        emit clicked(this);
-    }
-
-    this->isClicked = true;
-
     if (event->button() == Qt::LeftButton) {
-        emit isSelectionned(this);
+        if (isClicked) {
+            isClicked = false;
+            emit clicked(this);
+        } else {
+            emit isSelectionned(this);
+        }
     }
-}
-
-void PhotoCard::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
-        emit clicked(this);
 }
 
 PhotoCard::~PhotoCard()
@@ -193,4 +186,9 @@ Ui::PhotoCard *PhotoCard::getUi()
 void PhotoCard::setIsClicked(bool b)
 {
     this->isClicked = b;
+}
+
+bool PhotoCard::getIsClicked()
+{
+    return isClicked;
 }
