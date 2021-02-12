@@ -196,6 +196,10 @@ void MainWindow::setSearchKeyword()
     updateImages();
 }
 
+/**
+ *
+ * @brief MainWindow::addAlbum
+ */
 void MainWindow::addAlbum()
 {
     bool ok;
