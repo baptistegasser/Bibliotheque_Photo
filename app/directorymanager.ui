@@ -58,6 +58,9 @@ DirectoryManager QButton {
      </item>
      <item>
       <widget class="QPushButton" name="_del_dir_btn">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Retirer le dossier</string>
        </property>
@@ -286,5 +289,109 @@ DirectoryManager QButton {
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>_add_dir_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>DirectoryManager</receiver>
+   <slot>addDirectory()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_add_first_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>DirectoryManager</receiver>
+   <slot>addDirectory()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_del_dir_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>DirectoryManager</receiver>
+   <slot>removeDirectory()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_dir_tree</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>DirectoryManager</receiver>
+   <slot>onItemSelected()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_dir_tree</sender>
+   <signal>itemExpanded(QTreeWidgetItem*)</signal>
+   <receiver>DirectoryManager</receiver>
+   <slot>onItemExpanded(QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_dir_tree</sender>
+   <signal>itemCollapsed(QTreeWidgetItem*)</signal>
+   <receiver>DirectoryManager</receiver>
+   <slot>onItemCollapsed(QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addDirectory()</slot>
+  <slot>removeDirectory()</slot>
+  <slot>onItemSelected()</slot>
+  <slot>onItemExpanded(QTreeWidgetItem*)</slot>
+  <slot>onItemCollapsed(QTreeWidgetItem*)</slot>
+ </slots>
 </ui>

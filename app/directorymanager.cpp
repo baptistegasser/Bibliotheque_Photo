@@ -14,17 +14,8 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
 {
     setupUi(this);
 
-    // Configure buttons
-    _del_dir_btn->setEnabled(false);
-    connect(_add_dir_btn, &QPushButton::clicked, this, &DirectoryManager::addDirectory);
-    connect(_add_first_btn, &QPushButton::clicked, this, &DirectoryManager::addDirectory);
-    connect(_del_dir_btn, &QPushButton::clicked, this, &DirectoryManager::removeDirectory);
-
     // Configure folder tree
     _dir_tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    connect(_dir_tree, &QTreeWidget::itemExpanded, this, &DirectoryManager::onItemExpanded);
-    connect(_dir_tree, &QTreeWidget::itemCollapsed, this, &DirectoryManager::onItemCollapsed);
-    connect(_dir_tree, &QTreeWidget::itemSelectionChanged, this, &DirectoryManager::onItemSelected);
 
     // Detect if no folder was added
     QList<Directory> dirs = DB::getDirectoryDao().getAll();
