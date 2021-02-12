@@ -21,8 +21,6 @@ public:
 protected slots:
     void onClose();
     void constructSearchBar(QString s);
-    void constructImageList(Directory dir);
-    void constructImageList(QList<Directory> dirs);
     void updateImages();
     void showModificationWindow(PhotoCard *ph);
     void showSelectionnedPhoto(PhotoCard *ph);
