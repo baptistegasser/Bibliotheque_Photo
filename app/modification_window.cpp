@@ -448,6 +448,7 @@ void Modification_window::selectAlbum()
 
 void Modification_window::initTopLayout()
 {
+    initAlbum();
     QStringList name_format = img.name.split('.');
     _my_title->setText(name_format.at(0));
     QString info = "Format "+name_format.at(1)+" - Taille "+img.size/1000+"Mo - Date "+img.date.toString("dd/MM/yyyy");
