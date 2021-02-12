@@ -19,7 +19,8 @@ public:
         Rating,
         None
     };
-
+    // L'album dans lequel chercher
+    QString album;
     // The keyword to search
     QString keyword;
     // The values used to filter results
@@ -31,6 +32,7 @@ public:
     bool sortDescendant;
 
     ImageSearch();
+    void resetAlbum();
     void resetKeyword();
     void resetFilter();
     void resetOrder();

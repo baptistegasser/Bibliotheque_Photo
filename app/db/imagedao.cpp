@@ -62,7 +62,7 @@ bool ImageDAO::saveAll(QList<Image> images)
 bool ImageDAO::create(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("INSERT INTO Image (\"Path\", ParentDir, Album, Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight, MainColor, Date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+    query.prepare("INSERT INTO Image (\"Path\", ParentDir, Album, Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight, MainColor, Date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
     query.addBindValue(image.path);
     query.addBindValue(image.parentDir);
@@ -100,7 +100,7 @@ bool ImageDAO::create(Image &image)
 bool ImageDAO::update(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("UPDATE Image SET ParentDir=?, Album, Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=?, MainColor=?, Date=? WHERE \"Path\"=?;");
+    query.prepare("UPDATE Image SET ParentDir=?, Album=?, Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=?, MainColor=?, Date=? WHERE \"Path\"=?;");
     query.addBindValue(image.parentDir);
     query.addBindValue(image.album);
     query.addBindValue(image.name);
@@ -181,6 +181,7 @@ QList<Image> ImageDAO::search(const ImageSearch &search)
     if (search.minHeight != 0) _filter += " AND Height >= :minHeight";
     if (search.maxHeight != 0) _filter += " AND Height <= :maxHeight";
     if (search.minRating != 0) _filter += " AND Rating >= :minRating";
+    if (!search.album.isEmpty()) _filter += " AND Album >= :album";
 
     if (search.sortOrder != ImageSearch::None) {
         switch (search.sortOrder) {
@@ -215,6 +216,7 @@ QList<Image> ImageDAO::search(const ImageSearch &search)
     if (search.minHeight != 0) query.bindValue(":minHeight", search.minHeight);
     if (search.maxHeight != 0) query.bindValue(":maxHeight", search.maxHeight);
     if (search.minRating != 0) query.bindValue(":minRating", search.minRating);
+    if (!search.album.isEmpty()) query.bindValue(":album", search.album);
 
     QList<Image> result;
     if (!query.exec()) {

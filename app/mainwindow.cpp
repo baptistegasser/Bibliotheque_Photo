@@ -10,6 +10,7 @@
 #include <QShortcut>
 #include <QLabel>
 #include <QMenu>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->width_window = geometry().width();
     this->height_window = geometry().height();
     this->currentSearch.sortOrder = ImageSearch::Name;
+
+    _album_combobox->addItems(DB::getAlbumDAO().getAlbums());
+    this->currentSearch.album = _album_combobox->itemText(0);
 
     // Configure and connect the search bar and button
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
@@ -190,6 +194,21 @@ void MainWindow::setSearchKeyword()
     _search_comboBox->clearFocus();
     this->currentSearch.keyword = _search_comboBox->currentText();
     updateImages();
+}
+
+void MainWindow::addAlbum()
+{
+    bool ok;
+    QString name = QInputDialog::getText(this, tr("Choisir le nom du nouvel album photo"), "", QLineEdit::Normal, "", &ok);
+    if (ok && !name.isEmpty()) {
+        currentSearch.album = name;
+        updateImages();
+    }
+}
+
+void MainWindow::setAlbum(int i)
+{
+    currentSearch.album = _album_combobox->itemText(i);
 }
 
 void MainWindow::sortItemChanged(int index)

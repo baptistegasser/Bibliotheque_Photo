@@ -2,9 +2,15 @@
 
 ImageSearch::ImageSearch()
 {
+    resetAlbum();
     resetKeyword();
     resetFilter();
     resetOrder();
+}
+
+void ImageSearch::resetAlbum()
+{
+    album = QString::Null();
 }
 
 void ImageSearch::resetKeyword()

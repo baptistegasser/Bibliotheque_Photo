@@ -28,6 +28,8 @@ protected slots:
     void showImageList();
     void setSearchKeyword();
 
+    void addAlbum();
+    void setAlbum(int i);
     void sortItemChanged(int index);
     void sortOrderChanged();
 
