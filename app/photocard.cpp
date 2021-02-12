@@ -36,13 +36,19 @@ PhotoCard::PhotoCard(QWidget *parent) :
  */
 void PhotoCard::setImage(Image *image)
 {
+    QPixmap picture  = QPixmap(image->path);
+    if(image->cropped)
+    {
+        QRect rect (image->crop_x,image->crop_y,image->crop_width,image->crop_height);
+        picture = picture.copy(rect);
+    }
     this->image = image;
     int height = image->height;
     int width = image->width;
     float ratio = (float)height/width;
     ui->photo->setMinimumHeight(ui->photo->width()*ratio);
     QLabel *container = new QLabel(ui->photo);
-    container->setPixmap(QPixmap(image->path).scaled(ui->photo->width(), ui->photo->height()*ratio));
+    container->setPixmap(picture.scaled(ui->photo->width(), ui->photo->height()*ratio));
 
 
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);

@@ -61,7 +61,7 @@ void Modification_window::updateImage()
     {
         picture = picture.scaled(img->res_width,img->res_height);
     }
-    _my_slider->setValue(0);
+    _my_slider->setValue(1);
     if(img->resized)
     {
         _frame.setGeometry((_my_picture->width()/2)-(img->res_width/2),(_my_picture->height()/2)-(img->res_height/2),img->res_width,img->res_height);
@@ -130,6 +130,7 @@ void Modification_window::resizeImage(int w, int h)
  */
 void Modification_window::openResizeDialog()
 {
+
     int preWidth = img->width;
     int preHeight = img->height;
     if(img->resized)
@@ -138,6 +139,7 @@ void Modification_window::openResizeDialog()
         preWidth = img->res_width;
     }
     QInputCustom input(this,2,{"Largeur","Hauteur"},{QString::number(preWidth),QString::number(preHeight)});
+    input.setWindowTitle("Redimensionner");
     QRadioButton ratio ("garder le ratio");
     input.addWidget(&ratio);
     input.exec();
@@ -169,9 +171,9 @@ void Modification_window::backToOriginal()
 void Modification_window::zoom()
 {
 
-    double val = 1 + (double)_my_slider->value()/10;
-    double w = img->width;
-    double h = img->height;
+    int val = _my_slider->value();
+    int w = img->width;
+    int h = img->height;
     if (img->resized)
     {
         w = img->res_width;
@@ -341,7 +343,7 @@ QPushButton *Modification_window::getReturnButton()
 
 void Modification_window::save()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),img->name,tr("Images (*.png *.jpeg *.jpg)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Enregistrer la photo"),img->name,tr("Images (*.png *.jpeg *.jpg)"));
     picture.save(fileName);
 }
 

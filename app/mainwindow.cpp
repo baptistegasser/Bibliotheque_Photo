@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
-
+    this->setWindowTitle("Bibliothèque photo");
     this->isCleared = false;
     this->width_window = geometry().width();
     this->height_window = geometry().height();
