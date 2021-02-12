@@ -40,10 +40,25 @@ void PhotoCard::setImage(Image *image)
     container->setPixmap(QPixmap(image->path).scaled(ui->photo->width(), ui->photo->height()*ratio));
 
 
-    QVector<int> rgb = this->image->main_color;
-    ui->main_color_frame->setStyleSheet("border-image: none; background-color: rgb("+QString::number(rgb[0])+','+QString::number(rgb[1])+','+QString::number(rgb[2])+")");
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    effect->setBlurRadius(20);
+    effect->setXOffset(-.1);
+    effect->setYOffset(0);
+    QColor color = QColor(0,0,0,50);
+    effect->setColor(color);
 
-    ui->date_label->setStyleSheet("font-size: 11px;");
+    QVector<int> rgb = this->image->main_color;
+    QFrame * main_color_frame = new QFrame(ui->photo);
+    QString border;
+    if(rgb[0] < 127 || rgb[1] < 127 || rgb[2] < 127){
+        border = QString("#FFFFFF");
+    } else {
+        border = QString("#000000");
+    }
+    main_color_frame->setStyleSheet("border-radius: 5px; border: 1px solid "+border+"; border-image: none; background-color: rgb("+QString::number(rgb[0])+','+QString::number(rgb[1])+','+QString::number(rgb[2])+")");
+    main_color_frame->setGeometry(5,5,30, 30);
+    main_color_frame->setGraphicsEffect(effect);
+
     QFontMetrics metrics(ui->date_label->font());
     QString elidedText = metrics.elidedText(this->image->name, Qt::ElideRight, ui->photo->width());
     ui->date_label->setText(elidedText);

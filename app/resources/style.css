@@ -6,57 +6,58 @@ QMainWindow#MainWindow{
     background-color: #FFFFFF;
 }
 /*******************/
-/*    photoCard    */
+/*    PhotoCard    */
 /*******************/
-QWidget#photoCard{
+QWidget#PhotoCard{
     background-color: #FFFFFF;
 }
-QWidget#photoCard QWidget#main_widget {
+QWidget#PhotoCard QWidget#main_widget {
     border-radius: 15px
 }
-QWidget#photoCard QFrame#photo{
+QWidget#PhotoCard QFrame#photo{
     border-radius: 15px;
 }
-QWidget#photoCard QFrame#photo QFrame#main_color_frame{
+QWidget#PhotoCard QFrame#photo QFrame#main_color_frame{
     border: 0.5px solid black;
     border-radius: 10px;
     background-color: red;
     margin: 0px 4px 0px 0px;
 }
-QWidget#photoCard QLabel{
+QWidget#PhotoCard QLabel{
     color: #B3B2B2;
     font-size: 11px;
     font-weight: 300;
 }
-QWidget#photoCard QLabel#desc_label, QWidget#photoCard QLabel#ress_label, QWidget#photoCard QLabel#keyw_label{
+QWidget#PhotoCard QLabel#desc_label, QWidget#PhotoCard QLabel#ress_label, QWidget#PhotoCard QLabel#keyw_label, QWidget#PhotoCard QGroupBox#stars_group QLabel#title{
     font-weight: bold;
+    color: #575656;
 }
-QWidget#photoCard QLabel#date_label{
-    font-size: 20px;
+QWidget#PhotoCard QLabel#date_label{
+    font-size: 11px;
     font-weight: 600;
     color: #575656;
 }
-QWidget#photoCard QLabel#info_label{
+QWidget#PhotoCard QLabel#info_label{
     font-size: 10px;
 }
-QWidget#photoCard QScrollArea, QWidget#photoCard QScrollArea QWidget, QWidget#photoCard QScrollArea QWidget QWidget, QWidget#photoCard QScrollArea QWidget QWidget QHBoxLayout{
+QWidget#PhotoCard QScrollArea, QWidget#PhotoCard QScrollArea QWidget, QWidget#PhotoCard QScrollArea QWidget QWidget, QWidget#PhotoCard QScrollArea QWidget QWidget QHBoxLayout{
     border: 0;
     padding: 0;
     margin: 0;
     background: transparent;
 }
-QWidget#photoCard QScrollArea > QWidget > QScrollBar {
+QWidget#PhotoCard QScrollArea > QWidget > QScrollBar {
     background: palette(base);
 }
-QWidget#photoCard QGroupBox#stars_group{
+QWidget#PhotoCard QGroupBox#stars_group{
     color: #575656;
     padding: 0;
     border: 0;
 }
-QWidget#photoCard QGroupBox#stars_group QFrame#star1_frame,
-QWidget#photoCard QGroupBox#stars_group QFrame#star2_frame,
-QWidget#photoCard QGroupBox#stars_group QFrame#star3_frame,
-QWidget#photoCard QGroupBox#stars_group QFrame#star4_frame,
-QWidget#photoCard QGroupBox#stars_group QFrame#star5_frame{
+QWidget#PhotoCard QGroupBox#stars_group QFrame#star1_frame,
+QWidget#PhotoCard QGroupBox#stars_group QFrame#star2_frame,
+QWidget#PhotoCard QGroupBox#stars_group QFrame#star3_frame,
+QWidget#PhotoCard QGroupBox#stars_group QFrame#star4_frame,
+QWidget#PhotoCard QGroupBox#stars_group QFrame#star5_frame{
     border-image: url(:/image/resources/star_empty.png) 0 0 0 0 stretch stretch;
 }
