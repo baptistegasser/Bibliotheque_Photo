@@ -186,8 +186,10 @@ void MainWindow::showSelectionnedPhoto(PhotoCard *ph)
  */
 void MainWindow::showImageList()
 {
-    updateImages();
     _my_stack->setCurrentIndex(0);
+    if (photoSelectionned != nullptr) {
+        photoSelectionned->setImage(photoSelectionned->getImage());
+    }
 }
 
 /**

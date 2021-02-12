@@ -12,7 +12,7 @@ class Modification_window : public QWidget, private Ui::modification_window
 {
     Q_OBJECT
 private:
-    Image img;
+    Image *img;
     QLabel _frame;
     QPixmap picture;
     FlowLayout * grid_layout_cat;
@@ -27,8 +27,7 @@ private:
     bool ratio;
 
 public:
-    explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);
-    ~Modification_window(){}
+    explicit Modification_window(QWidget *parent = nullptr, Image *image = nullptr);
     void updateImage();
     void setQFileInfo(QFileInfo img);
     void resizeImage(int w, int h);

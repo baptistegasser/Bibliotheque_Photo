@@ -16,11 +16,11 @@
 #include "QFileDialog"
 #include "resizable_rubber_rand.h"
 
-Modification_window::Modification_window(QWidget *parent, const Image *image) :
+Modification_window::Modification_window(QWidget *parent, Image *image) :
     QWidget(parent)
 {
     setupUi(this);
-    img = *image;
+    img = image;
 
     connect(_my_redimensionner,&QPushButton::clicked,this,&Modification_window::openResizeDialog);
     connect(_my_reset,&QPushButton::clicked,this,&Modification_window::backToOriginal);
@@ -47,31 +47,31 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
 void Modification_window::updateImage()
 {
     _my_reset->hide();
-    if(img.resized || img.cropped)
+    if(img->resized || img->cropped)
     {
         _my_reset->show();
         _my_recadrer->hide();
     }
-    picture  = QPixmap(img.path);
-    if(img.cropped)
+    picture  = QPixmap(img->path);
+    if(img->cropped)
     {
-        QRect rect (img.crop_x,img.crop_y,img.crop_width,img.crop_height);
+        QRect rect (img->crop_x,img->crop_y,img->crop_width,img->crop_height);
         picture = picture.copy(rect);
     }
-    if(img.resized)
+    if(img->resized)
     {
-        picture = picture.scaled(img.res_width,img.res_height);
+        picture = picture.scaled(img->res_width,img->res_height);
     }
     _my_slider->setValue(0);
-    if(img.resized)
+    if(img->resized)
     {
-        _frame.setGeometry((_my_picture->width()/2)-(img.res_width/2),(_my_picture->height()/2)-(img.res_height/2),img.res_width,img.res_height);
-        _frame.setFixedSize(QSize(img.res_width,img.res_height));
+        _frame.setGeometry((_my_picture->width()/2)-(img->res_width/2),(_my_picture->height()/2)-(img->res_height/2),img->res_width,img->res_height);
+        _frame.setFixedSize(QSize(img->res_width,img->res_height));
     }
     else
     {
-        _frame.setGeometry((_my_picture->width()/2)-(img.width/2),(_my_picture->height()/2)-(img.height/2),img.width,img.height);
-        _frame.setFixedSize(QSize(img.width,img.height));
+        _frame.setGeometry((_my_picture->width()/2)-(img->width/2),(_my_picture->height()/2)-(img->height/2),img->width,img->height);
+        _frame.setFixedSize(QSize(img->width,img->height));
     }
     _frame.setPixmap(picture);
     _frame.setAlignment(Qt::AlignCenter);
@@ -90,10 +90,10 @@ void Modification_window::resizeImage(int w, int h)
 {
     if(ratio)
     {
-        if(img.resized)
+        if(img->resized)
         {
-            picture = picture.scaled(img.width,img.height);
-            if(w > img.res_width || h > img.res_height)
+            picture = picture.scaled(img->width,img->height);
+            if(w > img->res_width || h > img->res_height)
             {
                 picture = picture.scaled(w,h,Qt::KeepAspectRatioByExpanding);
             }
@@ -104,7 +104,7 @@ void Modification_window::resizeImage(int w, int h)
         }
         else
         {
-            if(w > img.width || h > img.height)
+            if(w > img->width || h > img->height)
             {
                 picture = picture.scaled(w,h,Qt::KeepAspectRatioByExpanding);
             }
@@ -118,10 +118,10 @@ void Modification_window::resizeImage(int w, int h)
     {
         picture = picture.scaled(w,h);
     }
-    img.res_height = picture.height();
-    img.res_width = picture.width();
-    img.resized = true;
-    DB::getImageDao().save(img);
+    img->res_height = picture.height();
+    img->res_width = picture.width();
+    img->resized = true;
+    DB::getImageDao().save(*img);
     updateImage();
 }
 
@@ -131,12 +131,12 @@ void Modification_window::resizeImage(int w, int h)
  */
 void Modification_window::openResizeDialog()
 {
-    int preWidth = img.width;
-    int preHeight = img.height;
-    if(img.resized)
+    int preWidth = img->width;
+    int preHeight = img->height;
+    if(img->resized)
     {
-        preHeight = img.res_height;
-        preWidth = img.res_width;
+        preHeight = img->res_height;
+        preWidth = img->res_width;
     }
     QInputCustom input(this,2,{"Largeur","Hauteur"},{QString::number(preWidth),QString::number(preHeight)});
     QRadioButton ratio ("garder le ratio");
@@ -156,10 +156,10 @@ void Modification_window::openResizeDialog()
  */
 void Modification_window::backToOriginal()
 {
-    img.resized = false;
-    img.cropped = false;
+    img->resized = false;
+    img->cropped = false;
     _my_recadrer->show();
-    DB::getImageDao().save(img);
+    DB::getImageDao().save(*img);
     updateImage();
 }
 
@@ -171,12 +171,12 @@ void Modification_window::zoom()
 {
 
     double val = 1 + (double)_my_slider->value()/10;
-    double w = img.width;
-    double h = img.height;
-    if (img.resized)
+    double w = img->width;
+    double h = img->height;
+    if (img->resized)
     {
-        w = img.res_width;
-        h = img.res_height;
+        w = img->res_width;
+        h = img->res_height;
     }
     picture = picture.scaled(w*val,h*val);
     _frame.setPixmap(picture);
@@ -192,8 +192,8 @@ void Modification_window::zoom()
  */
 void Modification_window::comment()
 {
-    img.comment = _my_commentaire_edit->toPlainText();
-    DB::getImageDao().save(img);
+    img->comment = _my_commentaire_edit->toPlainText();
+    DB::getImageDao().save(*img);
 }
 
 /**
@@ -221,24 +221,24 @@ void Modification_window::initLayout()
 void Modification_window::initDetail()
 {
     _my_color_dominant_edit->setEnabled(false);
-    QColor domCol (img.main_color.at(0),img.main_color.at(1),img.main_color.at(2));
+    QColor domCol (img->main_color.at(0),img->main_color.at(1),img->main_color.at(2));
     _my_color_dominant_edit->setText(domCol.name());
     _my_color_dominant_edit->setStyleSheet("background-color:"+domCol.name()+";");
 
-    _my_commentaire_edit->document()->setPlainText(img.comment);
-    QVector<Tag> catTag = img.categoryTags.toVector();
+    _my_commentaire_edit->document()->setPlainText(img->comment);
+    QVector<Tag> catTag = img->categoryTags.toVector();
     for(Tag &t:catTag)
     {
         TagButton *tb = getTagButtonFromTag(t);
         grid_layout_cat->addWidget(tb);
     }
-    QVector<Tag> feelTag = img.feelingTags.toVector();
+    QVector<Tag> feelTag = img->feelingTags.toVector();
     for(Tag &t:feelTag)
     {
         TagButton *tb = getTagButtonFromTag(t);
         grid_layout_feel->addWidget(tb);
     }
-    QVector<Tag> descTag = img.descriptiveTags.toVector();
+    QVector<Tag> descTag = img->descriptiveTags.toVector();
     for(Tag &t:descTag)
     {
         TagButton *tb = getTagButtonFromTag(t);
@@ -247,7 +247,7 @@ void Modification_window::initDetail()
     for (int i = 0; i< 5 ;i++ )
     {
         QIcon icon;
-        if (i <= img.rating-1)
+        if (i <= img->rating-1)
         {
             icon.addPixmap(QPixmap(":/image/star_full").scaled(200,200));
         }
@@ -278,17 +278,17 @@ void Modification_window::addTag(int i)
     case 0:
         area = area_cat;
         layout = grid_layout_cat;
-        list = &img.categoryTags;
+        list = &img->categoryTags;
         break;
     case 1:
         area = area_desc;
         layout = grid_layout_desc;
-        list = &img.descriptiveTags;
+        list = &img->descriptiveTags;
         break;
     case 2:
         area = area_feel;
         layout = grid_layout_feel;
-        list = &img.feelingTags;
+        list = &img->feelingTags;
         break;
 
     }
@@ -302,7 +302,7 @@ void Modification_window::addTag(int i)
         {
             layout->addWidget(tb);
             list->append(Tag(nom,color));
-            DB::getImageDao().save(img);
+            DB::getImageDao().save(*img);
         }
     }
 }
@@ -320,7 +320,7 @@ TagButton *Modification_window::getTagButtonFromTag(Tag tag)
  */
 void Modification_window::changeNote(int rating)
 {
-    if (rating == img.rating-1)
+    if (rating == img->rating-1)
     {
         rating--;
     }
@@ -331,8 +331,8 @@ void Modification_window::changeNote(int rating)
             stars.at(i)->setIcon(QIcon(":/image/star_empty"));
         }
     }
-    img.rating = rating+1;
-    DB::getImageDao().save(img);
+    img->rating = rating+1;
+    DB::getImageDao().save(*img);
 }
 
 QPushButton *Modification_window::getReturnButton()
@@ -342,7 +342,7 @@ QPushButton *Modification_window::getReturnButton()
 
 void Modification_window::save()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),img.name,tr("Images (*.png *.jpeg *.jpg)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),img->name,tr("Images (*.png *.jpeg *.jpg)"));
     picture.save(fileName);
 }
 
@@ -350,31 +350,31 @@ void Modification_window::cropped ()
 {
     updateImage();
     Resizable_rubber_band * band = new Resizable_rubber_band(&_frame);
-    if (img.resized)
+    if (img->resized)
     {
-        band->move((_frame.width()/2)-(img.res_width/2),(_frame.height()/2)-(img.res_height/2));
+        band->move((_frame.width()/2)-(img->res_width/2),(_frame.height()/2)-(img->res_height/2));
     }
     else
     {
-        band->move((_frame.width()/2)-(img.width/2),(_frame.height()/2)-(img.height/2));
+        band->move((_frame.width()/2)-(img->width/2),(_frame.height()/2)-(img->height/2));
     }
 
     band->setStyleSheet("background-color:rgba(0,0,200,0.5);");
     band->resize(50,50);
-    if(img.resized)
+    if(img->resized)
     {
-        band->setMaximumHeight(img.res_height);
-        band->setMaximumWidth(img.res_width);
+        band->setMaximumHeight(img->res_height);
+        band->setMaximumWidth(img->res_width);
     }
-    else if (img.cropped)
+    else if (img->cropped)
     {
-        band->setMaximumHeight(img.crop_height);
-        band->setMaximumWidth(img.crop_width);
+        band->setMaximumHeight(img->crop_height);
+        band->setMaximumWidth(img->crop_width);
     }
     else
     {
-        band->setMaximumHeight(img.height);
-        band->setMaximumWidth(img.width);
+        band->setMaximumHeight(img->height);
+        band->setMaximumWidth(img->width);
     }
 
     band->setMinimumSize(30,30);
@@ -406,11 +406,11 @@ void Modification_window::cropped ()
 void Modification_window::toCrop(QRect rect)
 {
 
-    img.cropped = true;
-    img.crop_x = rect.x();
-    img.crop_y = rect.y();
-    img.crop_width = rect.width();
-    img.crop_height = rect.height();
+    img->cropped = true;
+    img->crop_x = rect.x();
+    img->crop_y = rect.y();
+    img->crop_width = rect.width();
+    img->crop_height = rect.height();
 
     _my_detail_box->setEnabled(true);
     groupBox->setEnabled(true);
@@ -418,7 +418,7 @@ void Modification_window::toCrop(QRect rect)
     _my_slider->setEnabled(true);
     _my_return_button->setEnabled(true);
 
-    DB::getImageDao().save(img);
+    DB::getImageDao().save(*img);
     updateImage();
     delete croppAccept;
     delete croppCancel;
@@ -442,16 +442,16 @@ void Modification_window::initAlbum()
 
 void Modification_window::selectAlbum()
 {
-    img.album = _my_album_combo->currentText();
-    DB::getImageDao().save(img);
+    img->album = _my_album_combo->currentText();
+    DB::getImageDao().save(*img);
 }
 
 void Modification_window::initTopLayout()
 {
     initAlbum();
-    QStringList name_format = img.name.split('.');
+    QStringList name_format = img->name.split('.');
     _my_title->setText(name_format.at(0));
-    QString info = "Format "+name_format.at(1)+" - Taille "+img.size/1000+"Mo - Date "+img.date.toString("dd/MM/yyyy");
+    QString info = "Format "+name_format.at(1)+" - Taille "+img->size/1000+"Mo - Date "+img->date.toString("dd/MM/yyyy");
     _my_info->setText(info);
 
 }
