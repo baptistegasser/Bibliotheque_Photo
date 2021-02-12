@@ -165,7 +165,7 @@ border-left: none;</string>
            <item>
             <widget class="DirectoryManager" name="_dir_manager" native="true">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -443,6 +443,10 @@ background-color: white;</string>
    <extends>QWidget</extends>
    <header>directorymanager.h</header>
    <container>1</container>
+   <slots>
+    <signal>directoryAdded()</signal>
+    <signal>directoryRemoved()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>
@@ -481,9 +485,93 @@ background-color: white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>_search_comboBox</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>constructSearchBar(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>799</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_search_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setSearchKeyword()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>890</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MainWindow</sender>
+   <signal>destroyed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onClose()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>456</x>
+     <y>313</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_dir_manager</sender>
+   <signal>directoryAdded()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateImages()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>2</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_dir_manager</sender>
+   <signal>directoryRemoved()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateImages()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>sortOrderChanged()</slot>
   <slot>sortItemChanged(int)</slot>
+  <slot>constructSearchBar(QString)</slot>
+  <slot>setSearchKeyword()</slot>
+  <slot>onClose()</slot>
+  <slot>updateImages()</slot>
  </slots>
 </ui>

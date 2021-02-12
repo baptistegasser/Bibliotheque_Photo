@@ -20,26 +20,16 @@ MainWindow::MainWindow(QWidget *parent)
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
     shortcut->setContext(Qt::ShortcutContext::WidgetShortcut);
     connect(shortcut, &QShortcut::activated, this, &MainWindow::setSearchKeyword);
-    connect(_search_btn, &QAbstractButton::clicked, this, &MainWindow::setSearchKeyword);
-    connect(_search_comboBox, &QComboBox::currentTextChanged, this, &MainWindow::constructSearchBar);
 
     // Config filter and sort buttons
     FilterMenu *menu = new FilterMenu(&this->currentSearch);
     _filter_btn->setMenu(menu);
     connect(menu, &FilterMenu::filterUpdated, this, &MainWindow::updateImages);
 
-    // Handle windows closing
-    connect(this, &QWidget::destroyed, this, &MainWindow::onClose);
-
     isCleared = false;
-
     width_window = width();
 
-    connect(_dir_manager, &DirectoryManager::directoryAdded, this, &MainWindow::updateImages);
-    connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
-    updateImages();
-
-    _my_stack->setCurrentIndex(0);
+    showImageList();
 }
 
 MainWindow::~MainWindow()
