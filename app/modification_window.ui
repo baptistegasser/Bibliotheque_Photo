@@ -804,13 +804,13 @@ margin-left:10%;</string>
                 <string notr="true">margin-bottom:15px;</string>
                </property>
                <property name="minimum">
-                <number>0</number>
+                <number>1</number>
                </property>
                <property name="maximum">
-                <number>15</number>
+                <number>7</number>
                </property>
                <property name="singleStep">
-                <number>2</number>
+                <number>1</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
