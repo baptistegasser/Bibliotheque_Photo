@@ -713,7 +713,7 @@ background-color: white;</string>
    <slot>sortOrderChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>925</x>
+     <x>897</x>
      <y>41</y>
     </hint>
     <hint type="destinationlabel">
@@ -729,8 +729,8 @@ background-color: white;</string>
    <slot>sortItemChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>900</x>
-     <y>33</y>
+     <x>872</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>589</x>
@@ -809,8 +809,8 @@ background-color: white;</string>
    <slot>constructSearchBar(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1087</x>
-     <y>39</y>
+     <x>1074</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>1083</x>

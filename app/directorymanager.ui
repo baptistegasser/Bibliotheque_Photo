@@ -342,7 +342,7 @@ DirectoryManager QButton {
    <hints>
     <hint type="sourcelabel">
      <x>49</x>
-     <y>111</y>
+     <y>64</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
