@@ -183,7 +183,7 @@ QList<Image> ImageDAO::search(const ImageSearch &search)
     if (search.sortOrder != ImageSearch::None) {
         switch (search.sortOrder) {
         case ImageSearch::Name:
-            _sort = "ORDER BY Name ";
+            _sort = "ORDER BY LOWER(Name) ";
             break;
         case ImageSearch::Size:
             _sort = "ORDER BY Size ";
@@ -195,7 +195,7 @@ QList<Image> ImageDAO::search(const ImageSearch &search)
             _sort = "ORDER BY Rating ";
             break;
         }
-        _sort += search.sortDescendant? "DESC" : "ASC";
+        _sort += search.sortDescendant ? "ASC" : "DESC";
     }
 
     SQL = SQL.replace(":SEARCH:", _search).replace(":FILTER:", _filter).replace(":SORT:", _sort);

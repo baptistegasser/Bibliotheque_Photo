@@ -16,6 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
 
+    this->isCleared = false;
+    this->width_window = geometry().width();
+    this->height_window = geometry().height();
+    this->currentSearch.sortOrder = ImageSearch::Name;
+
     // Configure and connect the search bar and button
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
     shortcut->setContext(Qt::ShortcutContext::WidgetShortcut);
@@ -25,11 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     FilterMenu *menu = new FilterMenu(&this->currentSearch);
     _filter_btn->setMenu(menu);
     connect(menu, &FilterMenu::filterUpdated, this, &MainWindow::updateImages);
-
-    isCleared = false;
-
-    width_window = geometry().width();
-    height_window = geometry().height();
 
     _search_comboBox->setCompleter(nullptr);
     constructSearchBar("");

@@ -194,7 +194,7 @@ void DirectoryManager::removeDirectory()
     }
 
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Condirmation", "Supprimer le dossier "+dir.absolutePath()+" ?", QMessageBox::Yes|QMessageBox::No);
+    reply = QMessageBox::question(this, "Condirmation", "Désindexer le dossier "+dir.absolutePath()+" ?", QMessageBox::Yes|QMessageBox::No);
 
     if (reply == QMessageBox::Yes) {
         DB::getDirectoryDao().remove(dir);
