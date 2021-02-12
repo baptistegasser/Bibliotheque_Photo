@@ -7,7 +7,9 @@
 DialogCreateTag::DialogCreateTag(QWidget *parent) :
     QDialog(parent)
 {
+
     setupUi(this);
+    this->setWindowTitle("Ajouter un tag");
     if(_label_colo->text() == "Non sélectionnée" || _my_combo->currentText().isEmpty())
     {
         buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);

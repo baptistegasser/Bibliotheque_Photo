@@ -131,6 +131,7 @@ void Modification_window::resizeImage(int w, int h)
  */
 void Modification_window::openResizeDialog()
 {
+
     int preWidth = img->width;
     int preHeight = img->height;
     if(img->resized)
@@ -139,6 +140,7 @@ void Modification_window::openResizeDialog()
         preWidth = img->res_width;
     }
     QInputCustom input(this,2,{"Largeur","Hauteur"},{QString::number(preWidth),QString::number(preHeight)});
+    input.setWindowTitle("Redimensionner");
     QRadioButton ratio ("garder le ratio");
     input.addWidget(&ratio);
     input.exec();
@@ -342,7 +344,7 @@ QPushButton *Modification_window::getReturnButton()
 
 void Modification_window::save()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),img->name,tr("Images (*.png *.jpeg *.jpg)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Enregistrer la photo"),img->name,tr("Images (*.png *.jpeg *.jpg)"));
     picture.save(fileName);
 }
 
