@@ -152,6 +152,8 @@ void MainWindow::showModificationWindow(PhotoCard *ph)
 
     currentWin = new Modification_window(page_2, ph->getImage());
     page_2->layout()->addWidget(currentWin);
+    _header->setEnabled(false);
+    _header->setHidden(true);
 
     connect(currentWin->getReturnButton(), SIGNAL(clicked()), this, SLOT(showImageList()));
 
@@ -186,6 +188,8 @@ void MainWindow::showSelectionnedPhoto(PhotoCard *ph)
  */
 void MainWindow::showImageList()
 {
+    _header->setEnabled(true);
+    _header->setHidden(false);
     _my_stack->setCurrentIndex(0);
     if (photoSelectionned != nullptr) {
         photoSelectionned->setImage(photoSelectionned->getImage());
