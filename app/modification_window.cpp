@@ -38,6 +38,10 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
 
 }
 
+/**
+ * Update the image after modification
+ * @brief Modification_window::updateImage
+ */
 void Modification_window::updateImage()
 {
     _my_reset->hide();
@@ -46,16 +50,16 @@ void Modification_window::updateImage()
         _my_reset->show();
     }
     picture  = QPixmap(img.path);
+    if(img.cropped)
+    {
+        _my_recadrer->hide();
+        QRect rect (img.crop_x,img.crop_y,img.crop_width,img.crop_height);
+        picture = picture.copy(rect);
+    }
     if(img.resized)
     {
         picture = picture.scaled(img.res_width,img.res_height);
     }
-    if(img.cropped)
-    {
-        QRect rect (img.crop_x,img.crop_y,img.crop_width,img.crop_height);
-        picture = picture.copy(rect);
-    }
-
     _my_slider->setValue(1);
     if(img.resized)
     {
@@ -74,6 +78,12 @@ void Modification_window::updateImage()
     _frame.show();
 }
 
+/**
+ * Permite to resize the photo with parameter
+ * @brief Modification_window::resizeImage
+ * @param w
+ * @param h
+ */
 void Modification_window::resizeImage(int w, int h)
 {
     if(ratio)
@@ -113,6 +123,10 @@ void Modification_window::resizeImage(int w, int h)
     updateImage();
 }
 
+/**
+ * Access to the photo resize window
+ * @brief Modification_window::openResizeDialog
+ */
 void Modification_window::openResizeDialog()
 {
     int preWidth = img.width;
@@ -134,14 +148,23 @@ void Modification_window::openResizeDialog()
     }
 }
 
+/**
+ * Permite to return to the original photo
+ * @brief Modification_window::backToOriginal
+ */
 void Modification_window::backToOriginal()
 {
     img.resized = false;
     img.cropped = false;
+    _my_recadrer->show();
     DB::getImageDao().save(img);
     updateImage();
 }
 
+/**
+ * Permit to zoom on the photo
+ * @brief Modification_window::zoom
+ */
 void Modification_window::zoom()
 {
 
@@ -169,12 +192,20 @@ void Modification_window::zoom()
 
 }
 
+/**
+ * Add a comment to the photo
+ * @brief Modification_window::comment
+ */
 void Modification_window::comment()
 {
     img.comment = _my_commentaire_edit->toPlainText();
     DB::getImageDao().save(img);
 }
 
+/**
+ * Init the layout
+ * @brief Modification_window::initLayout
+ */
 void Modification_window::initLayout()
 {
     grid_layout_cat = new FlowLayout();
@@ -243,6 +274,11 @@ void Modification_window::initDetail()
     }
 }
 
+/**
+ * Add one tag to the photo
+ * @brief Modification_window::addTag
+ * @param i
+ */
 void Modification_window::addTag(int i)
 {
     QWidget * area;
@@ -287,6 +323,11 @@ TagButton *Modification_window::getTagButtonFromTag(Tag tag)
     return tb;
 }
 
+/**
+ * Update rate of the photo
+ * @brief Modification_window::changeNote
+ * @param rating
+ */
 void Modification_window::changeNote(int rating)
 {
     if (rating == img.rating-1)
@@ -321,11 +362,11 @@ void Modification_window::cropped ()
     Resizable_rubber_band * band = new Resizable_rubber_band(&_frame);
     if (img.resized)
     {
-         band->move((_frame.width()/2)-(img.res_width/2),(_frame.height()/2)-(img.res_height/2));
+        band->move((_frame.width()/2)-(img.res_width/2),(_frame.height()/2)-(img.res_height/2));
     }
     else if (img.cropped)
     {
-         band->move((_frame.width()/2)-(img.crop_width/2),(_frame.height()/2)-(img.crop_height/2));
+        band->move((_frame.width()/2)-(img.crop_width/2),(_frame.height()/2)-(img.crop_height/2));
     }
     else
     {
@@ -358,14 +399,18 @@ void Modification_window::cropped ()
     _my_slider->setEnabled(false);
     _my_return_button->setEnabled(false);
 
-
-    croppAccept = new QPushButton("Redimensionner");
-    croppAccept->setStyleSheet("background-color:white;border:1px solid black;");
+    croppAccept = new QPushButton("Recadrer");
+    croppAccept->setFixedSize(200,50);
+    croppAccept->setStyleSheet("background-color:white;color:black ;border:solid darkgrey ;border-width: 1px 1px 1px 1px;border-radius:10px;");
     croppCancel = new QPushButton("Annuler");
-    zoom_layout->addWidget(croppAccept);
-    zoom_layout->addWidget(croppCancel);
+    croppCancel->setStyleSheet("background-color:white;color:black ;border:solid darkgrey ;border-width: 1px 1px 1px 1px;border-radius:10px;");
+    croppCancel->setFixedSize(200,50);
+    _cropp_layout->setAlignment(Qt::AlignHCenter);
+    _cropp_layout->addWidget(croppAccept);
+    _cropp_layout->addWidget(croppCancel);
 
-    croppAccept->setStyleSheet("background-color:grey;border:solid black 1px;");
+
+
     croppAccept->show();
     connect(croppAccept,&QPushButton::clicked,this,[=](){band->hide();this->toCrop(band->frameGeometry());});
     connect(croppCancel,&QPushButton::clicked,this,[=](){band->hide();this->cropCancel();});
@@ -374,11 +419,14 @@ void Modification_window::cropped ()
 
 void Modification_window::toCrop(QRect rect)
 {
+
     img.cropped = true;
     img.crop_x = rect.x();
     img.crop_y = rect.y();
     img.crop_width = rect.width();
     img.crop_height = rect.height();
+
+
 
     _my_detail_box->setEnabled(true);
     groupBox->setEnabled(true);

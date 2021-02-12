@@ -201,6 +201,10 @@ void MainWindow::setSearchKeyword()
     updateImages();
 }
 
+/**
+ *
+ * @brief MainWindow::addAlbum
+ */
 void MainWindow::addAlbum()
 {
     bool ok;
@@ -211,11 +215,17 @@ void MainWindow::addAlbum()
     }
 }
 
+
 void MainWindow::setAlbum(int i)
 {
     currentSearch.album = _album_combobox->itemText(i);
 }
 
+/**
+ * Show the type of order
+ * @brief MainWindow::sortItemChanged
+ * @param index
+ */
 void MainWindow::sortItemChanged(int index)
 {
     if (index == -1) {
@@ -244,6 +254,10 @@ void MainWindow::sortItemChanged(int index)
     updateImages();
 }
 
+/**
+ * Show the direction of order
+ * @brief MainWindow::sortOrderChanged
+ */
 void MainWindow::sortOrderChanged()
 {
     this->currentSearch.sortDescendant = !currentSearch.sortDescendant;

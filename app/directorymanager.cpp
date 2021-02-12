@@ -26,6 +26,10 @@ DirectoryManager::DirectoryManager(QWidget *parent) :
     }
 }
 
+/**
+ * Add one directory to
+ * @brief DirectoryManager::addDirectory
+ */
 void DirectoryManager::addDirectory()
 {
     QString dirPath = getDirectoryDialog();

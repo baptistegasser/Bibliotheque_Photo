@@ -18,6 +18,10 @@ FilterMenu::FilterMenu(ImageSearch *search, QWidget *parent) :
     updateDisplay();
 }
 
+/**
+ * Update the request with filter value
+ * @brief FilterMenu::updateFilter
+ */
 void FilterMenu::updateFilter()
 {
     search->minWidth = _min_width_box->value();
@@ -28,6 +32,11 @@ void FilterMenu::updateFilter()
     emit filterUpdated();
 }
 
+/**
+ * Update the visual of the star filter
+ * @brief FilterMenu::setCurrentRating
+ * @param rating
+ */
 void FilterMenu::setCurrentRating(int rating)
 {
     for (int i = 0; i < 5; ++i) {
@@ -41,6 +50,10 @@ void FilterMenu::setCurrentRating(int rating)
     search->minRating = rating;
 }
 
+/**
+ * Update the visual
+ * @brief FilterMenu::updateDisplay
+ */
 void FilterMenu::updateDisplay()
 {
     _min_width_box->setValue(search->minWidth);
@@ -50,6 +63,10 @@ void FilterMenu::updateDisplay()
     setCurrentRating(search->minRating);
 }
 
+/**
+ * Reset the filter
+ * @brief FilterMenu::resetFilter
+ */
 void FilterMenu::resetFilter()
 {
     search->resetFilter();

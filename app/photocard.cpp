@@ -29,6 +29,11 @@ PhotoCard::PhotoCard(QWidget *parent) :
     isClicked = false;
 }
 
+/**
+ * Set the image in the photocard and this information
+ * @brief PhotoCard::setImage
+ * @param image
+ */
 void PhotoCard::setImage(Image *image)
 {
     this->image = image;
@@ -79,7 +84,10 @@ void PhotoCard::setImage(Image *image)
     showRateStars();
 }
 
-
+/**
+ * Show all descriptive tag of this photocard
+ * @brief PhotoCard::showDescriptiveTags
+ */
 void PhotoCard::showDescriptiveTags()
 {
     QHBoxLayout * grid_layout = new QHBoxLayout();
@@ -102,6 +110,10 @@ void PhotoCard::showDescriptiveTags()
     ui->desc_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
+/**
+ * Show all feeling tag of this photocard
+ * @brief PhotoCard::showFeelingTags
+ */
 void PhotoCard::showFeelingTags()
 {
     QHBoxLayout * grid_layout = new QHBoxLayout();
@@ -124,6 +136,10 @@ void PhotoCard::showFeelingTags()
     ui->ress_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
+/**
+ * Show all category tag of this photocard
+ * @brief PhotoCard::showCategoryTags
+ */
 void PhotoCard::showCategoryTags(){
     QHBoxLayout * grid_layout = new QHBoxLayout();
     QWidget * area = new QWidget();
@@ -145,7 +161,10 @@ void PhotoCard::showCategoryTags(){
     ui->keyw_scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-
+/**
+ * Update the visual of the rate stars
+ * @brief PhotoCard::showRateStars
+ */
 void PhotoCard::showRateStars()
 {
     QList<QPushButton *> stars = {
