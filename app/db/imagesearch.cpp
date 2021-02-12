@@ -2,7 +2,7 @@
 
 ImageSearch::ImageSearch()
 {
-    resultSize = 10000;
+    resultSize = 1;
     pageNumber = 0;
     resetAlbum();
     resetKeyword();
