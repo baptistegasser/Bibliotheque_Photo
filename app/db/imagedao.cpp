@@ -159,7 +159,7 @@ QList<Image> ImageDAO::getAll()
 
 QList<Image> ImageDAO::search(const ImageSearch &search)
 {
-    QString SQL = "SELECT * FROM Image Where :SEARCH: :FILTER: :SORT:;";
+    QString SQL = "SELECT * FROM Image Where :SEARCH: :FILTER: :SORT: LIMIT :resultSize OFFSET :resultOffset;";
 
     QString _search = "True";
     QString _filter = "";
@@ -205,6 +205,9 @@ QList<Image> ImageDAO::search(const ImageSearch &search)
 
     QSqlQuery query = getNewQuery();
     query.prepare(SQL);
+
+    query.bindValue(":resultSize", search.resultSize);
+    query.bindValue(":resultOffset", search.pageNumber * search.resultSize);
 
     if (!search.keyword.isEmpty()) {
         query.bindValue(":keyword", "%"+search.keyword+"%");
@@ -288,4 +291,29 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     img.categoryTags = tagDao.getCategoryTags(img);
 
     return img;
+}
+
+int ImageDAO::maxPageNb(int itemsPerPage)
+{
+    QSqlQuery query = getNewQuery();
+
+    if (!query.exec("SELECT COUNT(\"Path\") AS ImageCount FROM Image;")) {
+        qWarning() << "Failed to count images" << query.lastQuery();
+        qCritical() << query.lastError().text();
+        return 0;
+    }
+
+    int imageCounts = 0;
+    if (!query.next()) {
+        return 0;
+    }
+
+    imageCounts = query.value("ImageCount").toInt();
+
+    int reminder = imageCounts % itemsPerPage;
+    int pages = (imageCounts - reminder) / itemsPerPage;
+    if (reminder != 0) pages += 1;
+
+    // return -1 to have progammer value instead of display
+    return pages-1;
 }

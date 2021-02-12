@@ -2,6 +2,8 @@
 
 ImageSearch::ImageSearch()
 {
+    resultSize = 10000;
+    pageNumber = 0;
     resetAlbum();
     resetKeyword();
     resetFilter();

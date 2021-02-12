@@ -25,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     _album_combobox->addItems(DB::getAlbumDAO().getAlbums());
     this->currentSearch.album = _album_combobox->itemText(0);
 
+    currentSearch.resultSize = _item_pages_combobox->itemText(0).toInt();
+    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    if (max > 0) _next_btn->setEnabled(true);
+    _page_display->setText(QString("page %1 sur %2").arg(currentSearch.pageNumber+1).arg(max+1));
+
     // Configure and connect the search bar and button
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
     shortcut->setContext(Qt::ShortcutContext::WidgetShortcut);
@@ -248,4 +253,46 @@ void MainWindow::sortOrderChanged()
         _sort_order_btn->setIcon(QIcon(":/icon/sort_reverse"));
     }
     updateImages();
+}
+
+void MainWindow::nextPage()
+{
+    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    currentSearch.pageNumber += 1;
+    if (currentSearch.pageNumber >= max) {
+        currentSearch.pageNumber = max;
+        _next_btn->setEnabled(false);
+    }
+    _previous_btn->setEnabled(currentSearch.pageNumber > 0);
+
+    updateImages();
+    _page_display->setText(QString("page %1 sur %2").arg(currentSearch.pageNumber+1).arg(max+1));
+}
+
+void MainWindow::previousPage()
+{
+    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    currentSearch.pageNumber -= 1;
+    if (currentSearch.pageNumber <= 0) {
+        currentSearch.pageNumber = 0;
+        _previous_btn->setEnabled(false);
+    }
+    _next_btn->setEnabled(currentSearch.pageNumber < max);
+
+    updateImages();
+    _page_display->setText(QString("page %1 sur %2").arg(currentSearch.pageNumber+1).arg(max+1));
+}
+
+void MainWindow::setImagePerPage(int index)
+{
+    this->currentSearch.resultSize = _item_pages_combobox->itemText(index).toInt();
+    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    if (this->currentSearch.pageNumber > max) {
+        this->currentSearch.pageNumber = max;
+    }
+    _previous_btn->setEnabled(currentSearch.pageNumber > 0);
+    _next_btn->setEnabled(currentSearch.pageNumber < max);
+
+    updateImages();
+    _page_display->setText(QString("page %1 sur %2").arg(currentSearch.pageNumber+1).arg(max+1));
 }

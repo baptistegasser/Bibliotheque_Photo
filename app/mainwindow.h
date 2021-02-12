@@ -33,6 +33,10 @@ protected slots:
     void sortItemChanged(int index);
     void sortOrderChanged();
 
+    void nextPage();
+    void previousPage();
+    void setImagePerPage(int index);
+
 private:
     bool isCleared;
     int width_window;

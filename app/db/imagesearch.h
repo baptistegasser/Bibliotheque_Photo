@@ -31,6 +31,11 @@ public:
     SortBy sortOrder;
     bool sortDescendant;
 
+    // The number of results to return
+    int resultSize;
+    // The current page used to calculate offset
+    int pageNumber;
+
     ImageSearch();
     void resetAlbum();
     void resetKeyword();

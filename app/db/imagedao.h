@@ -21,6 +21,8 @@ public:
     QList<Image> search(const ImageSearch &search);
     QList<Image> getInDir(const Directory &dir);
 
+    int maxPageNb(int itemsPerPage);
+
 private:
     bool create(Image &image);
     bool update(Image &image);
