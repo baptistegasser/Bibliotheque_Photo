@@ -19,6 +19,10 @@ DialogCreateTag::DialogCreateTag(QWidget *parent) :
 
 }
 
+/**
+ * Set the name when text was edit
+ * @brief DialogCreateTag::setName
+ */
 void DialogCreateTag::setName()
 {
     QStringList wordList;
@@ -54,6 +58,10 @@ void DialogCreateTag::setName()
     }
 }
 
+/**
+ * Change the background color of the tag
+ * @brief DialogCreateTag::changeColor
+ */
 void DialogCreateTag::changeColor()
 {
 
