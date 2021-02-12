@@ -33,20 +33,26 @@ void DirectoryManager::addDirectory()
         return;
     }
 
+    _progress->setValue(0);
+    _progress->setMinimum(0);
+    _progress->setMaximum(0);
+
     // Show progress
     _stackpane->setCurrentIndex(1);
+    _add_dir_btn->setDisabled(true);
 
     Directory directory(dirPath, Directory::INCLUDE);
     DirIndexer *indexer = new DirIndexer(directory);
     connect(indexer, &DirIndexer::fileToIndexChanged, this,  [=](int i) {
         _progress->setMaximum(i);
-        _progress->setFormat("%p% fichier traité sur " + QString::number(i));
+        _progress->setFormat("%v fichier traités sur %m");
     });
     connect(indexer, &DirIndexer::indexedFilesChanged, this, [=](int i) { _progress->setValue(i); });
     connect(indexer, &DirIndexer::doneIndexing, this, [=]() {
         displayDir(directory, true);
         displayDirs(indexer->getResult());
         _stackpane->setCurrentIndex(0);
+        _add_dir_btn->setEnabled(true);
         emit directoryAdded();
     });
 
@@ -79,7 +85,7 @@ QString DirectoryManager::getDirectoryDialog()
 void DirectoryManager::displayDirs(const QList<Directory> &dirs)
 {
     for (const Directory &dir : dirs) {
-        displayDir(dir, false);
+        displayDir(dir, true);
     }
 }
 
@@ -87,8 +93,10 @@ void DirectoryManager::displayDir(const Directory &dir, bool expanded)
 {
     Directory tmp(dir);
     QTreeWidgetItem *item = createDirItem(tmp);
-    item->setData(0, Qt::UserRole, QVariant(true));
+    item->setData(0, Qt::UserRole, true);
     item->setData(1, Qt::UserRole, dir.absolutePath());
+    item->setData(2, Qt::UserRole, true);
+    item->setIcon(0, QIcon(":/icon/folder_closed"));
     if (expanded) {
         expandItem(item);
     }
@@ -132,7 +140,7 @@ QTreeWidgetItem *DirectoryManager::createDirItem(Directory &dir)
     }
 
     dirItem->setText(0, dirName);
-    dirItem->setIcon(0, QIcon(":/icon/folder_closed"));
+    dirItem->setIcon(0, QIcon(":/icon/folder_closed_disabled"));
     return dirItem;
 }
 
@@ -152,7 +160,6 @@ void DirectoryManager::displayImages(const QList<Image> &images, QTreeWidgetItem
 void DirectoryManager::expandItem(QTreeWidgetItem *item)
 {
     QStack<QTreeWidgetItem *> items;
-    items.push(item);
 
     QTreeWidgetItem *current = item;
     while (current->parent() != nullptr) {
@@ -161,7 +168,9 @@ void DirectoryManager::expandItem(QTreeWidgetItem *item)
     }
 
     while (!items.isEmpty()) {
-        items.pop()->setExpanded(true);
+        QTreeWidgetItem *ie = items.pop();
+        ie->setExpanded(true);
+        onItemExpanded(ie);
     }
 }
 
@@ -272,10 +281,20 @@ void DirectoryManager::onItemSelected()
 
 void DirectoryManager::onItemExpanded(QTreeWidgetItem *item)
 {
-    item->setIcon(0, QIcon(":/icon/folder_open"));
+    QVariant v = item->data(2, Qt::UserRole);
+    if (v.canConvert(QVariant::Bool) && v.toBool()) {
+        item->setIcon(0, QIcon(":/icon/folder_open"));
+    } else {
+        item->setIcon(0, QIcon(":/icon/folder_open_disabled"));
+    }
 }
 
 void DirectoryManager::onItemCollapsed(QTreeWidgetItem *item)
 {
-    item->setIcon(0, QIcon(":/icon/folder_closed"));
+    QVariant v = item->data(2, Qt::UserRole);
+    if (v.canConvert(QVariant::Bool) && v.toBool()) {
+        item->setIcon(0, QIcon(":/icon/folder_closed"));
+    } else {
+        item->setIcon(0, QIcon(":/icon/folder_closed_disabled"));
+    }
 }

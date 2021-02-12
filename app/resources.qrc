@@ -21,5 +21,7 @@
         <file alias="search">resources/search.png</file>
         <file alias="sort">resources/sort.png</file>
         <file alias="sort_reverse">resources/sort_reverse.png</file>
+        <file alias="folder_closed_disabled">resources/disabled_folder_closed.png</file>
+        <file alias="folder_open_disabled">resources/disabled_folder_open.png</file>
     </qresource>
 </RCC>
