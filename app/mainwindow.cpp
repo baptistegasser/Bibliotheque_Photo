@@ -55,6 +55,10 @@ MainWindow::~MainWindow()
  */
 void MainWindow::setGeometrySize(int width, int height)
 {
+    if (width > 1920 || height > 1080) {
+        width = 1920;
+        height = 1080;
+    }
     setGeometry(0,0,width, height);
     width_window = width;
     height_window = height;
