@@ -450,8 +450,18 @@ void Modification_window::initTopLayout()
 {
     initAlbum();
     QStringList name_format = img->name.split('.');
+    QString taille;
+    if (img->size >= 1000000000) {
+        taille =  (QString::number(img->size/float(1000000000), 'f', 2)+" GB");
+    } else if (img->size >= 1000000) {
+        taille = (QString::number(img->size/float(1000000), 'f', 2)+" MB");
+    } else if (img->size >= 1000) {
+        taille = (QString::number(img->size/1000)+" KB");
+    } else {
+        taille = (QString::number(img->size)+" B");
+    }
     _my_title->setText(name_format.at(0));
-    QString info = "Format "+name_format.at(1)+" - Taille "+img->size/1000+"Mo - Date "+img->date.toString("dd/MM/yyyy");
+    QString info = "Format "+name_format.at(1)+" - "+taille+" - Date "+img->date.toString("dd/MM/yyyy");
     _my_info->setText(info);
 
 }
