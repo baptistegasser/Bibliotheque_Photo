@@ -38,6 +38,10 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
 
 }
 
+/**
+ * Update the image after modification
+ * @brief Modification_window::updateImage
+ */
 void Modification_window::updateImage()
 {
     _my_reset->hide();
@@ -74,6 +78,12 @@ void Modification_window::updateImage()
     _frame.show();
 }
 
+/**
+ * Permite to resize the photo with parameter
+ * @brief Modification_window::resizeImage
+ * @param w
+ * @param h
+ */
 void Modification_window::resizeImage(int w, int h)
 {
     if(ratio)
@@ -113,6 +123,10 @@ void Modification_window::resizeImage(int w, int h)
     updateImage();
 }
 
+/**
+ * Access to the photo resize window
+ * @brief Modification_window::openResizeDialog
+ */
 void Modification_window::openResizeDialog()
 {
     int preWidth = img.width;
@@ -134,6 +148,10 @@ void Modification_window::openResizeDialog()
     }
 }
 
+/**
+ * Permite to return to the original photo
+ * @brief Modification_window::backToOriginal
+ */
 void Modification_window::backToOriginal()
 {
     img.resized = false;
@@ -143,6 +161,10 @@ void Modification_window::backToOriginal()
     updateImage();
 }
 
+/**
+ * Permit to zoom on the photo
+ * @brief Modification_window::zoom
+ */
 void Modification_window::zoom()
 {
 
@@ -170,12 +192,20 @@ void Modification_window::zoom()
 
 }
 
+/**
+ * Add a comment to the photo
+ * @brief Modification_window::comment
+ */
 void Modification_window::comment()
 {
     img.comment = _my_commentaire_edit->toPlainText();
     DB::getImageDao().save(img);
 }
 
+/**
+ * Init the layout
+ * @brief Modification_window::initLayout
+ */
 void Modification_window::initLayout()
 {
     grid_layout_cat = new FlowLayout();
@@ -244,6 +274,11 @@ void Modification_window::initDetail()
     }
 }
 
+/**
+ * Add one tag to the photo
+ * @brief Modification_window::addTag
+ * @param i
+ */
 void Modification_window::addTag(int i)
 {
     QWidget * area;
@@ -288,6 +323,11 @@ TagButton *Modification_window::getTagButtonFromTag(Tag tag)
     return tb;
 }
 
+/**
+ * Update rate of the photo
+ * @brief Modification_window::changeNote
+ * @param rating
+ */
 void Modification_window::changeNote(int rating)
 {
     if (rating == img.rating-1)
