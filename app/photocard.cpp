@@ -62,7 +62,16 @@ void PhotoCard::setImage(Image *image)
     QFontMetrics metrics(ui->date_label->font());
     QString elidedText = metrics.elidedText(this->image->name, Qt::ElideRight, ui->photo->width());
     ui->date_label->setText(elidedText);
-    ui->info_label->setText(QString::number(this->image->size/8000)+"Ko");
+
+    if (this->image->size >= 1000000000) {
+        ui->info_label->setText(QString::number(this->image->size/float(1000000000), 'f', 2)+" GB");
+    } else if (this->image->size >= 1000000) {
+        ui->info_label->setText(QString::number(this->image->size/float(1000000), 'f', 2)+" MB");
+    } else if (this->image->size >= 1000) {
+        ui->info_label->setText(QString::number(this->image->size/1000)+" KB");
+    } else {
+        ui->info_label->setText(QString::number(this->image->size)+" B");
+    }
 
     showDescriptiveTags();
     showFeelingTags();
