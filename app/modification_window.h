@@ -6,6 +6,7 @@
 #include "model/image.h"
 #include "tagbutton.h"
 #include "flowlayout.h"
+#include "QDialogButtonBox"
 
 class Modification_window : public QWidget, private Ui::modification_window
 {
@@ -21,10 +22,14 @@ private:
     FlowLayout * grid_layout_desc;
     QWidget * area_desc;
     QList<QPushButton*> stars;
+    QPushButton * croppAccept;
+    QPushButton * croppCancel;
     bool ratio;
+    bool isZoomed = false;
 
 public:
     explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);
+    ~Modification_window(){}
     void updateImage();
     void setQFileInfo(QFileInfo img);
     void resizeImage(int w, int h);
@@ -44,6 +49,9 @@ public slots:
     void addTag(int i);
     void changeNote(int i);
     void save();
+    void cropped();
+    void toCrop(QRect rect);
+    void cropCancel();
 
 };
 

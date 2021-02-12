@@ -14,6 +14,7 @@
 #include "QRgb"
 #include "QRadioButton"
 #include "QFileDialog"
+#include "resizable_rubber_rand.h"
 
 Modification_window::Modification_window(QWidget *parent, const Image *image) :
     QWidget(parent)
@@ -29,6 +30,7 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_add_tag_desc_button,&QPushButton::clicked,this,[=](){this->addTag(1);});
     connect(_my_add_tag_ress_button,&QPushButton::clicked,this,[=](){this->addTag(2);});
     connect(_my_download_button,&QPushButton::clicked,this,&Modification_window::save);
+    connect(_my_recadrer,&QPushButton::clicked,this,&Modification_window::cropped);
     updateImage();
     initLayout();
     initDetail();
@@ -39,7 +41,7 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
 void Modification_window::updateImage()
 {
     _my_reset->hide();
-    if(img.resized)
+    if(img.resized || img.cropped)
     {
         _my_reset->show();
     }
@@ -55,9 +57,20 @@ void Modification_window::updateImage()
     }
 
     _my_slider->setValue(1);
+    if(img.resized)
+    {
+        _frame.setGeometry((_my_picture->width()/2)-(img.res_width/2),(_my_picture->height()/2)-(img.res_height/2),img.res_width,img.res_height);
+        _frame.setFixedSize(QSize(img.res_width,img.res_height));
+    }
+    else
+    {
+        _frame.setGeometry((_my_picture->width()/2)-(img.width/2),(_my_picture->height()/2)-(img.height/2),img.width,img.height);
+        _frame.setFixedSize(QSize(img.width,img.height));
+    }
     _frame.setPixmap(picture);
     _frame.setAlignment(Qt::AlignCenter);
     _my_picture->setWidget(&_frame);
+    _my_picture->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     _frame.show();
 }
 
@@ -100,8 +113,6 @@ void Modification_window::resizeImage(int w, int h)
     updateImage();
 }
 
-
-
 void Modification_window::openResizeDialog()
 {
     int preWidth = img.width;
@@ -135,6 +146,14 @@ void Modification_window::zoom()
 {
 
     int val = _my_slider->value();
+    if (val != 1)
+    {
+        isZoomed = true;
+    }
+    else
+    {
+        isZoomed = false;
+    }
     int w = img.width;
     int h = img.height;
     if (img.resized)
@@ -144,6 +163,9 @@ void Modification_window::zoom()
     }
     picture = picture.scaled(w*val,h*val);
     _frame.setPixmap(picture);
+    _frame.setFixedSize(QSize(w*val,h*val));
+    _frame.setGeometry((_my_picture->width()/2)-(w*val/2),(_my_picture->height()/2)-(h*val/2),w*val,h*val);
+
 
 }
 
@@ -291,5 +313,93 @@ void Modification_window::save()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),img.name,tr("Images (*.png *.jpeg *.jpg)"));
     picture.save(fileName);
+}
+
+void Modification_window::cropped ()
+{
+    updateImage();
+    Resizable_rubber_band * band = new Resizable_rubber_band(&_frame);
+    if (img.resized)
+    {
+         band->move((_frame.width()/2)-(img.res_width/2),(_frame.height()/2)-(img.res_height/2));
+    }
+    else if (img.cropped)
+    {
+         band->move((_frame.width()/2)-(img.crop_width/2),(_frame.height()/2)-(img.crop_height/2));
+    }
+    else
+    {
+        band->move((_frame.width()/2)-(img.width/2),(_frame.height()/2)-(img.height/2));
+    }
+
+    band->setStyleSheet("background-color:rgba(0,0,200,0.5);");
+    band->resize(50,50);
+    if(img.resized)
+    {
+        band->setMaximumHeight(img.res_height);
+        band->setMaximumWidth(img.res_width);
+    }
+    else if (img.cropped)
+    {
+        band->setMaximumHeight(img.crop_height);
+        band->setMaximumWidth(img.crop_width);
+    }
+    else
+    {
+        band->setMaximumHeight(img.height);
+        band->setMaximumWidth(img.width);
+    }
+
+    band->setMinimumSize(30,30);
+
+    _my_detail_box->setEnabled(false);
+    groupBox->setEnabled(false);
+    _my_download_button->setEnabled(false);
+    _my_slider->setEnabled(false);
+    _my_return_button->setEnabled(false);
+
+
+    croppAccept = new QPushButton("Redimensionner");
+    croppAccept->setStyleSheet("background-color:white;border:1px solid black;");
+    croppCancel = new QPushButton("Annuler");
+    zoom_layout->addWidget(croppAccept);
+    zoom_layout->addWidget(croppCancel);
+
+    croppAccept->setStyleSheet("background-color:grey;border:solid black 1px;");
+    croppAccept->show();
+    connect(croppAccept,&QPushButton::clicked,this,[=](){band->hide();this->toCrop(band->frameGeometry());});
+    connect(croppCancel,&QPushButton::clicked,this,[=](){band->hide();this->cropCancel();});
+
+}
+
+void Modification_window::toCrop(QRect rect)
+{
+    img.cropped = true;
+    img.crop_x = rect.x();
+    img.crop_y = rect.y();
+    img.crop_width = rect.width();
+    img.crop_height = rect.height();
+
+    _my_detail_box->setEnabled(true);
+    groupBox->setEnabled(true);
+    _my_download_button->setEnabled(true);
+    _my_slider->setEnabled(true);
+    _my_return_button->setEnabled(true);
+
+    DB::getImageDao().save(img);
+    updateImage();
+    delete croppAccept;
+    delete croppCancel;
+}
+
+void Modification_window::cropCancel()
+{
+    _my_detail_box->setEnabled(true);
+    groupBox->setEnabled(true);
+    _my_download_button->setEnabled(true);
+    _my_slider->setEnabled(true);
+    _my_return_button->setEnabled(true);
+    delete croppAccept;
+    delete croppCancel;
 }
 

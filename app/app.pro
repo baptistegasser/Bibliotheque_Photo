@@ -27,6 +27,7 @@ SOURCES += \
     modification_window.cpp \
     photocard.cpp \
     qinputcustom.cpp \
+    resizable_rubber_rand.cpp \
     tagbutton.cpp
 
 HEADERS += \
@@ -47,6 +48,7 @@ HEADERS += \
     modification_window.h \
     photocard.h \
     qinputcustom.h \
+    resizable_rubber_rand.h \
     tagbutton.h
 
 FORMS += \
