@@ -57,9 +57,7 @@ void DirIndexer::findFilesToIndex()
 
 void DirIndexer::indexDir(Directory &dir, QList<Directory> *indexedDirs)
 {
-    // Save dir
-    DB::getDirectoryDao().save(dir);
-
+    int indexedImages = 0;
     QQueue<Directory> subDirs = QQueue<Directory>();
 
     // Get all files/dirs in current dir and index them
@@ -72,6 +70,7 @@ void DirIndexer::indexDir(Directory &dir, QList<Directory> *indexedDirs)
             // Index only files with known valid extentions
             if (supportedFilesExtentions.contains(fileInfo.suffix())) {
                 indexImage(dir, fileInfo);
+                indexedImages += 1;
             }
 
             this->indexedFiles += 1;
@@ -79,8 +78,13 @@ void DirIndexer::indexDir(Directory &dir, QList<Directory> *indexedDirs)
         }
     }
 
-    // Index all found directories
-    indexedDirs->append(subDirs);
+    // Save dir if we found something in it
+    if (indexedImages != 0) {
+        DB::getDirectoryDao().save(dir);
+        // Index all found directories
+        indexedDirs->append(dir);
+    }
+
     for (Directory &currentDir : subDirs) {
         currentDir.parentDirPath = dir.absolutePath();
         indexDir(currentDir, indexedDirs);

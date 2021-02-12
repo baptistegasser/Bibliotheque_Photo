@@ -199,6 +199,7 @@ void PhotoCard::mousePressEvent(QMouseEvent *event)
 PhotoCard::~PhotoCard()
 {
     delete ui;
+    delete image;
 }
 
 Image* PhotoCard::getImage()
