@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     width_window = geometry().width();
     height_window = geometry().height();
 
+    _search_comboBox->setCompleter(nullptr);
+    constructSearchBar("");
 
     showImageList();
 }
@@ -39,6 +41,12 @@ MainWindow::~MainWindow()
 {
 }
 
+/**
+ * Set the size of mainWindow
+ * @brief MainWindow::setGeometrySize
+ * @param width
+ * @param height
+ */
 void MainWindow::setGeometrySize(int width, int height)
 {
     setGeometry(0,0,width, height);
@@ -51,6 +59,11 @@ void MainWindow::onClose() {
     DB::close();
 }
 
+/**
+ * Construct the search bar for tag research
+ * @brief MainWindow::constructSearchBar
+ * @param s
+ */
 void MainWindow::constructSearchBar(QString s)
 {
     if (!isCleared) {
@@ -67,6 +80,10 @@ void MainWindow::constructSearchBar(QString s)
     }
 }
 
+/**
+ * Update the image list in the mainWindow
+ * @brief MainWindow::updateImages
+ */
 void MainWindow::updateImages()
 {
     photoSelectionned = nullptr;
@@ -132,6 +149,11 @@ void MainWindow::showModificationWindow(PhotoCard *ph)
     _my_stack->setCurrentIndex(1);
 }
 
+/**
+ * Show the design of the selected photo
+ * @brief MainWindow::showSelectionnedPhoto
+ * @param ph
+ */
 void MainWindow::showSelectionnedPhoto(PhotoCard *ph)
 {
     if (photoSelectionned != nullptr) {
@@ -158,8 +180,13 @@ void MainWindow::showImageList()
     _my_stack->setCurrentIndex(0);
 }
 
+/**
+ * Set the search request
+ * @brief MainWindow::setSearchKeyword
+ */
 void MainWindow::setSearchKeyword()
 {
+    qDebug() << __FUNCTION__;
     _search_comboBox->clearFocus();
     this->currentSearch.keyword = _search_comboBox->currentText();
     updateImages();
