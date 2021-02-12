@@ -332,6 +332,12 @@ padding: 5px 0px;</string>
                  <height>0</height>
                 </size>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color:white;
 color: black;
@@ -452,8 +458,8 @@ background-color: white;</string>
    <slot>sortOrderChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>639</x>
-     <y>23</y>
+     <x>631</x>
+     <y>36</y>
     </hint>
     <hint type="destinationlabel">
      <x>913</x>
@@ -474,22 +480,6 @@ background-color: white;</string>
     <hint type="destinationlabel">
      <x>589</x>
      <y>-4</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>_search_comboBox</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>constructSearchBar(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>799</x>
-     <y>27</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>456</x>
-     <y>313</y>
     </hint>
    </hints>
   </connection>
@@ -554,6 +544,22 @@ background-color: white;</string>
     <hint type="destinationlabel">
      <x>456</x>
      <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>_search_comboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>constructSearchBar(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>815</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1083</x>
+     <y>43</y>
     </hint>
    </hints>
   </connection>
