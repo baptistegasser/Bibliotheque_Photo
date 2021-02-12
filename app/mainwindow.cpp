@@ -27,13 +27,24 @@ MainWindow::MainWindow(QWidget *parent)
     connect(menu, &FilterMenu::filterUpdated, this, &MainWindow::updateImages);
 
     isCleared = false;
-    width_window = width();
+
+    width_window = geometry().width();
+    height_window = geometry().height();
+
 
     showImageList();
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::setGeometrySize(int width, int height)
+{
+    setGeometry(0,0,width, height);
+    width_window = width;
+    height_window = height;
+    updateImages();
 }
 
 void MainWindow::onClose() {
@@ -79,7 +90,7 @@ void MainWindow::updateImages()
         Image *image = new Image(img);
         PhotoCard *pC = new PhotoCard(scrollContent);
         pC->setImage(image);
-        pC->setFixedSize(width_window-540/2,268);
+        pC->setFixedSize((width_window-320)/2,268);
 
         connect(pC, SIGNAL(clicked(PhotoCard *)), this, SLOT(showModificationWindow(PhotoCard *)));
         connect(pC, SIGNAL(isSelectionned(PhotoCard *)), this, SLOT(showSelectionnedPhoto(PhotoCard *)));

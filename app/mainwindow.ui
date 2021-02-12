@@ -411,15 +411,7 @@ background-color: white;</string>
                  <height>546</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_4">
-                <item>
-                 <widget class="QPushButton" name="pushButton">
-                  <property name="text">
-                   <string>PushButton</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <layout class="QVBoxLayout" name="verticalLayout_4"/>
               </widget>
              </widget>
             </item>

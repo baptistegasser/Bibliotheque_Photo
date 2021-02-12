@@ -9,6 +9,7 @@
 #include "db/db.h"
 
 #include <QApplication>
+#include <QDesktopWidget>
 #include <QDebug>
 
 #include "QFileDialog"
@@ -32,12 +33,14 @@ int main(int argc, char *argv[])
     QString styleSheet = QLatin1String(file.readAll());
     a.setStyleSheet(styleSheet);
 
+
+
     // Logo
     a.setWindowIcon(QIcon(":/icon/logo"));
 
     MainWindow w;
+    w.setGeometrySize(a.desktop()->width(), a.desktop()->height());
     w.showMaximized();
-
 
     /*Modification_window win(nullptr,&DB::getImageDao().getAll().at(0));*/
 

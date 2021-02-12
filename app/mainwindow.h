@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setGeometrySize(int width, int height);
 
 protected slots:
     void onClose();
@@ -33,6 +34,7 @@ protected slots:
 private:
     bool isCleared;
     int width_window;
+    int height_window;
     ImageSearch currentSearch;
 
     Modification_window *currentWin;
