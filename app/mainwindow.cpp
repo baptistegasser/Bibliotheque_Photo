@@ -35,14 +35,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     width_window = width();
 
-    scrollAreaPage = new QScrollArea();
-    scrollAreaPage->setStyleSheet("background: transparent;");
-
-    page->layout()->addWidget(scrollAreaPage);
-
-    scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    scrollAreaPage->setStyleSheet("background-color : white;");
-
     connect(_dir_manager, &DirectoryManager::directoryAdded, this, &MainWindow::updateImages);
     connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
     updateImages();
@@ -77,9 +69,9 @@ void MainWindow::constructSearchBar(QString s)
 void MainWindow::updateImages()
 {
     photoSelectionned = nullptr;
-    vBoxPage = new QVBoxLayout();
+    QVBoxLayout *vBoxPage = new QVBoxLayout();
 
-    scrollContent = new QWidget();
+    QWidget *scrollContent = new QWidget();
 
     QSizePolicy test;
     test.setHorizontalPolicy(QSizePolicy::Expanding);

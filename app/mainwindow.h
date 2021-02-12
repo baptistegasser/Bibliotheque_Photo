@@ -35,9 +35,6 @@ private:
     int width_window;
     ImageSearch currentSearch;
 
-    QScrollArea *scrollAreaPage;
-    QVBoxLayout * vBoxPage;
-    QWidget * scrollContent;
     Modification_window *currentWin;
     PhotoCard *photoSelectionned = nullptr;
 };
