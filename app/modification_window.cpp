@@ -31,8 +31,10 @@ Modification_window::Modification_window(QWidget *parent, const Image *image) :
     connect(_my_add_tag_ress_button,&QPushButton::clicked,this,[=](){this->addTag(2);});
     connect(_my_download_button,&QPushButton::clicked,this,&Modification_window::save);
     connect(_my_recadrer,&QPushButton::clicked,this,&Modification_window::cropped);
+    connect(_my_album_combo,&QComboBox::currentTextChanged,this,&Modification_window::selectAlbum);
     updateImage();
     initLayout();
+    initTopLayout();
     initDetail();
     this->showMaximized();
 
@@ -48,11 +50,11 @@ void Modification_window::updateImage()
     if(img.resized || img.cropped)
     {
         _my_reset->show();
+        _my_recadrer->hide();
     }
     picture  = QPixmap(img.path);
     if(img.cropped)
     {
-        _my_recadrer->hide();
         QRect rect (img.crop_x,img.crop_y,img.crop_width,img.crop_height);
         picture = picture.copy(rect);
     }
@@ -60,7 +62,7 @@ void Modification_window::updateImage()
     {
         picture = picture.scaled(img.res_width,img.res_height);
     }
-    _my_slider->setValue(1);
+    _my_slider->setValue(0);
     if(img.resized)
     {
         _frame.setGeometry((_my_picture->width()/2)-(img.res_width/2),(_my_picture->height()/2)-(img.res_height/2),img.res_width,img.res_height);
@@ -168,17 +170,9 @@ void Modification_window::backToOriginal()
 void Modification_window::zoom()
 {
 
-    int val = _my_slider->value();
-    if (val != 1)
-    {
-        isZoomed = true;
-    }
-    else
-    {
-        isZoomed = false;
-    }
-    int w = img.width;
-    int h = img.height;
+    double val = 1 + (double)_my_slider->value()/10;
+    double w = img.width;
+    double h = img.height;
     if (img.resized)
     {
         w = img.res_width;
@@ -226,10 +220,6 @@ void Modification_window::initLayout()
 
 void Modification_window::initDetail()
 {
-    _my_picture_label->setText(img.name);
-    _my_picture_label->setStyleSheet("font:25px");
-    _my_picture_label->setAlignment(Qt::AlignCenter);
-
     _my_color_dominant_edit->setEnabled(false);
     QColor domCol (img.main_color.at(0),img.main_color.at(1),img.main_color.at(2));
     _my_color_dominant_edit->setText(domCol.name());
@@ -364,10 +354,6 @@ void Modification_window::cropped ()
     {
         band->move((_frame.width()/2)-(img.res_width/2),(_frame.height()/2)-(img.res_height/2));
     }
-    else if (img.cropped)
-    {
-        band->move((_frame.width()/2)-(img.crop_width/2),(_frame.height()/2)-(img.crop_height/2));
-    }
     else
     {
         band->move((_frame.width()/2)-(img.width/2),(_frame.height()/2)-(img.height/2));
@@ -426,8 +412,6 @@ void Modification_window::toCrop(QRect rect)
     img.crop_width = rect.width();
     img.crop_height = rect.height();
 
-
-
     _my_detail_box->setEnabled(true);
     groupBox->setEnabled(true);
     _my_download_button->setEnabled(true);
@@ -449,5 +433,25 @@ void Modification_window::cropCancel()
     _my_return_button->setEnabled(true);
     delete croppAccept;
     delete croppCancel;
+}
+
+void Modification_window::initAlbum()
+{
+    _my_album_combo->addItems(DB::getAlbumDAO().getAlbums());
+}
+
+void Modification_window::selectAlbum()
+{
+    img.album = _my_album_combo->currentText();
+    DB::getImageDao().save(img);
+}
+
+void Modification_window::initTopLayout()
+{
+    QStringList name_format = img.name.split('.');
+    _my_title->setText(name_format.at(0));
+    QString info = "Format "+name_format.at(1)+" - Taille "+img.size/1000+"Mo - Date "+img.date.toString("dd/MM/yyyy");
+    _my_info->setText(info);
+
 }
 
