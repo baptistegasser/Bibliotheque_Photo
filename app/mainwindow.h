@@ -38,8 +38,6 @@ private:
     QScrollArea *scrollAreaPage;
     QVBoxLayout * vBoxPage;
     QWidget * scrollContent;
-    QGridLayout *gridLayoutModification_Window;
-    QStackedWidget *modification_Window_Widget;
     Modification_window *currentWin;
     PhotoCard *photoSelectionned = nullptr;
 };

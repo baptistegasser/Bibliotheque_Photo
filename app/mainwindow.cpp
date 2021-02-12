@@ -47,11 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
     updateImages();
 
-    gridLayoutModification_Window = new QGridLayout();
-    modification_Window_Widget = new QStackedWidget();
-
-    modification_Window_Widget->setLayout(gridLayoutModification_Window);
-
     _my_stack->setCurrentIndex(0);
 }
 
@@ -131,14 +126,12 @@ void MainWindow::updateImages()
 void MainWindow::showModificationWindow(PhotoCard *ph)
 {
     if (currentWin != nullptr) {
-        gridLayoutModification_Window->removeWidget(currentWin);
+        page_2->layout()->removeWidget(currentWin);
     }
 
-    currentWin =  new Modification_window(modification_Window_Widget,ph->getImage());
-
-    gridLayoutModification_Window->addWidget(currentWin);
-
-    page_2->layout()->addWidget(modification_Window_Widget);
+    delete currentWin;
+    currentWin = new Modification_window(page_2, ph->getImage());
+    page_2->layout()->addWidget(currentWin);
 
     connect(currentWin->getReturnButton(), SIGNAL(clicked()), this, SLOT(showImageList()));
 
