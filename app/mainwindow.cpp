@@ -93,7 +93,8 @@ void MainWindow::updateImages()
 
         cpt += 1;
     }
-    if (cpt%2 == 0)
+    // Si il y a un nombre d'éléments impairs
+    if (cpt%2 != 0)
         vBoxPage->addLayout(photoGrid);
 
     scrollContent->setLayout(vBoxPage);
@@ -111,7 +112,6 @@ void MainWindow::showModificationWindow(PhotoCard *ph)
         page_2->layout()->removeWidget(currentWin);
     }
 
-    delete currentWin;
     currentWin = new Modification_window(page_2, ph->getImage());
     page_2->layout()->addWidget(currentWin);
 
