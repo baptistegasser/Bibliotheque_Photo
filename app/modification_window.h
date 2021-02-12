@@ -25,7 +25,6 @@ private:
     QPushButton * croppAccept;
     QPushButton * croppCancel;
     bool ratio;
-    bool isZoomed = false;
 
 public:
     explicit Modification_window(QWidget *parent = nullptr, const Image *image = nullptr);
@@ -35,9 +34,12 @@ public:
     void resizeImage(int w, int h);
     void backToOriginal();
     void initLayout();
+    void initTopLayout();
     void initDetail();
     TagButton* getTagButtonFromTag(Tag tag);
     QPushButton* getReturnButton();
+    void initAlbum();
+
 
 
 
@@ -52,6 +54,7 @@ public slots:
     void cropped();
     void toCrop(QRect rect);
     void cropCancel();
+    void selectAlbum();
 
 };
 

@@ -101,7 +101,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -118,20 +118,102 @@ padding
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="_my_picture_label">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>70</height>
-           </size>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetFixedSize</enum>
           </property>
-          <property name="styleSheet">
-           <string notr="true">padding-right: 140px;</string>
+          <item>
+           <widget class="QLabel" name="_my_title">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+color:rgb(131, 131, 131);
+text-align:center;
+font-size:20px;
+font-weight : bold;
+</string>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#838383;&quot;&gt;Photo du XX Mois 20XX à XX:XX&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="_my_info">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:rgb(131, 131, 131);
+font-size:12px;
+text-align:center;</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>2</number>
           </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#838383;&quot;&gt;Photo du XX Mois 20XX à XX:XX&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#a7a7a7;&quot;&gt;XXX Mo - Format XXX - Image originale&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
           </property>
-         </widget>
+          <property name="leftMargin">
+           <number>3</number>
+          </property>
+          <property name="rightMargin">
+           <number>3</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:rgb(139,139,139);
+font-size:14px;</string>
+            </property>
+            <property name="text">
+             <string>Album</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="_my_album_combo">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="editable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -352,7 +434,7 @@ border-right: 1px black solid;
            </size>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Couleur dominante&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#8b8b8b;&quot;&gt;Couleur dominante&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -365,7 +447,7 @@ border-right: 1px black solid;
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">color:rgb(180, 179, 179);
+           <string notr="true">color:rgb(139, 139,139);
 border: 1px solid rgb(180, 179, 179);
 border-radius:5px;
 
@@ -386,7 +468,7 @@ border-radius:5px;
            </size>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Note&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#8b8b8b;&quot;&gt;Note&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -402,11 +484,14 @@ border-radius:5px;
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>15</height>
+            <height>30</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">margin-bottom:3px;</string>
+          </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Commentaire&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#8b8b8b;&quot;&gt;Commentaire&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -418,13 +503,14 @@ border-radius:5px;
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>75</height>
+            <height>60</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">color:rgb(180, 179, 179);
-border: 1px solid rgb(180, 179, 179);
-border-radius:5px;</string>
+           <string notr="true">color:rgb(139,139,139);
+border: 1px solid rgb(139,139,139);
+border-radius:5px;
+font-size:12px;</string>
           </property>
           <property name="plainText">
            <string/>
@@ -439,6 +525,9 @@ border-radius:5px;</string>
           <property name="spacing">
            <number>0</number>
           </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetNoConstraint</enum>
+          </property>
           <item>
            <widget class="QLabel" name="_my_descriptif_label">
             <property name="maximumSize">
@@ -448,16 +537,23 @@ border-radius:5px;</string>
              </size>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Descriptif&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#8b8b8b;&quot;&gt;Ajouter un mot clé descriptif ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#8b8b8b;&quot;&gt;Descriptif&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#8b8b8b;&quot;&gt;Ajouter un mot clé descriptif ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="_my_add_tag_desc_button">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>25</height>
+             </size>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color:rgb(180, 179, 179);
-border: 1px solid rgb(180, 179, 179);
+             <string notr="true">color:rgb(139,139,139);
+border: 1px solid rgb(139,139,139);
 border-radius:5px;
+font-size:12px;
 </string>
             </property>
             <property name="text">
@@ -504,16 +600,23 @@ border-radius:5px;
              </size>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Ressenti&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#8b8b8b;&quot;&gt;Ajouter un mot clé descriptif ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#8b8b8b;&quot;&gt;Ressenti&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#8b8b8b;&quot;&gt;Ajouter un mot clé descriptif ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="_my_add_tag_ress_button">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>25</height>
+             </size>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color:rgb(180, 179, 179);
-border: 1px solid rgb(180, 179, 179);
+             <string notr="true">color:rgb(139,139,139);
+border: 1px solid rgb(139,139,139);
 border-radius:5px;
+font-size:12px;
 
 </string>
             </property>
@@ -561,16 +664,24 @@ border-radius:5px;
              </size>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;Catégorie&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; color:#8b8b8b;&quot;&gt;Ajouter un mot clé de catégorie ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#8b8b8b;&quot;&gt;Catégorie&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#8b8b8b;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#8b8b8b;&quot;&gt;Ajouter un mot clé de catégorie ...&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="_my_add_tag_cat_button">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>25</height>
+             </size>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color:rgb(180, 179, 179);
-border: 1px solid rgb(180, 179, 179);
+             <string notr="true">color:rgb(139,139,139);
+border: 1px solid rgb(139,139,139);
 border-radius:5px;
+font-size:12px;
+
 </string>
             </property>
             <property name="text">
@@ -648,7 +759,7 @@ border-radius:5px;
             <x>0</x>
             <y>0</y>
             <width>776</width>
-            <height>697</height>
+            <height>674</height>
            </rect>
           </property>
          </widget>
@@ -678,20 +789,28 @@ border-radius:5px;
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">margin-left:200%</string>
+                <string notr="true">color : rgb(139,139,139);
+font:17px;
+margin-left:10%;</string>
                </property>
                <property name="text">
-                <string>Zoom:</string>
+                <string>Zoom</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QSlider" name="_my_slider">
+               <property name="styleSheet">
+                <string notr="true">margin-bottom:15px;</string>
+               </property>
                <property name="minimum">
-                <number>1</number>
+                <number>0</number>
                </property>
                <property name="maximum">
-                <number>10</number>
+                <number>15</number>
+               </property>
+               <property name="singleStep">
+                <number>2</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -705,7 +824,7 @@ border-radius:5px;
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
+                 <width>20</width>
                  <height>20</height>
                 </size>
                </property>
@@ -713,6 +832,15 @@ border-radius:5px;
              </item>
              <item>
               <widget class="QPushButton" name="_my_download_button">
+               <property name="styleSheet">
+                <string notr="true">color:rgb(139,139,139);
+border: 1px solid rgb(139,139,139);
+border-radius:5px;
+font-size:17px;
+margin-right:25%;
+
+ </string>
+               </property>
                <property name="text">
                 <string>Enregistrer</string>
                </property>
