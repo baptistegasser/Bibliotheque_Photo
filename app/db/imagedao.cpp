@@ -272,7 +272,7 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     QString mainColorStr = record.value("MainColor").toString();
     QStringList rgb = mainColorStr.split(";");
     for (int i = 0; i < 3; ++i) {
-        img.main_color[i] = rgb[0].toInt();
+        img.main_color[i] = rgb[i].toInt();
     }
 
     img.date = QDateTime::fromString(record.value("Date").toString(), "yyyy-MM-dd hh:mm:ss");
