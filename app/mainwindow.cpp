@@ -88,6 +88,7 @@ void MainWindow::constructSearchBar(QString s)
 
 void MainWindow::updateImages()
 {
+    photoSelectionned = nullptr;
     vBoxPage = new QVBoxLayout();
 
     scrollContent = new QWidget();
