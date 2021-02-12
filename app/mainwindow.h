@@ -35,11 +35,9 @@ private:
     int width_window;
     ImageSearch currentSearch;
 
-    QGridLayout *gridLayoutPage;
     QScrollArea *scrollAreaPage;
     QVBoxLayout * vBoxPage;
     QWidget * scrollContent;
-    QGridLayout *gridLayoutPage2;
     QGridLayout *gridLayoutModification_Window;
     QStackedWidget *modification_Window_Widget;
     Modification_window *currentWin;

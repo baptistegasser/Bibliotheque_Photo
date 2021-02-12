@@ -374,14 +374,17 @@ padding: 5px 0px;</string>
            <string notr="true"/>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
+           <layout class="QGridLayout" name="gridLayout_3"/>
           </widget>
-          <widget class="QWidget" name="page_2"/>
+          <widget class="QWidget" name="page_2">
+           <layout class="QGridLayout" name="gridLayout_4"/>
+          </widget>
          </widget>
         </item>
        </layout>

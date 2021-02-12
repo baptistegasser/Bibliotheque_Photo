@@ -35,14 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     width_window = width();
 
-    gridLayoutPage = new QGridLayout();
     scrollAreaPage = new QScrollArea();
     scrollAreaPage->setStyleSheet("background: transparent;");
 
-    page->setLayout(gridLayoutPage);
-
-
-    gridLayoutPage->addWidget(scrollAreaPage);
+    page->layout()->addWidget(scrollAreaPage);
 
     scrollAreaPage->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     scrollAreaPage->setStyleSheet("background-color : white;");
@@ -50,9 +46,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_dir_manager, &DirectoryManager::directoryAdded, this, &MainWindow::updateImages);
     connect(_dir_manager, &DirectoryManager::directoryRemoved, this, &MainWindow::updateImages);
     updateImages();
-
-    gridLayoutPage2 = new QGridLayout();
-    page_2->setLayout(gridLayoutPage2);
 
     gridLayoutModification_Window = new QGridLayout();
     modification_Window_Widget = new QStackedWidget();
@@ -145,7 +138,7 @@ void MainWindow::showModificationWindow(PhotoCard *ph)
 
     gridLayoutModification_Window->addWidget(currentWin);
 
-    gridLayoutPage2->addWidget(modification_Window_Widget);
+    page_2->layout()->addWidget(modification_Window_Widget);
 
     connect(currentWin->getReturnButton(), SIGNAL(clicked()), this, SLOT(showImageList()));
 
