@@ -79,17 +79,42 @@ bool DirectoryDAO::update(Directory &directory)
 bool DirectoryDAO::remove(Directory &directory)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("DELETE FROM Directory WHERE \"Path\" = ? OR ParentDirPath = ?;");
-    query.addBindValue(directory.absolutePath());
-    query.addBindValue(directory.absolutePath());
+    query.prepare("DELETE FROM Image WHERE ParentDir = :path");
+    query.bindValue(":path", directory.absolutePath());
 
     if (!query.exec()) {
-        qWarning() << "Removing directory failed" << directory.operator QString();
+        qWarning() << "Removing images from parent dir failed" << query.lastQuery() << directory.operator QString();
         qCritical() << query.lastError().text();
         return false;
     }
 
-    return query.numRowsAffected() == 1;
+    int numRows = query.numRowsAffected();
+
+    query.finish();
+    query = getNewQuery();
+    query.prepare("DELETE FROM Image WHERE ParentDir IN (SELECT \"Path\" FROM Directory WHERE Directory.\"Path\" = Image.ParentDir AND Directory.ParentDirPath = :path);");
+    query.bindValue(":path", directory.absolutePath());
+
+    if (!query.exec()) {
+        qWarning() << "Removing images from sub dir failed" << query.lastQuery() << directory.operator QString();
+        qCritical() << query.lastError().text();
+        return false;
+    }
+
+    numRows += query.numRowsAffected();
+
+    query.finish();
+    query = getNewQuery();
+    query.prepare("DELETE FROM Directory WHERE \"Path\" =:path OR ParentDirPath = :path;");
+    query.bindValue(":path", directory.absolutePath());
+
+    if (!query.exec()) {
+        qWarning() << "Removing directory failed" << query.lastQuery() << directory.operator QString();
+        qCritical() << query.lastError().text();
+        return false;
+    }
+
+    return (numRows + query.numRowsAffected()) >= 1;
 }
 
 QList<Directory> DirectoryDAO::getAll()
