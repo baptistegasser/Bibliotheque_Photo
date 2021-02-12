@@ -78,7 +78,7 @@ void PhotoCard::showDescriptiveTags()
 
     for(int i(0); i < image->descriptiveTags.size(); i++){
         TagButton * tagbutton = new TagButton(area, image->descriptiveTags[i].value, image->descriptiveTags[i].color);
-        grid_layout->addWidget(tagbutton);
+        grid_layout->addWidget(tagbutton, 0, Qt::AlignLeft);
     }
 
     if(image->descriptiveTags.size() == 0){
@@ -100,7 +100,7 @@ void PhotoCard::showFeelingTags()
 
     for(int i(0); i < image->feelingTags.size(); i++){
         TagButton * tagbutton = new TagButton(area, image->feelingTags[i].value, image->feelingTags[i].color);
-        grid_layout->addWidget(tagbutton);
+        grid_layout->addWidget(tagbutton, 0, Qt::AlignLeft);
     }
 
     if(image->feelingTags.size() == 0){
@@ -121,7 +121,7 @@ void PhotoCard::showCategoryTags(){
 
     for(int i(0); i < image->categoryTags.size(); i++){
         TagButton * tagbutton = new TagButton(area, image->categoryTags[i].value, image->categoryTags[i].color);
-        grid_layout->addWidget(tagbutton);
+        grid_layout->addWidget(tagbutton, 0, Qt::AlignLeft);
     }
 
     if(image->categoryTags.size() == 0){
