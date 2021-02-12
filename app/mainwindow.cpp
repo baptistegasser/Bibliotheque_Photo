@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->currentSearch.sortOrder = ImageSearch::Name;
 
     _album_combobox->addItems(DB::getAlbumDAO().getAlbums());
-    this->currentSearch.album = _album_combobox->itemText(0);
+    currentSearch.album = QString::Null();
 
     currentSearch.resultSize = _item_pages_combobox->itemText(0).toInt();
     int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
