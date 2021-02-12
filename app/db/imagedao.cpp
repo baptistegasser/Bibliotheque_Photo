@@ -62,10 +62,11 @@ bool ImageDAO::saveAll(QList<Image> images)
 bool ImageDAO::create(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("INSERT INTO Image (\"Path\", ParentDir, Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight, MainColor, Date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+    query.prepare("INSERT INTO Image (\"Path\", ParentDir, Album, Name, \"Size\", Width, Height, Rating, Comment, Resized, ResWidth, ResHeight, Cropped, CropX, CropY, CropWidth, CropHeight, MainColor, Date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
     query.addBindValue(image.path);
     query.addBindValue(image.parentDir);
+    query.addBindValue(image.album);
     query.addBindValue(image.name);
     query.addBindValue(image.size);
     query.addBindValue(image.width);
@@ -99,8 +100,9 @@ bool ImageDAO::create(Image &image)
 bool ImageDAO::update(Image &image)
 {
     QSqlQuery query = getNewQuery();
-    query.prepare("UPDATE Image SET ParentDir=?, Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=?, MainColor=?, Date=? WHERE \"Path\"=?;");
+    query.prepare("UPDATE Image SET ParentDir=?, Album, Name=?, \"Size\"=?, Width=?, Height=?, Rating=?, Comment=?, Resized=?, ResWidth=?, ResHeight=?, Cropped=?, CropX=?, CropY=?, CropWidth=?, CropHeight=?, MainColor=?, Date=? WHERE \"Path\"=?;");
     query.addBindValue(image.parentDir);
+    query.addBindValue(image.album);
     query.addBindValue(image.name);
     query.addBindValue(image.size);
     query.addBindValue(image.width);
@@ -254,6 +256,7 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     Image img;
     img.path = record.value("Path").toString();
     img.parentDir = record.value("ParentDir").toString();
+    img.album = record.value("Album").toString();
     img.name = record.value("Name").toString();
     img.size = record.value("Size").toInt();
     img.width = record.value("Width").toInt();

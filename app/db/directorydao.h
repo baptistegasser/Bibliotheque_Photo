@@ -5,7 +5,7 @@
 #include "model/directory.h"
 #include <QSqlRecord>
 
-class DirectoryDAO : public DAO<Directory>
+class DirectoryDAO : public DAO
 {
 public:
     using DAO::DAO;

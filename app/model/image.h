@@ -13,6 +13,7 @@ class Image
 public:
     QString path;       // Absolute path to the image
     QString parentDir;  // Absolute path to the image dir
+    QString album;      // Album of the image
     QString name;       // The image name
     qint64 size;        // The file size in bytes
     QDateTime date;     // The file creation date

@@ -7,7 +7,7 @@
 #include "db/imagesearch.h"
 #include "QSqlRecord"
 
-class ImageDAO : public DAO<Image>
+class ImageDAO : public DAO
 {
 public:
     using DAO::DAO;

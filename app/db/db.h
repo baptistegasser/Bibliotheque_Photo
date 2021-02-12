@@ -1,6 +1,7 @@
 #ifndef DB_H
 #define DB_H
 
+#include "albumdao.h"
 #include "imagedao.h"
 #include "tagdao.h"
 #include "directorydao.h"
@@ -18,6 +19,7 @@ private:
     TagDAO *tagDao;
     ImageDAO *imageDao;
     DirectoryDAO *directoryDao;
+    AlbumDAO *albumDao;
 
     DB();
     ~DB();
@@ -31,6 +33,7 @@ public:
     static TagDAO getTagDao();
     static ImageDAO getImageDao();
     static DirectoryDAO getDirectoryDao();
+    static AlbumDAO getAlbumDAO();
 
     class DBException : public std::exception {
     private:

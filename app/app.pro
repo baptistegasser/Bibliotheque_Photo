@@ -9,6 +9,7 @@ include(../Bibliotheque_Photo.pri)
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    db/albumdao.cpp \
     db/db.cpp \
     db/directorydao.cpp \
     db/imagedao.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
     tagbutton.cpp
 
 HEADERS += \
+    db/albumdao.h \
     db/dao.h \
     db/db.h \
     db/directorydao.h \

@@ -7,6 +7,7 @@ Image::Image()
 {
     path = "";
     parentDir = "";
+    album = "Sans album";
     name = "";
     size = 0;
     width = 0;
@@ -41,6 +42,7 @@ Image &Image::operator =(const Image &img)
 
     path = img.path;
     parentDir = img.parentDir;
+    album = img.album;
     name = img.name;
     size = img.size;
     width = img.width;

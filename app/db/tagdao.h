@@ -7,7 +7,7 @@
 
 #include "QSqlRecord"
 
-class TagDAO : DAO<Tag>
+class TagDAO : DAO
 {
 public:
     using DAO::DAO;

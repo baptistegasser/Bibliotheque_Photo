@@ -20,7 +20,7 @@ DirIndexer::DirIndexer(Directory dir, QObject *parent):
 
 void DirIndexer::startIndexing()
 {
-    fileToIndex = -1;
+    fileToIndex = 0;
     indexedFiles = 0;
 
     future = QtConcurrent::run(this, &DirIndexer::index);

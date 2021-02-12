@@ -8,7 +8,6 @@
 #include "QSqlQuery"
 #include "QVariant"
 
-template <typename T>
 class DAO
 {
 public:

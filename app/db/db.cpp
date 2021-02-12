@@ -40,6 +40,7 @@ DB::DB()
     tagDao = new TagDAO(m_db);
     imageDao = new ImageDAO(m_db);
     directoryDao = new DirectoryDAO(m_db);
+    albumDao = new AlbumDAO(m_db);
 }
 
 DB::~DB()
@@ -49,6 +50,7 @@ DB::~DB()
     delete tagDao;
     delete imageDao;
     delete directoryDao;
+    delete albumDao;
     QSqlDatabase::removeDatabase(name);
 }
 
@@ -99,6 +101,12 @@ DirectoryDAO DB::getDirectoryDao()
 {
     assertInit();
     return *instance->directoryDao;
+}
+
+AlbumDAO DB::getAlbumDAO()
+{
+    assertInit();
+    return *instance->albumDao;
 }
 
 void DB::assertInit()
