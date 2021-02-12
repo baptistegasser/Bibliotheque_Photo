@@ -210,8 +210,7 @@ void MainWindow::addAlbum()
     bool ok;
     QString name = QInputDialog::getText(this, tr("Choisir le nom du nouvel album photo"), "", QLineEdit::Normal, "", &ok);
     if (ok && !name.isEmpty()) {
-        currentSearch.album = name;
-        updateImages();
+        _album_combobox->addItem(name);
     }
 }
 
@@ -219,6 +218,10 @@ void MainWindow::addAlbum()
 void MainWindow::setAlbum(int i)
 {
     currentSearch.album = _album_combobox->itemText(i);
+    if (currentSearch.album == "Tous les albums") {
+        currentSearch.album = QString::Null();
+    }
+    updateImages();
 }
 
 /**

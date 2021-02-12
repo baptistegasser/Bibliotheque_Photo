@@ -240,6 +240,11 @@ padding: 5px;
                <property name="editable">
                 <bool>false</bool>
                </property>
+               <item>
+                <property name="text">
+                 <string>Tous les albums</string>
+                </property>
+               </item>
               </widget>
              </item>
              <item>
