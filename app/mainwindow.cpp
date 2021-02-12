@@ -96,7 +96,7 @@ void MainWindow::constructSearchBar(QString s)
  */
 void MainWindow::updateImages()
 {
-    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    int max = DB::getImageDao().maxPageNb(currentSearch);
     if (max > 0) _next_btn->setEnabled(true);
     _page_display->setText(QString("page %1 sur %2").arg(max==-1 ? 0:currentSearch.pageNumber+1).arg(max+1));
 
@@ -285,7 +285,7 @@ void MainWindow::sortOrderChanged()
 
 void MainWindow::nextPage()
 {
-    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    int max = DB::getImageDao().maxPageNb(currentSearch);
     currentSearch.pageNumber += 1;
     if (currentSearch.pageNumber >= max) {
         currentSearch.pageNumber = max;
@@ -299,7 +299,7 @@ void MainWindow::nextPage()
 
 void MainWindow::previousPage()
 {
-    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    int max = DB::getImageDao().maxPageNb(currentSearch);
     currentSearch.pageNumber -= 1;
     if (currentSearch.pageNumber <= 0) {
         currentSearch.pageNumber = 0;
@@ -314,7 +314,7 @@ void MainWindow::previousPage()
 void MainWindow::setImagePerPage(int index)
 {
     this->currentSearch.resultSize = _item_pages_combobox->itemText(index).toInt();
-    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    int max = DB::getImageDao().maxPageNb(currentSearch);
     if (this->currentSearch.pageNumber > max) {
         this->currentSearch.pageNumber = max;
     }

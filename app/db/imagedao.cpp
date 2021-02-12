@@ -197,6 +197,8 @@ QList<Image> ImageDAO::search(const ImageSearch &search)
         case ImageSearch::Rating:
             _sort = "ORDER BY Rating ";
             break;
+        default:
+            break;
         }
         _sort += search.sortDescendant ? "ASC" : "DESC";
     }
@@ -293,11 +295,70 @@ Image ImageDAO::fromRecord(QSqlRecord record)
     return img;
 }
 
-int ImageDAO::maxPageNb(int itemsPerPage)
+int ImageDAO::maxPageNb(ImageSearch search)
 {
-    QSqlQuery query = getNewQuery();
+    QString SQL = "SELECT COUNT(\"Path\") AS ImageCount FROM Image Where :SEARCH: :FILTER: :SORT:";
 
-    if (!query.exec("SELECT COUNT(\"Path\") AS ImageCount FROM Image;")) {
+    QString _search = "True";
+    QString _filter = "";
+    QString _sort = "";
+
+    if (!search.keyword.isEmpty()) {
+        _search = /* sometime I wonder wtf I'm doing */
+        "(Name LIKE :keyword OR Comment LIKE :keyword OR \"Path\" IN ("
+        "  SELECT ImgPath FROM ImageCategory WHERE TagValue = :tagkeyword"
+        "    UNION"
+        "  SELECT ImgPath FROM ImageDescriptive WHERE TagValue = :tagkeyword"
+        "    UNION"
+        "  SELECT ImgPath FROM ImageFeeling WHERE TagValue = :tagkeyword"
+        "))";
+    }
+
+    if (search.minWidth != 0)  _filter += " AND Width >=  :minWidth";
+    if (search.maxWidth != 0)  _filter += " AND Width <=  :maxWidth";
+    if (search.minHeight != 0) _filter += " AND Height >= :minHeight";
+    if (search.maxHeight != 0) _filter += " AND Height <= :maxHeight";
+    if (search.minRating != 0) _filter += " AND Rating >= :minRating";
+    if (!search.album.isEmpty()) _filter += " AND Album >= :album";
+
+    if (search.sortOrder != ImageSearch::None) {
+        switch (search.sortOrder) {
+        case ImageSearch::Name:
+            _sort = "ORDER BY LOWER(Name) ";
+            break;
+        case ImageSearch::Size:
+            _sort = "ORDER BY Size ";
+            break;
+        case ImageSearch::Date:
+            _sort = "ORDER BY Date ";
+            break;
+        case ImageSearch::Rating:
+            _sort = "ORDER BY Rating ";
+            break;
+        default:
+            break;
+        }
+        _sort += search.sortDescendant ? "ASC" : "DESC";
+    }
+
+    SQL = SQL.replace(":SEARCH:", _search).replace(":FILTER:", _filter).replace(":SORT:", _sort);
+
+    QSqlQuery query = getNewQuery();
+    query.prepare(SQL);
+
+    if (!search.keyword.isEmpty()) {
+        query.bindValue(":keyword", "%"+search.keyword+"%");
+        query.bindValue(":tagkeyword", search.keyword);
+    }
+
+    if (search.minWidth != 0)  query.bindValue(":minWidth", search.minWidth);
+    if (search.maxWidth != 0)  query.bindValue(":maxWidth", search.maxWidth);
+    if (search.minHeight != 0) query.bindValue(":minHeight", search.minHeight);
+    if (search.maxHeight != 0) query.bindValue(":maxHeight", search.maxHeight);
+    if (search.minRating != 0) query.bindValue(":minRating", search.minRating);
+    if (!search.album.isEmpty()) query.bindValue(":album", search.album);
+
+    if (!query.exec()) {
         qWarning() << "Failed to count images" << query.lastQuery();
         qCritical() << query.lastError().text();
         return 0;
@@ -310,8 +371,8 @@ int ImageDAO::maxPageNb(int itemsPerPage)
 
     imageCounts = query.value("ImageCount").toInt();
 
-    int reminder = imageCounts % itemsPerPage;
-    int pages = (imageCounts - reminder) / itemsPerPage;
+    int reminder = imageCounts % search.resultSize;
+    int pages = (imageCounts - reminder) / search.resultSize;
     if (reminder != 0) pages += 1;
 
     // return -1 to have progammer value instead of display
