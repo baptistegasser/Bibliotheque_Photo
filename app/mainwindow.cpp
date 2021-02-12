@@ -198,7 +198,6 @@ void MainWindow::showImageList()
  */
 void MainWindow::setSearchKeyword()
 {
-    qDebug() << __FUNCTION__;
     _search_comboBox->clearFocus();
     this->currentSearch.keyword = _search_comboBox->currentText();
     updateImages();
