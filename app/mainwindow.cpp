@@ -22,13 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     this->height_window = geometry().height();
     this->currentSearch.sortOrder = ImageSearch::Name;
 
+    currentSearch.resultSize = _item_pages_combobox->itemText(0).toInt();
+
     _album_combobox->addItems(DB::getAlbumDAO().getAlbums());
     currentSearch.album = QString::Null();
-
-    currentSearch.resultSize = _item_pages_combobox->itemText(0).toInt();
-    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
-    if (max > 0) _next_btn->setEnabled(true);
-    _page_display->setText(QString("page %1 sur %2").arg(currentSearch.pageNumber+1).arg(max+1));
 
     // Configure and connect the search bar and button
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::Key_Return), _search_comboBox);
@@ -95,6 +92,10 @@ void MainWindow::constructSearchBar(QString s)
  */
 void MainWindow::updateImages()
 {
+    int max = DB::getImageDao().maxPageNb(currentSearch.resultSize);
+    if (max > 0) _next_btn->setEnabled(true);
+    _page_display->setText(QString("page %1 sur %2").arg(max==-1 ? 0:currentSearch.pageNumber+1).arg(max+1));
+
     photoSelectionned = nullptr;
     QVBoxLayout *vBoxPage = new QVBoxLayout();
 
@@ -211,6 +212,7 @@ void MainWindow::addAlbum()
     QString name = QInputDialog::getText(this, tr("Choisir le nom du nouvel album photo"), "", QLineEdit::Normal, "", &ok);
     if (ok && !name.isEmpty()) {
         _album_combobox->addItem(name);
+        DB::getAlbumDAO().createAlbum(name);
     }
 }
 

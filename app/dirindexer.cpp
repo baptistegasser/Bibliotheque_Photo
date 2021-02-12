@@ -68,7 +68,7 @@ void DirIndexer::indexDir(Directory &dir, QList<Directory> *indexedDirs)
             subDirs.enqueue(next);
         } else {
             // Index only files with known valid extentions
-            if (supportedFilesExtentions.contains(fileInfo.suffix())) {
+            if (supportedFilesExtentions.contains(fileInfo.suffix().toLower())) {
                 indexImage(dir, fileInfo);
                 indexedImages += 1;
             }
