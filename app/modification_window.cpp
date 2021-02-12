@@ -31,7 +31,6 @@ Modification_window::Modification_window(QWidget *parent, Image *image) :
     connect(_my_add_tag_ress_button,&QPushButton::clicked,this,[=](){this->addTag(2);});
     connect(_my_download_button,&QPushButton::clicked,this,&Modification_window::save);
     connect(_my_recadrer,&QPushButton::clicked,this,&Modification_window::cropped);
-    connect(_my_album_combo,&QComboBox::currentTextChanged,this,&Modification_window::selectAlbum);
     updateImage();
     initLayout();
     initTopLayout();
@@ -437,7 +436,15 @@ void Modification_window::cropCancel()
 
 void Modification_window::initAlbum()
 {
-    _my_album_combo->addItems(DB::getAlbumDAO().getAlbums());
+    QList<QString> albums = DB::getAlbumDAO().getAlbums();
+    _my_album_combo->addItems(albums);
+    for (int i = 0; i < albums.size(); ++i) {
+        if (img->album == albums[i]) {
+            _my_album_combo->setCurrentIndex(i);
+            break;
+        }
+    }
+    connect(_my_album_combo,&QComboBox::currentTextChanged,this,&Modification_window::selectAlbum);
 }
 
 void Modification_window::selectAlbum()
